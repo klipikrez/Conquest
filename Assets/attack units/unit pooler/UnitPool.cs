@@ -25,7 +25,7 @@ public class UnitPool : MonoBehaviour
 
     public UnitAgent Get()
     {
-        if(unitsQueue.Count == 0)
+        if (unitsQueue.Count == 0)
         {
             AddUnitsToQueue(1);
         }
@@ -35,9 +35,9 @@ public class UnitPool : MonoBehaviour
 
     void AddUnitsToQueue(int count)
     {
-        for(int i = 0; i<count;i++)
+        for (int i = 0; i < count; i++)
         {
-            UnitAgent unitInstantce = Instantiate(unitPrefab,transform);
+            UnitAgent unitInstantce = Instantiate(unitPrefab, transform);
             unitInstantce.gameObject.SetActive(false);
             unitInstantce.id = number++;
             unitsQueue.Enqueue(unitInstantce);
@@ -46,6 +46,7 @@ public class UnitPool : MonoBehaviour
 
     public void ReurnUnitsToPool(UnitAgent unit)
     {
+        unit.CancelInvoke();
         unit.gameObject.SetActive(false);
         unit.Controller.agents.Remove(unit);
         unitsQueue.Enqueue(unit);

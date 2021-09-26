@@ -6,6 +6,9 @@ public class playerMovement : MonoBehaviour
 {
 
     public CharacterController controller;
+    public Camera payerCamera;
+    Vector3 baseCameraAnchor;
+    Vector3 previousPosition;
     public float speed = 1f;
     public float mouseSpeed = 20f;
 
@@ -14,11 +17,50 @@ public class playerMovement : MonoBehaviour
     public float zoomChange = 5f;
     public float minZoom = 0;
     public float maxZoom = 10;
+    bool viewProjection = false;
 
+
+    private void Start()
+    {
+        baseCameraAnchor = transform.position;
+        Zoom(1);
+    }
     void Update()
     {
-        Move();
-        Zoom();
+        if (Input.GetKeyUp("space"))
+        {
+            viewProjection = !viewProjection;
+            if (viewProjection)
+            {
+                payerCamera.orthographic = true;
+                payerCamera.cullingMask -= LayerMask.GetMask("unit");
+                payerCamera.cullingMask += LayerMask.GetMask("unitMarker");
+                payerCamera.cullingMask -= LayerMask.GetMask("building");
+                payerCamera.cullingMask += LayerMask.GetMask("buildingMarker");
+                payerCamera.transform.rotation = Quaternion.Euler(90, 0, 0);
+                previousPosition = transform.position;
+            }
+            else
+            {
+                payerCamera.orthographic = false;
+                payerCamera.cullingMask += LayerMask.GetMask("unit");
+                payerCamera.cullingMask -= LayerMask.GetMask("unitMarker");
+                payerCamera.cullingMask += LayerMask.GetMask("building");
+                payerCamera.cullingMask -= LayerMask.GetMask("buildingMarker");
+                controller.Move(new Vector3(previousPosition.x - transform.position.x, 0, previousPosition.z - transform.position.z));//reset camera to previous position
+            }
+
+        }
+
+        if (viewProjection)
+        {
+            SpaceAction();
+        }
+        else
+        {
+            Move();
+            Zoom(zoomSpeed * Time.deltaTime);
+        }
     }
 
     void Move()
@@ -34,8 +76,8 @@ public class playerMovement : MonoBehaviour
 
         if (Input.GetMouseButton(2))
         {
-            hor -= Input.GetAxis("Mouse X") * mouseSpeed;
-            vert -= Input.GetAxis("Mouse Y") * mouseSpeed;
+            hor -= Input.GetAxis("Mouse X") * mouseSpeed / 2;
+            vert -= Input.GetAxis("Mouse Y") * mouseSpeed / 2;
         }
 
         if (Input.GetMouseButtonUp(2))
@@ -46,15 +88,15 @@ public class playerMovement : MonoBehaviour
 
         Vector3 moveVector = transform.right * hor + transform.forward * vert;
 
-        controller.Move(moveVector * Time.deltaTime * (zoomLevel/5));
+        controller.Move(moveVector * Time.deltaTime * (zoomLevel / 5));
 
     }
 
-    void Zoom()
+    void Zoom(float moveAmount)
     {
 
         RaycastHit hit;
-        if(!Physics.Raycast(transform.position,Vector3.down, out hit, 100f, LayerMask.GetMask("terrain")))
+        if (!Physics.Raycast(transform.position, Vector3.down, out hit, 800f, LayerMask.GetMask("terrain")))
         {
             //ako nema dno  hit.distance = zoomLevel; da bi kamera ostala u mestu
             Debug.Log("nes nera di bur z");
@@ -69,11 +111,11 @@ public class playerMovement : MonoBehaviour
 
         float offset = zoomLevel - hit.distance;
 
-        float Y = Mathf.Lerp(0, offset, Mathf.Clamp01(zoomSpeed * Time.deltaTime));
+        float Y = Mathf.Lerp(0, offset, Mathf.Clamp01(moveAmount));
         Vector3 moveVector = new Vector3(0, Y, 0);
 
         controller.Move(moveVector);
-        
+        SetCameraRotation(hit.distance);
         //laseri i vatromet :)
     }
 
@@ -95,5 +137,28 @@ public class playerMovement : MonoBehaviour
 
             }
         }
+    }
+
+    void SetCameraRotation(float height)
+    {
+        float amount = Mathf.Pow((minZoom - height + 10) / 10, 3f);
+        float lerpFloat = Mathf.Lerp(65, 35, amount);
+        //Quaternion target = Quaternion.Lerp(Quaternion.Euler(35, 0, 0), Quaternion.Euler(80, 0, 0), (height - minZoom) / 10);
+
+        Quaternion target = Quaternion.Euler(lerpFloat, 0, 0);
+        if (payerCamera.transform.rotation.eulerAngles != target.eulerAngles)
+        {
+            payerCamera.transform.rotation = target;
+        }
+    }
+
+    void SpaceAction()
+    {
+        Vector3 acc = new Vector3(
+            Mathf.Lerp(transform.position.x, baseCameraAnchor.x, Time.deltaTime),
+            baseCameraAnchor.y,
+            Mathf.Lerp(transform.position.z, baseCameraAnchor.z, Time.deltaTime));
+
+        controller.Move(acc - transform.position);
     }
 }

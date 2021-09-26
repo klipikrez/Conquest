@@ -38,9 +38,9 @@ public class playerSelectionDictionary : MonoBehaviour
             removeOprionsSelected();
         }
 
-        foreach(KeyValuePair<int, GameObject> pair in selected)
+        foreach (KeyValuePair<int, GameObject> pair in selected)
         {
-            if(pair.Value != null)
+            if (pair.Value != null)
             {
                 selected[pair.Key].GetComponent<BuildingMain>().Deselected();
             }
@@ -62,7 +62,7 @@ public class playerSelectionDictionary : MonoBehaviour
         }
     }
 
-    public void Attack(Transform attack,int percent)
+    public void Attack(Transform attack, int percent)
     {
         foreach (KeyValuePair<int, GameObject> pair in selected)
         {
@@ -102,7 +102,7 @@ public class playerSelectionDictionary : MonoBehaviour
             {
                 if (selected[pair.Key] != optionsActive.gameObject)
                 {
-                    selected[pair.Key].GetComponent<UnitController>().Gift(percent,optionsActive);
+                    selected[pair.Key].GetComponent<UnitController>().Gift(percent, optionsActive);
                 }
             }
         }

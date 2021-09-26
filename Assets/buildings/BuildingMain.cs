@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BuildingMain : MonoBehaviour
 {
+    public Vector3 UiOffset;
     public GameObject UiCanvas;
     public GameObject Ui;
     public GameObject allyOptions;
@@ -18,6 +19,8 @@ public class BuildingMain : MonoBehaviour
     {
         UiCanvas.SetActive(true);
         UiCanvas.SetActive(false);
+        allyOptions.SetActive(true);
+        enemyOptions.SetActive(true);
         allyOptions.SetActive(false);
         enemyOptions.SetActive(false);
 
@@ -38,12 +41,14 @@ public class BuildingMain : MonoBehaviour
 
     public void Selected()
     {
+        team.markerRend.material.SetFloat("_SineEnabled", 1);
         UiCanvas.SetActive(true);
         UiFollow();
     }
 
     public void Deselected()
     {
+        team.markerRend.material.SetFloat("_SineEnabled", 0);
         UiCanvas.SetActive(false);
         SetAllyOptions(false);
         SetEnemyOptions(false);
@@ -61,58 +66,22 @@ public class BuildingMain : MonoBehaviour
         UiFollow();
     }
 
-    //public void Selected()
-    //{
-    //    SetAllyOptions(false);
-    //    SetEnemyOptions(false);
-    //    UiCanvas.SetActive(true);
-    //    UiFollow();
-    //}
-
-    //public void Deselected()
-    //{
-    //    UiCanvas.SetActive(false);
-    //}
-
-    //public void SetAllyOptions(bool val)
-    //{
-
-    //    if (allyOptions.activeInHierarchy != val)
-    //    {          
-    //        if (val)
-    //        {              
-    //            UiCanvas.SetActive(true);
-    //        }
-    //        allyOptions.SetActive(val);
-    //        enemyOptions.SetActive(!val);
-    //    }
-    //}
-
-    //public void SetEnemyOptions(bool val)
-    //{
-
-    //    if (enemyOptions.activeInHierarchy != val)
-    //    {           
-    //        if (val)
-    //        {               
-    //            UiCanvas.SetActive(true);
-    //        }
-    //        enemyOptions.SetActive(val);
-    //        allyOptions.SetActive(!val);
-    //    }
-    //}
-
     void UiFollow()
     {
-        Vector3 pos = Camera.main.WorldToScreenPoint(this.transform.position);
+        if (!Ui.activeSelf)
+        {
+            Ui.SetActive(true);
+        }
 
-        if(pos.x < screenEdgeBuffer)
+        Vector3 pos = Camera.main.WorldToScreenPoint(this.transform.position + UiOffset);
+
+        if (pos.x < screenEdgeBuffer)
         {
             pos.x = screenEdgeBuffer;
         }
         else
         {
-            if(pos.x > Screen.width - screenEdgeBuffer)
+            if (pos.x > Screen.width - screenEdgeBuffer)
             {
                 pos.x = Screen.width - screenEdgeBuffer;
             }
@@ -135,8 +104,28 @@ public class BuildingMain : MonoBehaviour
 
     void UiIdle()
     {
-        Vector3 pos = Camera.main.WorldToScreenPoint(this.transform.position);
-        Ui.transform.position = pos;
+        if (Vector3.Angle(transform.position - Camera.main.transform.position, Camera.main.transform.forward) > 90.0f) return;
+
+        Vector3 pos = Camera.main.WorldToScreenPoint(this.transform.position + UiOffset);
+        //Rect screenRect = new Rect(-Screen.width / 5, -Screen.height / 5, Screen.width + Screen.width / 5, Screen.height + Screen.height / 5);
+        Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);
+        if (screenRect.Contains(pos))
+        {
+            // Inside screen vision feild
+            if (!Ui.activeSelf)
+            {
+                Ui.SetActive(true);
+            }
+
+            Ui.transform.position = pos;
+        } ///za kasnije da popravis ovo gedzeru jedan triguzlavi
+        else
+        {
+            if (Ui.activeSelf)
+            {
+                Ui.SetActive(false);
+            }
+        }
     }
 
 }

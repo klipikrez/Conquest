@@ -9,10 +9,9 @@ public class UnitController : MonoBehaviour
 
     public List<UnitController> neighbours;
     public float neighbourCheckRadious = 5f;
-
-    public UnitAgent unitAgentPrefab;
     public List<UnitAgent> agents = new List<UnitAgent>();
-    public UnitBehaivour behaivour;
+    public UnitBehaivour unitSteerBehaivour;
+    public BuildingBehaviorCompiler UnitBuildingSpawnBehavior;
     Production production;
     public Team team { get; private set; }
     LineRenderer line;
@@ -23,15 +22,20 @@ public class UnitController : MonoBehaviour
     public float unitAcceleration = 10;
     public float unitMaxSPeed = 5;
     public float drag = 0.9f;
+    public float updateUnitEvery = 0.1f;
 
     public float neighbourRadious = 1.5f;
     [Range(0, 1)]
     public float avoidenceRadiousMultiplyer = 0.5f;//max je 1 min je 0
+    //public float moveUpdateTimeInterval = 0.05f;
+    //float timer = 100;
 
     float squaredMaxSpeed;
     float squaredNeighbourRadious;
     float squaredAvoidenceRadious;
+    float avoidenceRadious;
     public float SuaredAvoidenceRadious { get { return squaredAvoidenceRadious; } }
+    public float AvoidenceRadious { get { return avoidenceRadious; } }
 
     Coroutine attackCoroutine;
     Coroutine lineCoroutine;
@@ -42,49 +46,71 @@ public class UnitController : MonoBehaviour
         squaredMaxSpeed = unitMaxSPeed * unitMaxSPeed;
         squaredNeighbourRadious = neighbourRadious * neighbourRadious;
         squaredAvoidenceRadious = squaredNeighbourRadious * avoidenceRadiousMultiplyer * avoidenceRadiousMultiplyer;
+        avoidenceRadious = neighbourRadious * avoidenceRadious;
         production = GetComponent<Production>();
         team = GetComponent<Team>();
         line = gameObject.AddComponent<LineRenderer>();
 
         CheckNeighbours();
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        //timer += Time.deltaTime;
 
-        for (int i = 0;i<agents.Count; i++)
+
+
+        //if (timer > moveUpdateTimeInterval)
+        //{
+
+
+        for (int i = 0; i < agents.Count; i++)
         {
             UnitAgent agent = agents[i];
-
-            List<Transform> context = GetNearbyObjects(agent);
-            context.Insert(0, agent.TrackPositions.Peek()); //insert na prvo mesto liste track transform
-
-            Vector2 move = behaivour.CalculateMove(agent, context, this);
-            move *= unitAcceleration;
-
-            //agents[i].currentMoveDirection *= drag;//drag
-
-            agent.currentMoveDirection += move;//acceleration
-            
-            if (agent.currentMoveDirection.sqrMagnitude > squaredMaxSpeed)//max speed
-            {
-                agent.currentMoveDirection = agent.currentMoveDirection.normalized * unitMaxSPeed;
-            }
-
+            agent.currentMoveDirection /= (1 + drag * Time.deltaTime);//drag
             agent.Move(agent.currentMoveDirection);
         }
+        //}
+
+        //if (timer > moveUpdateTimeInterval)
+        //{
+        //timer = 0;
+        //}
+    }
+
+    public void UpdateAgent(UnitAgent agent)
+    {
+        /*for (int i = 0; i < agents.Count; i++)
+        {
+            UnitAgent agent = agents[i];*/
+        List<Transform> context = GetNearbyObjects(agent);
+        context.Insert(0, agent.TrackPositions.Peek()); //insert na prvo mesto liste track transform
+
+        Vector2 move = unitSteerBehaivour.CalculateMove(agent, context, this);
+        move *= unitAcceleration;
+
+        agent.currentMoveDirection += move;//acceleration
+
+        if (agent.currentMoveDirection.sqrMagnitude > squaredMaxSpeed)//max speed
+        {
+            agent.currentMoveDirection = agent.currentMoveDirection.normalized * unitMaxSPeed;
+        }
+        //}
+
     }
 
     List<Transform> GetNearbyObjects(UnitAgent agent)
     {
         List<Transform> context = new List<Transform>();
         Collider[] contextColliders = Physics.OverlapSphere(agent.transform.position, neighbourRadious, LayerMask.GetMask("unit"));
-        foreach(Collider coll in contextColliders)
+        foreach (Collider coll in contextColliders)
         {
-            if(coll != agent.AgentCollider)
+            if (coll != agent.AgentCollider)
             {
-                context.Add(coll.transform);              
+                context.Add(coll.transform);
             }
         }
         return context;
@@ -92,9 +118,9 @@ public class UnitController : MonoBehaviour
 
     void CheckNeighbours()
     {
-        foreach(UnitController neighbour in neighbours)
+        foreach (UnitController neighbour in neighbours)
         {
-            if(!neighbour.neighbours.Contains(this))
+            if (!neighbour.neighbours.Contains(this))
             {
                 neighbour.neighbours.Add(this);
             }
@@ -126,7 +152,7 @@ public class UnitController : MonoBehaviour
     {
         StopAttackUnits();
         Transform[] path = CalculatePath(transform, attack);
-        if(path != null) attackCoroutine = StartCoroutine(SpawnContinuousAttackUnits(path, team.teamid));
+        if (path != null) attackCoroutine = StartCoroutine(SpawnContinuousAttackUnits(path, team.teamid));
     }
 
     public void Gift(int percent, BuildingMain gift)
@@ -141,26 +167,27 @@ public class UnitController : MonoBehaviour
         }
     }
 
-    Transform[] CalculatePath(Transform from,Transform to)
+    Transform[] CalculatePath(Transform from, Transform to)
     {
 
         Transform[] path = NavManager.Instance.CalculatePath(from, to);
-        
-        CalculateLine(path,from);
-
+        if (path != null)
+        {
+            CalculateLine(path, from);
+        }
         return path;
     }
 
-    void CalculateLine(Transform[] points,Transform start)
+    void CalculateLine(Transform[] points, Transform start)
     {
-        Vector3[] positions = new Vector3[points.Length+1];
+        Vector3[] positions = new Vector3[points.Length + 1];
         positions[0] = start.position;
         for (int i = 0; i < points.Length; i++)
         {
-            positions[i+1] = points[i].position;
+            positions[i + 1] = points[i].position;
         }
         line.enabled = true;
-        line.SetVertexCount(points.Length+1);
+        line.SetVertexCount(points.Length + 1);
         line.SetPositions(positions);
 
         if (lineCoroutine != null)
@@ -181,10 +208,10 @@ public class UnitController : MonoBehaviour
     {
         while (true)
         {
-            
+
             for (int i = 0; i < maxDispatchRate; i++)
             {
-                if (production.product-1 <= 0 || amount < 0)
+                if (production.product - 1 <= 0 || amount < 0)
                 {
                     yield break;
                 }
@@ -204,7 +231,7 @@ public class UnitController : MonoBehaviour
     {
         while (true)
         {
-            if (production.product > maxDispatchRate)
+            if (production.product - 1 > maxDispatchRate)
             {
                 for (int i = 0; i < maxDispatchRate; i++)
                 {
@@ -220,7 +247,7 @@ public class UnitController : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnGiftUnits(int amount,Transform[] attack, int teamid)
+    IEnumerator SpawnGiftUnits(int amount, Transform[] attack, int teamid)
     {
         while (true)
         {
@@ -243,20 +270,21 @@ public class UnitController : MonoBehaviour
         }
     }
 
-    void InitializeUnit(UnitAgent newAgent,Transform[] path, int teamid, bool isGift = false)
+    void InitializeUnit(UnitAgent newAgent, Transform[] path, int teamid, bool isGift = false)
     {
         Vector2 spawnZone = Random.insideUnitCircle * 0.2f;
 
-        newAgent.transform.position = new Vector3(spawnZone.x, 0.1f, spawnZone.y) + transform.position;
+        newAgent.transform.position = new Vector3(spawnZone.x, 0, spawnZone.y) + transform.position;
         newAgent.gameObject.SetActive(true);
 
-        newAgent.name = teamid.ToString()+ (isGift ? "g" : "n") + " - " + newAgent.id;
-        newAgent.AddPath(path);
-        newAgent.selfTeam = teamid;
-        newAgent.selfCol = team.colors[teamid];
-        newAgent.isGift = isGift;
-        newAgent.currentMoveDirection = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1));
-        newAgent.Initialize(this);
+        UnitBuildingSpawnBehavior.InitializeUnit(newAgent, path, this, teamid, isGift, updateUnitEvery);
+        //newAgent.name = teamid.ToString()+ (isGift ? "g" : "n") + " - " + newAgent.id;
+        //newAgent.AddPath(path);
+        //newAgent.selfTeam = teamid;
+        //newAgent.selfCol = team.colors[teamid];
+        //newAgent.isGift = isGift;
+        //newAgent.currentMoveDirection = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1));
+        //newAgent.Initialize(this);
     }
 
     void OnDrawGizmosSelected()

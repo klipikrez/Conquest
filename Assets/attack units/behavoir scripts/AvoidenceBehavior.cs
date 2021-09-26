@@ -19,10 +19,15 @@ public class AvoidenceBehavior : FilterUnitBehavior
         List<Transform> filterContext = (filter == null) ? context : filter.Filter(agent, context);
         for (int i = 1; i< filterContext.Count ; i++)//skipuje prvi element ove liste
         {
-            if(Vector2.SqrMagnitude(Vec3ToVec2(filterContext[i].position - agent.transform.position))< controller.SuaredAvoidenceRadious)
+            if(Vector2.SqrMagnitude(Vec3ToVec2(agent.transform.position - filterContext[i].position))< controller.SuaredAvoidenceRadious)
             {
                 avoid++;
-                avoidenceMove += (Vector2)(Vec3ToVec2(agent.transform.position - filterContext[i].position));
+
+                Vector2 vector2;
+                vector2 = (Vector2)(Vec3ToVec2((agent.transform.position - filterContext[i].position)));
+                vector2 = vector2.normalized * (vector2.magnitude - controller.AvoidenceRadious);
+
+                avoidenceMove += vector2/*new Vector2(controller.SuaredAvoidenceRadious,controller.SuaredAvoidenceRadious) - (Vector2)(Vec3ToVec2((agent.transform.position - filterContext[i].position)))*/;
             }
             
         }
@@ -35,7 +40,7 @@ public class AvoidenceBehavior : FilterUnitBehavior
         return avoidenceMove;
     }
 
-    Vector3 Vec3ToVec2(Vector3 input)
+    Vector2 Vec3ToVec2(Vector3 input)
     {
         return new Vector2(input.x, input.z);
     }

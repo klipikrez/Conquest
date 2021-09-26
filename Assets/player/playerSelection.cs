@@ -40,7 +40,7 @@ public class playerSelection : MonoBehaviour
     {
 
         Select();
-        
+
     }
 
     void Select()
@@ -105,9 +105,9 @@ public class playerSelection : MonoBehaviour
                 selectionBox.sharedMesh = selectionMesh;
                 selectionBox.convex = true;
                 selectionBox.isTrigger = true;
-
                 if (!Input.GetKey(KeyCode.LeftShift) && !EventSystem.current.IsPointerOverGameObject())
                 {
+
                     selectedDictionary.RemoveAll();
                 }
 
@@ -127,25 +127,25 @@ public class playerSelection : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(p1);
 
-        if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("building")))
+        if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("building")) && !EventSystem.current.IsPointerOverGameObject())
         {
             if (selfTeam.teamid != hit.transform.gameObject.GetComponent<Team>().teamid)
             {
-                selectedDictionary.Attack(hit.transform,65);
+                selectedDictionary.Attack(hit.transform, 65);
                 selectedDictionary.RemoveAll();
             }
             else
             {
                 if (selectedDictionary.selected.Count != 0)
                 {
-                    selectedDictionary.Attack(hit.transform,65);
+                    selectedDictionary.Attack(hit.transform, 65);
                     selectedDictionary.RemoveAll();
                 }
-                else 
+                else
                 {
                     selectedDictionary.AddSelected(hit.collider.gameObject);
                 }
-            }         
+            }
         }
         else
         {
@@ -158,7 +158,7 @@ public class playerSelection : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(p1);
 
-        if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("building")))
+        if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("building")) && !EventSystem.current.IsPointerOverGameObject())
         {
             BuildingMain hitBuilding = hit.transform.GetComponent<BuildingMain>();
 
@@ -170,7 +170,7 @@ public class playerSelection : MonoBehaviour
                 hitBuilding.SetAllyOptions(true);
                 return;
             }
-            else 
+            else
             {
                 //nemeny
                 hitBuilding.SetEnemyOptions(true);
@@ -284,41 +284,41 @@ public class playerSelection : MonoBehaviour
 
 
 
-/*
-    void OLDSelect()//neradi
-    {
-        if (building != null && !EventSystem.current.IsPointerOverGameObject())
+    /*
+        void OLDSelect()//neradi
         {
-            building.Deselected();//deselektuj proslu zgradu(ako je neka bila selectovana)
-            building = null;
-        }
-
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            GameObject objectHit = hit.collider.gameObject;
-
-            if ((tempBuilding = objectHit.GetComponent<buildingMain>()) != null && !EventSystem.current.IsPointerOverGameObject())
+            if (building != null && !EventSystem.current.IsPointerOverGameObject())
             {
-                if (building != null)
-                {
-                    building.Deselected(); //deselect proslo selektovanu zgradu
-                    building = null;
-                }
-                building = tempBuilding;
-                if (building.GetComponent<team>().teamid == selfTeam.teamid)
-                {
-                    building.Selected();
-                }
-                else
-                {
-                    //napad
-                }
+                building.Deselected();//deselektuj proslu zgradu(ako je neka bila selectovana)
+                building = null;
             }
 
-        }
-    }*/
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                GameObject objectHit = hit.collider.gameObject;
+
+                if ((tempBuilding = objectHit.GetComponent<buildingMain>()) != null && !EventSystem.current.IsPointerOverGameObject())
+                {
+                    if (building != null)
+                    {
+                        building.Deselected(); //deselect proslo selektovanu zgradu
+                        building = null;
+                    }
+                    building = tempBuilding;
+                    if (building.GetComponent<team>().teamid == selfTeam.teamid)
+                    {
+                        building.Selected();
+                    }
+                    else
+                    {
+                        //napad
+                    }
+                }
+
+            }
+        }*/
 
 }

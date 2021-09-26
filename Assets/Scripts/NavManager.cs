@@ -6,8 +6,8 @@ using UnityEngine;
 public class NavManager : MonoBehaviour
 {
 
-    public GameObject[] buildings;
-    public IDictionary<GameObject,UnitController> buildingControllers = new Dictionary<GameObject,UnitController>();
+    GameObject[] buildings;
+    IDictionary<GameObject, UnitController> buildingControllers = new Dictionary<GameObject, UnitController>();
 
     public static NavManager Instance { get; private set; }
 
@@ -20,7 +20,7 @@ public class NavManager : MonoBehaviour
     void Start()
     {
         buildings = GameObject.FindGameObjectsWithTag("building");
-        foreach(GameObject building in buildings)
+        foreach (GameObject building in buildings)
         {
             UnitController controller = building.GetComponent<UnitController>();
             buildingControllers.Add(building, controller);
@@ -47,7 +47,7 @@ public class NavManager : MonoBehaviour
     }
 
     public Transform[] CalculatePath(Transform start, Transform end)
-    { 
+    {
         if (start == null || end == null)
         {
             Debug.LogError("missing transform to calculate path");
@@ -81,7 +81,7 @@ public class NavManager : MonoBehaviour
         //start distance = 0
         distances[startController] = 0;
 
-        while(unexplored.Count > 0)
+        while (unexplored.Count > 0)
         {
             UnitController check = distances//check this
                 .Where(x => unexplored.Contains(x.Key.transform))//is in unexplored
@@ -114,7 +114,7 @@ public class NavManager : MonoBehaviour
 
             IList<UnitController> neighbours = check.neighbours;
 
-            foreach(UnitController neighbour in neighbours)
+            foreach (UnitController neighbour in neighbours)
             {
                 //distance cost
                 float dist = distances[check]
@@ -134,17 +134,5 @@ public class NavManager : MonoBehaviour
         }
         return null;
     }
-
-    //LineRenderer AddLienConnection(Vector3 p1,Vector3 p2)
-    //{
-    //    LineRenderer lr = gameObject.AddComponent(typeof(LineRenderer)) as LineRenderer;
-    //    lr.positionCount = 2;
-    //    lr.SetPosition(0, p1);
-    //    lr.SetPosition(1, p2);
-    //    //lr.SetColors(Color.white, Color.white);
-    //    //lr.SetWidth(1, 0.1f);
-
-    //    return lr;
-    //}
 
 }
