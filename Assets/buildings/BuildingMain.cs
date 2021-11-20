@@ -6,30 +6,31 @@ using UnityEngine.UI;
 public class BuildingMain : MonoBehaviour
 {
     public Vector3 UiOffset;
-    public GameObject UiCanvas;
+    public GameObject selector;
     public GameObject Ui;
+    public GameObject rect;
+    public GameObject sword;
     public GameObject allyOptions;
     public GameObject enemyOptions;
-
     public int screenEdgeBuffer = 40;
     [System.NonSerialized]
     public Team team;
 
+
+    Quaternion rotateTo;
+
     void Start()
     {
-        UiCanvas.SetActive(true);
-        UiCanvas.SetActive(false);
-        allyOptions.SetActive(true);
-        enemyOptions.SetActive(true);
+        selector.SetActive(false);
         allyOptions.SetActive(false);
         enemyOptions.SetActive(false);
-
+        allyOptions.transform.parent.gameObject.SetActive(false);
         team = GetComponent<Team>();
     }
 
     void Update()
     {
-        if (UiCanvas.activeInHierarchy)
+        if (selector.activeInHierarchy)
         {
             UiFollow();
         }
@@ -42,14 +43,14 @@ public class BuildingMain : MonoBehaviour
     public void Selected()
     {
         team.markerRend.material.SetFloat("_SineEnabled", 1);
-        UiCanvas.SetActive(true);
+        selector.SetActive(true);
         UiFollow();
     }
 
     public void Deselected()
     {
         team.markerRend.material.SetFloat("_SineEnabled", 0);
-        UiCanvas.SetActive(false);
+        selector.SetActive(false);
         SetAllyOptions(false);
         SetEnemyOptions(false);
     }
@@ -57,12 +58,22 @@ public class BuildingMain : MonoBehaviour
     public void SetAllyOptions(bool val)
     {
         allyOptions.SetActive(val);
+        selector.SetActive(val);
+
+        allyOptions.transform.parent.gameObject.SetActive(val);
+        SwordResetRotation();
+
         UiFollow();
     }
 
     public void SetEnemyOptions(bool val)
     {
         enemyOptions.SetActive(val);
+        selector.SetActive(val);
+
+        allyOptions.transform.parent.gameObject.SetActive(val);
+        SwordResetRotation();
+
         UiFollow();
     }
 
@@ -99,7 +110,15 @@ public class BuildingMain : MonoBehaviour
         }
 
 
-        Ui.transform.position = pos;
+        rect.transform.position = pos;
+
+        if (allyOptions.transform.parent.gameObject.activeSelf)
+        {
+
+            sword.transform.rotation *= Quaternion.Lerp(Quaternion.Euler(0, 0, 0), rotateTo * Quaternion.Inverse(sword.transform.rotation), Time.deltaTime * 10);
+
+        }
+
     }
 
     void UiIdle()
@@ -117,7 +136,9 @@ public class BuildingMain : MonoBehaviour
                 Ui.SetActive(true);
             }
 
-            Ui.transform.position = pos;
+
+            rect.transform.position = pos;
+
         } ///za kasnije da popravis ovo gedzeru jedan triguzlavi
         else
         {
@@ -126,6 +147,28 @@ public class BuildingMain : MonoBehaviour
                 Ui.SetActive(false);
             }
         }
+    }
+
+
+    public void SwordUpdateRotation(Transform pos)
+    {
+        Debug.Log(pos);
+        //Quaternion look = Quaternion.LookRotation(pos.position - sword.transform.position, Vector3.forward);
+        //look.eulerAngles = new Vector3(0, 0, look.eulerAngles.x + 90);
+
+        Vector3 dir = pos.position - sword.transform.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+        Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+        Debug.Log(angle - 90);
+        rotateTo = rotation;
+
+    }
+
+    public void SwordResetRotation()
+    {
+        rotateTo = Quaternion.Euler(0, 0, 0);
+        Debug.Log(0);
     }
 
 }

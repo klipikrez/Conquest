@@ -21,9 +21,10 @@ public class Team : MonoBehaviour
             prod = GetComponent<Production>();
             controller = GetComponent<UnitController>();
             StartCoroutine(BuildingStart());
+            UpdatColor();
         }
 
-        UpdateColor();
+
 
 
 
@@ -37,10 +38,12 @@ public class Team : MonoBehaviour
         markerRend.material.SetFloat("_SineEnabled", 0);
     }
 
-    void UpdateColor()
+    void UpdatColor()
     {
         //Debug.Log(controller/*.UnitBuildingSpawnBehavior.buildingBehaviors[teamid].color*/);
         //meshRenderer.material.SetColor("Color_", controller.UnitBuildingSpawnBehavior.buildingBehaviors[teamid].color);
+
+        prod.numberRefrence.color = controller.UnitBuildingSpawnBehavior.buildingBehaviors[teamid].color;//get color from building spawn behaviour
 
         if (meshRenderer != null)
         {
@@ -65,7 +68,7 @@ public class Team : MonoBehaviour
                 controller.StopAttackUnits();
                 prod.product = 0;
                 teamid = att.selfTeam;
-                UpdateColor();
+                UpdatColor();
             }
         }
     }

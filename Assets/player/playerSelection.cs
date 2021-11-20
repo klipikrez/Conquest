@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class playerSelection : MonoBehaviour
 {
     Team selfTeam;
+    playerMovement move;
 
     playerSelectionDictionary selectedDictionary;
     RaycastHit hit;
@@ -16,10 +17,12 @@ public class playerSelection : MonoBehaviour
     //=======================================================//
 
     MeshCollider selectionBox;
+    BoxCollider boxCollider;
     Mesh selectionMesh;
 
     Vector3 p1;
     Vector3 p2;
+    Vector3 P1Point;
 
     //the corners of our 2d selection box
     Vector2[] corners;
@@ -33,6 +36,7 @@ public class playerSelection : MonoBehaviour
         selfTeam = GetComponent<Team>();
         selectedDictionary = GetComponent<playerSelectionDictionary>();
         dragSelect = false;
+        move = gameObject.GetComponent<playerMovement>();
 
     }
 
@@ -56,14 +60,35 @@ public class playerSelection : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             p1 = Input.mousePosition;
+            Ray rej = Camera.main.ScreenPointToRay(p1);
+            if (Physics.Raycast(rej, out hit, 50000.0f, LayerMask.GetMask("terrain")))
+            {
+                P1Point = hit.point;
+            }
+            else
+            {
+                P1Point = Vector3.positiveInfinity;
+            }
+
         }
 
         //2. while left mouse button held
         if (Input.GetMouseButton(0))
         {
-            if ((p1 - Input.mousePosition).magnitude > 40)
+            Ray rej = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(rej, out hit, 50000.0f, LayerMask.GetMask("terrain")))
             {
-                dragSelect = true;
+                if ((P1Point - hit.point).magnitude > 0.5f)
+                {
+                    dragSelect = true;
+                }
+            }
+            else
+            {
+                if ((p1 - Input.mousePosition).magnitude > 40)
+                {
+                    dragSelect = true;
+                }
             }
         }
 
@@ -76,43 +101,77 @@ public class playerSelection : MonoBehaviour
             }
             else //marquee select
             {
-                verts = new Vector3[4];
-                vecs = new Vector3[4];
-                int i = 0;
                 p2 = Input.mousePosition;
-                corners = getBoundingBox(p1, p2);
-
-                foreach (Vector2 corner in corners)
+                if (!move.viewProjection)
                 {
-                    Ray ray = Camera.main.ScreenPointToRay(corner);
+                    p1 = Camera.main.WorldToScreenPoint(P1Point); //p1 to LAst recorded p1 raycast from camera to terrain and again to camera
+                    verts = new Vector3[4];
+                    vecs = new Vector3[4];
+                    int i = 0;
 
-                    if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("bounds")))
+                    corners = getBoundingBox(p1, p2);
+
+                    foreach (Vector2 corner in corners)
                     {
-                        //ovde se serem
-                        /*verts[i] = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-                        vecs[i] = ray.origin - hit.point;*/
-                        verts[i] = new Vector3(hit.point.x - transform.position.x, hit.point.y - transform.position.y, hit.point.z - transform.position.z);
-                        vecs[i] = ray.origin - hit.point;
-                        //Debug.DrawLine(Camera.main.ScreenToWorldPoint(corner), hit.point, Color.red, 1.0f);
+                        Ray ray = Camera.main.ScreenPointToRay(corner);
+
+                        if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("terrain")))
+                        {
+                            //ovde se serem
+                            /*verts[i] = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                            vecs[i] = ray.origin - hit.point;*/
+                            verts[i] = new Vector3(hit.point.x - transform.position.x, hit.point.y - transform.position.y, hit.point.z - transform.position.z).normalized * 50000.0f;
+                            vecs[i] = (ray.origin - hit.point).normalized * 50000.0f;
+                        }
+                        i++;
                     }
-                    i++;
+
+                    //generate the mesh
+                    selectionMesh = generateSelectionMesh(verts, vecs);
+
+                    selectionBox = gameObject.AddComponent<MeshCollider>();
+                    selectionBox.sharedMesh = selectionMesh;
+                    selectionBox.convex = true;
+                    selectionBox.isTrigger = true;
+                    if (!Input.GetKey(KeyCode.LeftShift) && !EventSystem.current.IsPointerOverGameObject())
+                    {
+
+                        selectedDictionary.RemoveAll();
+                    }
+
+                    Destroy(selectionBox, 0.02f);
                 }
-
-                //generate the mesh
-                selectionMesh = generateSelectionMesh(verts, vecs);
-
-                selectionBox = gameObject.AddComponent<MeshCollider>();
-                selectionBox.sharedMesh = selectionMesh;
-                selectionBox.convex = true;
-                selectionBox.isTrigger = true;
-                if (!Input.GetKey(KeyCode.LeftShift) && !EventSystem.current.IsPointerOverGameObject())
+                else
                 {
+                    RaycastHit hit1;
 
-                    selectedDictionary.RemoveAll();
+                    Ray ray = Camera.main.ScreenPointToRay(p1);
+                    if (Physics.Raycast(ray, out hit1, 50000.0f, LayerMask.GetMask("terrain")))
+                    {
+                        RaycastHit hit2;
+                        ray = Camera.main.ScreenPointToRay(p2);
+                        if (Physics.Raycast(ray, out hit2, 50000.0f, LayerMask.GetMask("terrain")))
+                        {
+                            boxCollider = gameObject.AddComponent<BoxCollider>();
+
+                            boxCollider.size = new Vector3(Mathf.Abs(hit2.point.x - hit1.point.x),
+                            50000.0f,
+                            Mathf.Abs(hit2.point.z - hit1.point.z));
+
+                            boxCollider.center = new Vector3((hit1.point.x + hit2.point.x) / 2, -25000.0f, (hit1.point.z + hit2.point.z) / 2);
+
+                            boxCollider.isTrigger = true;
+                            if (!Input.GetKey(KeyCode.LeftShift) && !EventSystem.current.IsPointerOverGameObject())
+                            {
+
+                                selectedDictionary.RemoveAll();
+                            }
+                            Destroy(boxCollider, 0.02f);
+                        }
+                    }
+
+
                 }
-
-                Destroy(selectionBox, 0.02f);
-
             }//end marquee select
 
             dragSelect = false;
@@ -186,7 +245,7 @@ public class playerSelection : MonoBehaviour
     {
         if (dragSelect == true)
         {
-            var rect = Utils.GetScreenRect(p1, Input.mousePosition);
+            var rect = Utils.GetScreenRect(Camera.main.WorldToScreenPoint(P1Point), Input.mousePosition);
             Utils.DrawScreenRect(rect, new Color(0.8f, 0.8f, 0.95f, 0.25f));
             Utils.DrawScreenRectBorder(rect, 2, new Color(0.8f, 0.8f, 0.95f));
         }

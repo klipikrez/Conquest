@@ -17,7 +17,7 @@ public class playerMovement : MonoBehaviour
     public float zoomChange = 5f;
     public float minZoom = 0;
     public float maxZoom = 10;
-    bool viewProjection = false;
+    public bool viewProjection = false;
 
 
     private void Start()

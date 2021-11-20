@@ -55,7 +55,7 @@ public class UnitAgent : MonoBehaviour
         //rend.material.SetColor("Color_ID", selfCol);
     }
 
-    void UpdateAgent()
+    void UpdateAgent() //line 54
     {
 
         controller.UpdateAgent(this);
@@ -66,10 +66,9 @@ public class UnitAgent : MonoBehaviour
         if (velocity != Vector2.zero)
         {
             transform.rotation = Quaternion.LookRotation(new Vector3(velocity.x, 0, velocity.y));
-            float y = SetHeight();
-            transform.position += new Vector3(velocity.x * Time.deltaTime, y, velocity.y * Time.deltaTime);
+            transform.position += new Vector3(velocity.x * Time.deltaTime, SetHeight(), velocity.y * Time.deltaTime);
             CheckAttack(velocity);
-            //UpdateObjectPos3(incrementMove);
+            UpdateObjectPos3(incrementMove);
         }
     }
 

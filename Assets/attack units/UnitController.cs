@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Team))]
 public class UnitController : MonoBehaviour
 {
-
+    public bool checkNeighbours = true;
     public List<UnitController> neighbours;
     public float neighbourCheckRadious = 5f;
     public List<UnitAgent> agents = new List<UnitAgent>();
@@ -51,8 +51,11 @@ public class UnitController : MonoBehaviour
         team = GetComponent<Team>();
         line = gameObject.AddComponent<LineRenderer>();
 
-        CheckNeighbours();
 
+        if (checkNeighbours)
+        {
+            CheckNeighbours();
+        }
 
     }
 

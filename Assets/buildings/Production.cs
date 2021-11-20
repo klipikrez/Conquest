@@ -20,10 +20,10 @@ public class Production : MonoBehaviour
             product += productProduction * Time.deltaTime;
         }
 
-        if (product > maxUnits+1)
+        if (product > maxUnits + 1)
         {
             product -= (productProduction / 2) * (((product - maxUnits) / 50) + 0.3f) * Time.deltaTime;
         }
-        numberRefrence.text = ((int)product).ToString();
+        numberRefrence.text = "<mspace=0.6em>" + ((int)product).ToString() + "</mspace>";
     }
 }

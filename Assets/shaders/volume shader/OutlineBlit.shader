@@ -106,7 +106,7 @@ Shader "Hidden/OutlineBlit"
                 s = 1 - s ;
 #endif         
                 col *= s;
-                return col + (1-s) * _OutlineCol;
+                return col + (1-s) * _OutlineCol ;
 #endif
             }
             
