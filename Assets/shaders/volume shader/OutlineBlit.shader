@@ -102,11 +102,11 @@ Shader "Hidden/OutlineBlit"
                 return half4(s.xxx, 1);
 #else
                 half4 col = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv);
+
 #ifdef REVERSED_OUTLINE
                 s = 1 - s ;
 #endif         
-                col *= s;
-                return col + (1-s) * _OutlineCol ;
+                return col *s + (1-s) * col *s ;
 #endif
             }
             
