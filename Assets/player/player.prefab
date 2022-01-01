@@ -302,7 +302,7 @@ MonoBehaviour:
   zoomSpeed: 10
   zoomChange: 5
   minZoom: 1.5
-  maxZoom: 15
+  maxZoom: 20
   viewProjection: 0
 --- !u!143 &8369362771284380455
 CharacterController:
@@ -489,7 +489,7 @@ MonoBehaviour:
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
-  m_Dithering: 0
+  m_Dithering: 1
   m_ClearDepth: 1
   m_AllowXRRendering: 1
   m_RequiresDepthTexture: 0

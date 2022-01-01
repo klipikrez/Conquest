@@ -4,7 +4,10 @@ Shader "Hidden/OutlineBlit"
     {
 	    [HideInInspector]_MainTex ("Base (RGB)", 2D) = "white" {}
         _OutlineCol("color",  Color) = (0,0,0,1)
-		_Delta ("Line Thickness", Range(0.0005, 0.0025)) = 0.001
+		_Delta ("Line Thickness", Range(0.0005, 0.25)) = 0.001
+        _Pow ("power", Range(0,1000))= 50
+        _Add("add", Range(0,0.01))= 0.0001
+        _Distance("distance", Range(-0.1,0.1))= 0.01
 		[Toggle(RAW_OUTLINE)]_Raw ("Outline Only", Float) = 0
         [Toggle(REVERSED_OUTLINE)]_Reversed ("Outline Reversed", Float) = 0
     }
@@ -30,7 +33,10 @@ Shader "Hidden/OutlineBlit"
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
 #endif
+            float _Distance;
             float _Delta;
+            float _Pow;
+            float _Add;
             half4 _OutlineCol;
             int _PosterizationCount;
             
@@ -77,7 +83,7 @@ Shader "Hidden/OutlineBlit"
                 vt += SampleDepth(uv + float2( 0.0,  1.0) * delta) * -2.0;
                 vt += SampleDepth(uv + float2( 1.0,  1.0) * delta) * -1.0;
                 
-                return sqrt(hr * hr + vt * vt);
+                return sqrt((hr * hr + vt * vt)/**(SampleDepth(uv))*/);
             }
             
             Varyings vert(Attributes input)
@@ -96,7 +102,7 @@ Shader "Hidden/OutlineBlit"
             {
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
                 
-                float s = pow((1 - saturate(sobel(input.uv))+0.01f), 50);
+                float s = pow((1 - saturate(sobel(input.uv))+_Add), _Pow);
                 s = clamp(s ,0 ,1 );
 #ifdef RAW_OUTLINE
                 return half4(s.xxx, 1);

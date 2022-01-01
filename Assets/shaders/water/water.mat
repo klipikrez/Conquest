@@ -75,6 +75,22 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_7adec40e12504234b1470a4fb587b7de_Texture_1:
+        m_Texture: {fileID: 2800000, guid: e9f4ed6ecf590ad409e06ebfc781612a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_8ff6334cf6334cf19d8b7c0282cfb800_Texture_1:
+        m_Texture: {fileID: 2800000, guid: b27b284585d19d44d80c7429ad544866, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_a366a9c35c4c4fb7aab389c796491dad_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 71de0e26df2759347af7722a23ec13b5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_c2db757ea9af475b9dcfd01fe9aa4b50_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 73d44638226b9c14b8e7ecf15793bb09, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_d607c93565544fb5917cdf6277f10a04_Texture_1:
         m_Texture: {fileID: 2800000, guid: 13718c4c143155948bb85cc9e0c511d3, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -97,6 +113,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_0e9dfffea07e4b9392af6dd00afba999: 2.485
+    - Vector1_7058c57a46e546359490c579811ae0d2: 0.17
+    - Vector1_fff366f725cb49c08946603c083ecb94: 0.65
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -124,9 +142,11 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_1948d03edd4b488ab17eaae1f952b50a: {r: 0.3484336, g: 0.61111414, b: 0.8490566, a: 0}
     - Color_3ede33bce6e14109b1e9c47dc0bac141: {r: 0.70073867, g: 0.8207547, b: 0.78780913, a: 1}
     - Color_5b232a9e420f476a9c41f8a2dc385ba1: {r: 0, g: 1, b: 0.19481745, a: 0}
     - Color_5b64d5db39874e648a420c6c87198eb9: {r: 1, g: 0, b: 0, a: 0}
+    - Color_5c8b056810c0407992fbe9e3984f7739: {r: 1, g: 1, b: 1, a: 0}
     - Color_8e01e764a44640faaad21b19cbb418eb: {r: 1, g: 1, b: 1, a: 1}
     - Color_a61b8a47d71b4040abf9338395f9a2dd: {r: 0.35702205, g: 0.4834688, b: 0.6698113, a: 0}
     - Vector2_78404c309f01446c8bd0194db28eae48: {r: 1, g: 1, b: 0, a: 0}

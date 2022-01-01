@@ -152,7 +152,6 @@ public class BuildingMain : MonoBehaviour
 
     public void SwordUpdateRotation(Transform pos)
     {
-        Debug.Log(pos);
         //Quaternion look = Quaternion.LookRotation(pos.position - sword.transform.position, Vector3.forward);
         //look.eulerAngles = new Vector3(0, 0, look.eulerAngles.x + 90);
 
@@ -160,7 +159,6 @@ public class BuildingMain : MonoBehaviour
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
         Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
-        Debug.Log(angle - 90);
         rotateTo = rotation;
 
     }
@@ -168,7 +166,6 @@ public class BuildingMain : MonoBehaviour
     public void SwordResetRotation()
     {
         rotateTo = Quaternion.Euler(0, 0, 0);
-        Debug.Log(0);
     }
 
 }

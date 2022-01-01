@@ -6,12 +6,6 @@ using TMPro;
 public class SelectLevel : MonoBehaviour
 {
 
-    [System.Serializable]
-    public class Level
-    {
-        public int biome;
-        public GameObject LevelObj;
-    }
 
     public Animator animator;
     public TextMeshProUGUI txt;
@@ -26,21 +20,22 @@ public class SelectLevel : MonoBehaviour
 
     void ChangeBiome()
     {
-        if (current >= 5)
+        if (current >= levels.Length)
         {
-            current = 1;
+            current = 0;
         }
         else
         {
             if (current <= 0)
             {
-                current = 4;
+                current = levels.Length-1;
             }
         }
 
         txt.text = current.ToString();
-        animator.SetInteger("state", current);
-
+        //animator.SetInteger("state", current);
+        //animator.Play(levels[current].anim.name);
+        animator.CrossFade(levels[current].anim.name, 1);
 
     }
 
