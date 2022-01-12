@@ -17,6 +17,9 @@ public class playerMovement : MonoBehaviour
     public float zoomChange = 5f;
     public float minZoom = 0;
     public float maxZoom = 10;
+    public float minZoomRotation = 35;
+    public float maxZoomRotation = 60;
+
     public bool viewProjection = false;
 
 
@@ -116,6 +119,7 @@ public class playerMovement : MonoBehaviour
 
         controller.Move(moveVector);
         SetCameraRotation(hit.distance);
+        //COOLmaterial;
         //laseri i vatromet :)
     }
 
@@ -142,7 +146,7 @@ public class playerMovement : MonoBehaviour
     void SetCameraRotation(float height)
     {
         float amount = Mathf.Pow((minZoom - height + 10) / 10, 3f);
-        float lerpFloat = Mathf.Lerp(65, 35, amount);
+        float lerpFloat = Mathf.Lerp(maxZoomRotation, minZoomRotation, amount);
         //Quaternion target = Quaternion.Lerp(Quaternion.Euler(35, 0, 0), Quaternion.Euler(80, 0, 0), (height - minZoom) / 10);
 
         Quaternion target = Quaternion.Euler(lerpFloat, 0, 0);

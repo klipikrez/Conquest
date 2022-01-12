@@ -8,6 +8,7 @@ public class Level : MonoBehaviour
     // Start is called before the first frame update
     public AnimationClip anim;
     public SceneReference levelScene;
+    public string LevelName;
 
     void Start()
     {

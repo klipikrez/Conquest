@@ -6,8 +6,7 @@ Shader "Hidden/OutlineBlit"
         _OutlineCol("color",  Color) = (0,0,0,1)
 		_Delta ("Line Thickness", Range(0.0005, 0.25)) = 0.001
         _Pow ("power", Range(0,1000))= 50
-        _Add("add", Range(0,0.01))= 0.0001
-        _Distance("distance", Range(-0.1,0.1))= 0.01
+        _Add("add", Range(0,0.1))= 0.0001
 		[Toggle(RAW_OUTLINE)]_Raw ("Outline Only", Float) = 0
         [Toggle(REVERSED_OUTLINE)]_Reversed ("Outline Reversed", Float) = 0
     }
@@ -33,7 +32,6 @@ Shader "Hidden/OutlineBlit"
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
 #endif
-            float _Distance;
             float _Delta;
             float _Pow;
             float _Add;
@@ -112,7 +110,7 @@ Shader "Hidden/OutlineBlit"
 #ifdef REVERSED_OUTLINE
                 s = 1 - s ;
 #endif         
-                return col *s + (1-s) * col *s ;
+                return col *s + (1-s) * _OutlineCol ;
 #endif
             }
             

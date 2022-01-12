@@ -49,7 +49,9 @@ public class UnitController : MonoBehaviour
         avoidenceRadious = neighbourRadious * avoidenceRadious;
         production = GetComponent<Production>();
         team = GetComponent<Team>();
-        line = gameObject.AddComponent<LineRenderer>();
+        line = GetComponent<LineRenderer>();
+        line.enabled = false;
+        //line = gameObject.AddComponent<LineRenderer>();
 
 
         if (checkNeighbours)

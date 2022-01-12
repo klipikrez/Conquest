@@ -9,19 +9,32 @@ public class Team : MonoBehaviour
     public int teamid = 0;
     public MeshRenderer meshRenderer;
     public MeshRenderer markerRend;
+    public Animator ObjectAnimatior;
     Production prod;
-    UnitController controller;
+    [System.NonSerialized]
+    public UnitController controller;
 
     void Start()
     {
 
-        if (GetComponent<BuildingMain>() != null)
+        if (GetComponent<BuildingMain>() != null)//isnt Player
         {
             isBuilding = true;
             prod = GetComponent<Production>();
             controller = GetComponent<UnitController>();
-            StartCoroutine(BuildingStart());
+            //StartCoroutine(BuildingStart());
             UpdatColor();
+
+            if (ObjectAnimatior == null && meshRenderer != null)
+            {
+                ObjectAnimatior = meshRenderer.gameObject.GetComponent<Animator>();
+            }
+
+            if (teamid == 1)
+            {
+                ObjectAnimatior.Play("Base Layer.playerStart");
+            }
+            WinConditions.Instance.AddBuildingTeam(this);
         }
 
 
@@ -33,9 +46,11 @@ public class Team : MonoBehaviour
 
     IEnumerator BuildingStart()
     {
+        yield return new WaitForSeconds(5);
+        /*
         markerRend.material.SetFloat("_SineEnabled", 1);
         yield return new WaitForSeconds(5);
-        markerRend.material.SetFloat("_SineEnabled", 0);
+        markerRend.material.SetFloat("_SineEnabled", 0);*/
     }
 
     void UpdatColor()
@@ -69,6 +84,7 @@ public class Team : MonoBehaviour
                 prod.product = 0;
                 teamid = att.selfTeam;
                 UpdatColor();
+                WinConditions.Instance.CheckTeams();
             }
         }
     }

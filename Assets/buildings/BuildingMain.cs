@@ -15,7 +15,8 @@ public class BuildingMain : MonoBehaviour
     public int screenEdgeBuffer = 40;
     [System.NonSerialized]
     public Team team;
-
+    [System.NonSerialized]
+    public bool selected = false;
 
     Quaternion rotateTo;
 
@@ -45,6 +46,7 @@ public class BuildingMain : MonoBehaviour
         team.markerRend.material.SetFloat("_SineEnabled", 1);
         selector.SetActive(true);
         UiFollow();
+        selected = true;
     }
 
     public void Deselected()
@@ -53,10 +55,12 @@ public class BuildingMain : MonoBehaviour
         selector.SetActive(false);
         SetAllyOptions(false);
         SetEnemyOptions(false);
+        selected = false;
     }
 
     public void SetAllyOptions(bool val)
     {
+        selected = val;
         allyOptions.SetActive(val);
         selector.SetActive(val);
 

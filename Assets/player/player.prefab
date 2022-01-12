@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 6503069905825701670}
   - component: {fileID: 6959027922345975452}
   - component: {fileID: 1018052702523815700}
+  - component: {fileID: 7857326871114823520}
   m_Layer: 2
   m_Name: player
   m_TagString: Untagged
@@ -298,11 +299,13 @@ MonoBehaviour:
   payerCamera: {fileID: 8369362773196885652}
   speed: 8
   mouseSpeed: 60
-  zoomLevel: 10
+  zoomLevel: 15
   zoomSpeed: 10
   zoomChange: 5
-  minZoom: 1.5
-  maxZoom: 20
+  minZoom: 3
+  maxZoom: 15
+  minZoomRotation: 35
+  maxZoomRotation: 60
   viewProjection: 0
 --- !u!143 &8369362771284380455
 CharacterController:
@@ -337,6 +340,7 @@ MonoBehaviour:
   teamid: 1
   meshRenderer: {fileID: 0}
   markerRend: {fileID: 0}
+  ObjectAnimatior: {fileID: 0}
 --- !u!114 &6503069905825701670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,6 +381,20 @@ MonoBehaviour:
   spawnThis:
   - {fileID: 991410877122514581, guid: 62f38646ca85f7047ad5a76f4844f479, type: 3}
   - {fileID: 7564368444039134256, guid: 662e7876c9913314799e66be69a59995, type: 3}
+  - {fileID: 7268935728859419413, guid: fcf48eaebd9fb1f408d493fff2e09ff9, type: 3}
+--- !u!114 &7857326871114823520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8369362771284380458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d635f2d7e23944abba0af099b16faf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RenderingAsset: {fileID: 11400000, guid: 19ba41d7c0026c3459d37c2fe90c55a0, type: 2}
 --- !u!1 &8369362773196885658
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +503,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2

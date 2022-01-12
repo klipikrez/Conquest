@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SelectLevel : MonoBehaviour
 {
 
 
     public Animator animator;
-    public TextMeshProUGUI txt;
+    public TextMeshProUGUI nimbe;
+    public TextMeshProUGUI teks;
     int current = 0;
     public Level[] levels;
 
@@ -22,20 +24,27 @@ public class SelectLevel : MonoBehaviour
     {
         if (current >= levels.Length)
         {
-            current = 0;
+            current = levels.Length - 1;
         }
         else
         {
-            if (current <= 0)
+            if (current < 0)
             {
-                current = levels.Length-1;
+                current = 0;
             }
         }
 
-        txt.text = current.ToString();
+        nimbe.text = current.ToString();
+        teks.text = levels[current].LevelName;
         //animator.SetInteger("state", current);
         //animator.Play(levels[current].anim.name);
         animator.CrossFade(levels[current].anim.name, 1);
+
+    }
+
+    public void Play()
+    {
+        SceneManager.LoadScene(levels[current].levelScene);
 
     }
 
