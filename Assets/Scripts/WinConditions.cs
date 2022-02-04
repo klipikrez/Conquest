@@ -6,7 +6,8 @@ public class WinConditions : MonoBehaviour
 {
 
     List<Team> buildings = new List<Team>();//added in Buildings Team.cs scripts Start()
-    int PlayerTeam = 1;
+    public int PlayerTeam = 1;
+    public float totalUnitsProduced = 0;
 
 
     public static WinConditions Instance { get; private set; }
@@ -40,22 +41,29 @@ public class WinConditions : MonoBehaviour
         {
             if (Player)
             {
-                Debug.Log("Pobeda");
+                Pobeda();
             }
             else
             {
-                Debug.Log("IZgubida");
+                Izgubida();
             }
         }
-        else
-        {
-            Debug.Log("NIKO");
-        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddPlayerProducedUnits(float amount)
     {
+        totalUnitsProduced += amount;
+    }
+
+    public void Pobeda()
+    {
+        Debug.Log("Pobeda");
 
     }
+
+    public void Izgubida()
+    {
+        Debug.Log("IZgubida");
+    }
+
 }

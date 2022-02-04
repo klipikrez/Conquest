@@ -5,8 +5,7 @@ using UnityEngine;
 public class Tutorial : MonoBehaviour
 {
 
-    public int phaze = 0;
-    public GameObject TutorialScreen;
+    public int phaze = 1;
     BuildingMain building;
     BuildingMain buildingEmemy;
     public BuildingMainTutorial tutorialBuilding;
@@ -19,13 +18,15 @@ public class Tutorial : MonoBehaviour
     {
         building = tutorialBuilding.gameObject.GetComponent<BuildingMain>();
         buildingEmemy = tutorialBuildingEnemy.gameObject.GetComponent<BuildingMain>();
-        tutorialBuilding.rect.SetActive(false);
         tutorialBuildingEnemy.rect.SetActive(false);
-        TutorialScreen.SetActive(true);
-        building.enabled = false;
-        buildingEmemy.enabled = false;
-        tutorialBuilding.mainCanvas.SetActive(false);
-        tutorialBuildingEnemy.mainCanvas.SetActive(false);
+
+
+                    tutorialBuilding.rect.SetActive(true);
+                    tutorialBuilding.mainCanvas.SetActive(true);
+                    tutorialBuildingEnemy.mainCanvas.SetActive(true);
+                    building.enabled = true;
+                    buildingEmemy.enabled = true;
+
     }
 
     private void Update()
@@ -40,13 +41,7 @@ public class Tutorial : MonoBehaviour
             case 0:
                 if (Input.anyKeyDown)
                 {
-                    phaze = 1;
-                    TutorialScreen.SetActive(false);
-                    tutorialBuilding.rect.SetActive(true);
-                    tutorialBuilding.mainCanvas.SetActive(true);
-                    tutorialBuildingEnemy.mainCanvas.SetActive(true);
-                    building.enabled = true;
-                    buildingEmemy.enabled = true;
+
                 }
                 break;
             case 1:

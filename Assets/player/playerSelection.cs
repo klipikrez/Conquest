@@ -30,6 +30,8 @@ public class playerSelection : MonoBehaviour
     //the vertices of our meshcollider
     Vector3[] verts;
     Vector3[] vecs;
+    [System.NonSerialized]
+    public bool Paused = false;
 
     void Start()
     {
@@ -42,8 +44,8 @@ public class playerSelection : MonoBehaviour
 
     void Update()
     {
-
-        Select();
+        if (!Paused)
+            Select();
 
     }
 

@@ -21,6 +21,8 @@ public class playerMovement : MonoBehaviour
     public float maxZoomRotation = 60;
 
     public bool viewProjection = false;
+    [System.NonSerialized]
+    public bool Paused = false;
 
 
     private void Start()
@@ -30,39 +32,45 @@ public class playerMovement : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyUp("space"))
+        if (!Paused)
         {
-            viewProjection = !viewProjection;
-            if (viewProjection)
+            /*if (Input.GetKeyUp("space"))
             {
-                payerCamera.orthographic = true;
-                payerCamera.cullingMask -= LayerMask.GetMask("unit");
-                payerCamera.cullingMask += LayerMask.GetMask("unitMarker");
-                payerCamera.cullingMask -= LayerMask.GetMask("building");
-                payerCamera.cullingMask += LayerMask.GetMask("buildingMarker");
-                payerCamera.transform.rotation = Quaternion.Euler(90, 0, 0);
-                previousPosition = transform.position;
+                viewProjection = !viewProjection;
+                if (viewProjection)
+                {
+                    payerCamera.orthographic = true;
+                    payerCamera.cullingMask -= LayerMask.GetMask("unit");
+                    payerCamera.cullingMask += LayerMask.GetMask("unitMarker");
+                    payerCamera.cullingMask -= LayerMask.GetMask("building");
+                    payerCamera.cullingMask += LayerMask.GetMask("buildingMarker");
+                    payerCamera.transform.rotation = Quaternion.Euler(90, 0, 0);
+                    previousPosition = transform.position;
+                }
+                else
+                {
+                    payerCamera.orthographic = false;
+                    payerCamera.cullingMask += LayerMask.GetMask("unit");
+                    payerCamera.cullingMask -= LayerMask.GetMask("unitMarker");
+                    payerCamera.cullingMask += LayerMask.GetMask("building");
+                    payerCamera.cullingMask -= LayerMask.GetMask("buildingMarker");
+                    controller.Move(new Vector3(previousPosition.x - transform.position.x, 0, previousPosition.z - transform.position.z));//reset camera to previous position
+                }
+
+            }*/
+
+            Move();
+            Zoom(zoomSpeed * Time.deltaTime);
+
+            /*if (viewProjection)
+            {
+                SpaceAction();
             }
             else
             {
-                payerCamera.orthographic = false;
-                payerCamera.cullingMask += LayerMask.GetMask("unit");
-                payerCamera.cullingMask -= LayerMask.GetMask("unitMarker");
-                payerCamera.cullingMask += LayerMask.GetMask("building");
-                payerCamera.cullingMask -= LayerMask.GetMask("buildingMarker");
-                controller.Move(new Vector3(previousPosition.x - transform.position.x, 0, previousPosition.z - transform.position.z));//reset camera to previous position
-            }
-
-        }
-
-        if (viewProjection)
-        {
-            SpaceAction();
-        }
-        else
-        {
-            Move();
-            Zoom(zoomSpeed * Time.deltaTime);
+                Move();
+                Zoom(zoomSpeed * Time.deltaTime);
+            }*/
         }
     }
 

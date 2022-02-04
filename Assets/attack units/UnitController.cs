@@ -12,7 +12,8 @@ public class UnitController : MonoBehaviour
     public List<UnitAgent> agents = new List<UnitAgent>();
     public UnitBehaivour unitSteerBehaivour;
     public BuildingBehaviorCompiler UnitBuildingSpawnBehavior;
-    Production production;
+    [System.NonSerialized]
+    public Production production;
     public Team team { get; private set; }
     LineRenderer line;
 
@@ -40,6 +41,11 @@ public class UnitController : MonoBehaviour
     Coroutine attackCoroutine;
     Coroutine lineCoroutine;
 
+    public Mesh CylinderMeshGizmo;
+
+    [System.NonSerialized]
+    public bool Paused = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +65,8 @@ public class UnitController : MonoBehaviour
             CheckNeighbours();
         }
 
+        //CylinderMeshGizmo = (Mesh)Resources.Load("Levels/Cylinder");
+
     }
 
     // Update is called once per frame
@@ -70,16 +78,17 @@ public class UnitController : MonoBehaviour
 
         //if (timer > moveUpdateTimeInterval)
         //{
-
-
-        for (int i = 0; i < agents.Count; i++)
+        if (!Paused)
         {
-            UnitAgent agent = agents[i];
-            agent.currentMoveDirection /= (1 + drag * Time.deltaTime);//drag
-            agent.Move(agent.currentMoveDirection);
-        }
-        //}
 
+            for (int i = 0; i < agents.Count; i++)
+            {
+                UnitAgent agent = agents[i];
+                agent.currentMoveDirection /= (1 + drag * Time.deltaTime);//drag
+                agent.Move(agent.currentMoveDirection);
+            }
+            //}
+        }
         //if (timer > moveUpdateTimeInterval)
         //{
         //timer = 0;
@@ -88,23 +97,25 @@ public class UnitController : MonoBehaviour
 
     public void UpdateAgent(UnitAgent agent)
     {
-        /*for (int i = 0; i < agents.Count; i++)
+        if (!Paused)
         {
-            UnitAgent agent = agents[i];*/
-        List<Transform> context = GetNearbyObjects(agent);
-        context.Insert(0, agent.TrackPositions.Peek()); //insert na prvo mesto liste track transform
+            /*for (int i = 0; i < agents.Count; i++)
+            {
+                UnitAgent agent = agents[i];*/
+            List<Transform> context = GetNearbyObjects(agent);
+            context.Insert(0, agent.TrackPositions.Peek()); //insert na prvo mesto liste track transform
 
-        Vector2 move = unitSteerBehaivour.CalculateMove(agent, context, this);
-        move *= unitAcceleration;
+            Vector2 move = unitSteerBehaivour.CalculateMove(agent, context, this);
+            move *= unitAcceleration;
 
-        agent.currentMoveDirection += move;//acceleration
+            agent.currentMoveDirection += move;//acceleration
 
-        if (agent.currentMoveDirection.sqrMagnitude > squaredMaxSpeed)//max speed
-        {
-            agent.currentMoveDirection = agent.currentMoveDirection.normalized * unitMaxSPeed;
+            if (agent.currentMoveDirection.sqrMagnitude > squaredMaxSpeed)//max speed
+            {
+                agent.currentMoveDirection = agent.currentMoveDirection.normalized * unitMaxSPeed;
+            }
+            //}
         }
-        //}
-
     }
 
     List<Transform> GetNearbyObjects(UnitAgent agent)
@@ -236,7 +247,7 @@ public class UnitController : MonoBehaviour
     {
         while (true)
         {
-            if (production.product - 1 > maxDispatchRate)
+            if (production.product - 1f >= maxDispatchRate)
             {
                 for (int i = 0; i < maxDispatchRate; i++)
                 {
@@ -292,9 +303,18 @@ public class UnitController : MonoBehaviour
         //newAgent.Initialize(this);
     }
 
-    void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
+
+
         // Draw a yellow sphere at the transform's position
+        Gizmos.color = new Vector4(0.5f, 0, 1f, 0.3f);
+        Gizmos.DrawMesh(CylinderMeshGizmo, transform.position + new Vector3(0, 0.2f, 0), Quaternion.Euler(Vector3.right * -90), 100 * new Vector3(neighbourCheckRadious, neighbourCheckRadious, 1));
+
+    }
+
+    private void OnDrawGizmosSelected()
+    {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, neighbourCheckRadious);
     }

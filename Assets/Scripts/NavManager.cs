@@ -46,6 +46,27 @@ public class NavManager : MonoBehaviour
 
     }
 
+    public void SetPauseBuildings(bool val)
+    {
+        foreach (GameObject building in buildings)
+        {
+            buildingControllers[building].Paused = val;
+            if (buildingControllers[building].production == null)
+            {
+                buildingControllers[building].GetComponent<Production>().Paused = val;
+
+            }
+            else
+            {
+
+                buildingControllers[building].production.Paused = val;
+
+            }
+        }
+    }
+
+
+
     public Transform[] CalculatePath(Transform start, Transform end)
     {
         if (start == null || end == null)
@@ -121,8 +142,8 @@ public class NavManager : MonoBehaviour
                     + Vector3.Distance(check.transform.position, neighbour.transform.position)  //distance
                     * check.unitMaxSPeed                                                        //max speed
                     * ((check.team.teamid != startController.team.teamid) ? 100 : 1);           //if not same team X100 distance
-                //burn fire hot
-                //update parent if better total distance is found
+                                                                                                //burn fire hot
+                                                                                                //update parent if better total distance is found
                 if (dist < distances[neighbour])
                 {
                     distances[neighbour] = dist;

@@ -552,7 +552,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1888820429599861714
 Transform:
   m_ObjectHideFlags: 0
@@ -704,7 +704,7 @@ MonoBehaviour:
   agents: []
   unitSteerBehaivour: {fileID: 11400000, guid: 2f23cd9a4598a604a8f3eaebdd1dd9cd, type: 2}
   UnitBuildingSpawnBehavior: {fileID: 11400000, guid: 811374bc372c505409bbbcc605b46d5b, type: 2}
-  maxDispatchRate: 1
+  maxDispatchRate: 5
   timeBetweenDispatches: 0.01
   unitAcceleration: 3
   unitMaxSPeed: 4
@@ -712,6 +712,7 @@ MonoBehaviour:
   updateUnitEvery: 0.2
   neighbourRadious: 0.22
   avoidenceRadiousMultiplyer: 1
+  CylinderMeshGizmo: {fileID: 2534964839176971238, guid: e5174f910b99a844ab56c4ccf2ce3c00, type: 3}
 --- !u!114 &6304924864299263280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2663,7 +2664,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7574356755248953289
 RectTransform:
   m_ObjectHideFlags: 0
