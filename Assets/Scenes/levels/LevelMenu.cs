@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelMenu : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class LevelMenu : MonoBehaviour
     public MainMenuUI Main;
     List<playerMovement> movementScripts = new List<playerMovement>();
     List<playerSelection> selectionScripts = new List<playerSelection>();
+
+    public GameObject WinUI;
+    public GameObject LoseUI;
 
 
     private void Start()
@@ -75,5 +79,31 @@ public class LevelMenu : MonoBehaviour
     {
         //Time.timeScale = 1.0f;
         ScenesManager.Instance.ReturnToMainMenu();
+    }
+
+    public void WinScreen()
+    {
+        Pause();
+        Main.SetObjectsActive(2);
+        WinUI.SetActive(true);
+        LoseUI.SetActive(false);
+    }
+
+    public void LoseScreen()
+    {
+        Pause();
+        Main.SetObjectsActive(2);
+        WinUI.SetActive(false);
+        LoseUI.SetActive(true);
+    }
+
+    public void Retry()
+    {
+        ScenesManager.Instance.Load(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void Continue()
+    {
+        Resume();
     }
 }

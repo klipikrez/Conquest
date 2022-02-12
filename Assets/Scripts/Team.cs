@@ -30,7 +30,7 @@ public class Team : MonoBehaviour
                 ObjectAnimatior = meshRenderer.gameObject.GetComponent<Animator>();
             }
 
-            if (teamid == 1)
+            if (ObjectAnimatior != null && teamid == 1)
             {
                 ObjectAnimatior.Play("Base Layer.playerStart");
             }
@@ -70,6 +70,14 @@ public class Team : MonoBehaviour
             float materalTeamTextureOffset = 1f / markerRend.material.mainTexture.height;
             markerRend.material.mainTextureOffset = new Vector2(0, -materalTeamTextureOffset * teamid);
         }
+        if (teamid != 0)
+        {
+            prod.productionDullMultiplyer = 1;
+        }
+        else
+        {
+            prod.productionDullMultiplyer = 0.2f;
+        }
     }
 
     public void Damage(UnitAgent att)
@@ -85,6 +93,7 @@ public class Team : MonoBehaviour
                 teamid = att.selfTeam;
                 UpdatColor();
                 WinConditions.Instance.CheckTeams();
+
             }
         }
     }

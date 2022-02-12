@@ -54,7 +54,8 @@ public class UnitController : MonoBehaviour
         squaredAvoidenceRadious = squaredNeighbourRadious * avoidenceRadiousMultiplyer * avoidenceRadiousMultiplyer;
         avoidenceRadious = neighbourRadious * avoidenceRadious;
         production = GetComponent<Production>();
-        team = GetComponent<Team>();
+        //team = GetComponent<Team>();
+        GetTeam();
         line = GetComponent<LineRenderer>();
         line.enabled = false;
         //line = gameObject.AddComponent<LineRenderer>();
@@ -67,6 +68,15 @@ public class UnitController : MonoBehaviour
 
         //CylinderMeshGizmo = (Mesh)Resources.Load("Levels/Cylinder");
 
+    }
+
+    public Team GetTeam()
+    {
+        if (team == null)
+        {
+            team = GetComponent<Team>();
+        }
+        return team;
     }
 
     // Update is called once per frame

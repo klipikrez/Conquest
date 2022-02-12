@@ -725,10 +725,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd85ebea8a8b8441941127a47059ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  product: 35
-  productProduction: 0.5
+  size: 1
+  product: 10
+  startRandomasationAdd: 30
+  productProduction: 0.2
+  startProductionAdd: 0.5
   maxUnits: 100
+  startmaxUnitsAdd: 100
   numberRefrence: {fileID: 5811039433398280106}
+  Paused: 0
 --- !u!114 &1682021026501713181
 MonoBehaviour:
   m_ObjectHideFlags: 0

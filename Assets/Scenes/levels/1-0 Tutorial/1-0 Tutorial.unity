@@ -1519,7 +1519,19 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6304924864299263280, guid: 4a063165b58158846a095392b42a00f9, type: 3}
+      propertyPath: startmaxUnitsAdd
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6304924864299263280, guid: 4a063165b58158846a095392b42a00f9, type: 3}
       propertyPath: productProduction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6304924864299263280, guid: 4a063165b58158846a095392b42a00f9, type: 3}
+      propertyPath: startProductionAdd
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6304924864299263280, guid: 4a063165b58158846a095392b42a00f9, type: 3}
+      propertyPath: startRandomasationAdd
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

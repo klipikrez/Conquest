@@ -7,7 +7,7 @@ public class NavManager : MonoBehaviour
 {
 
     GameObject[] buildings;
-    IDictionary<GameObject, UnitController> buildingControllers = new Dictionary<GameObject, UnitController>();
+    public IDictionary<GameObject, UnitController> buildingControllers { get; private set; } = new Dictionary<GameObject, UnitController>();
 
     public static NavManager Instance { get; private set; }
 
@@ -47,7 +47,7 @@ public class NavManager : MonoBehaviour
     }
 
     public void SetPauseBuildings(bool val)
-    {
+    {/*
         foreach (GameObject building in buildings)
         {
             buildingControllers[building].Paused = val;
@@ -60,6 +60,23 @@ public class NavManager : MonoBehaviour
             {
 
                 buildingControllers[building].production.Paused = val;
+
+            }
+        }*/
+
+
+        foreach (var building in buildingControllers)
+        {
+            building.Value.Paused = val;
+            if (building.Value.production == null)
+            {
+                building.Value.GetComponent<Production>().Paused = val;
+
+            }
+            else
+            {
+
+                building.Value.production.Paused = val;
 
             }
         }

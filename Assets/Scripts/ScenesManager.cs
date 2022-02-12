@@ -48,6 +48,16 @@ public class ScenesManager : MonoBehaviour
 
     }
 
+    public void Load(int cseneIndex)
+    {
+        SetLoadingGizmos(true);
+        //
+        // 
+        //Debug.Log(tekibelike.activeSelf);
+        StartCoroutine(LoadAsyncScene(cseneIndex));
+
+    }
+
     IEnumerator LoadAsyncScene(SceneReference sceneRef)
     {
         // The Application loads the Scene in the background as the current Scene runs.
@@ -56,6 +66,22 @@ public class ScenesManager : MonoBehaviour
         // a sceneBuildIndex of 1 as shown in Build Settings.
         yield return new WaitForEndOfFrame();
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneRef);
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+
+            yield return null;
+        }
+    }
+
+    IEnumerator LoadAsyncScene(int cseneIndex)
+    {
+        // The Application loads the Scene in the background as the current Scene runs.
+        // This is particularly good for creating loading screens.
+        // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
+        // a sceneBuildIndex of 1 as shown in Build Settings.
+        yield return new WaitForEndOfFrame();
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(cseneIndex);
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
         {

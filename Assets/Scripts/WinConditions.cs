@@ -11,13 +11,17 @@ public class WinConditions : MonoBehaviour
 
 
     public static WinConditions Instance { get; private set; }
+    LevelMenu levelMenu;
 
     private void Awake()
     {
         Instance = this;
     }
 
-
+    private void Start()
+    {
+        levelMenu = GameObject.FindObjectOfType<LevelMenu>();
+    }
     public void AddBuildingTeam(Team team)
     {
         buildings.Add(team);
@@ -57,13 +61,13 @@ public class WinConditions : MonoBehaviour
 
     public void Pobeda()
     {
-        Debug.Log("Pobeda");
+        levelMenu.WinScreen();
 
     }
 
     public void Izgubida()
     {
-        Debug.Log("IZgubida");
+        levelMenu.LoseScreen();
     }
 
 }
