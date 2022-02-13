@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Team : MonoBehaviour
 {
 
@@ -44,14 +45,6 @@ public class Team : MonoBehaviour
 
     }
 
-    IEnumerator BuildingStart()
-    {
-        yield return new WaitForSeconds(5);
-        /*
-        markerRend.material.SetFloat("_SineEnabled", 1);
-        yield return new WaitForSeconds(5);
-        markerRend.material.SetFloat("_SineEnabled", 0);*/
-    }
 
     void UpdatColor()
     {
@@ -80,7 +73,7 @@ public class Team : MonoBehaviour
         }
     }
 
-    public void Damage(UnitAgent att)
+    public void Damage(UnitAgent attacker)
     {
 
         if (isBuilding)
@@ -90,7 +83,8 @@ public class Team : MonoBehaviour
             {
                 controller.StopAttackUnits();
                 prod.product = 0;
-                teamid = att.selfTeam;
+                AIManager.Instance.UpdateTeamTowers(controller, teamid, attacker.selfTeam);
+                teamid = attacker.selfTeam;
                 UpdatColor();
                 WinConditions.Instance.CheckTeams();
 

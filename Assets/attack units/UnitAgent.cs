@@ -36,7 +36,6 @@ public class UnitAgent : MonoBehaviour
     //public float moveTime = 1;
     //public Vector3 moveHere;
     //Quaternion currentRottation;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +46,6 @@ public class UnitAgent : MonoBehaviour
         incrementOffset = Random.Range(0, incrementMove);
 
     }
-
     public void Initialize(UnitController unitController)
     {
         controller = unitController;
@@ -55,7 +53,7 @@ public class UnitAgent : MonoBehaviour
         //rend.material.SetColor("Color_ID", selfCol);
     }
 
-    void UpdateAgent() //line 54
+    void UpdateAgent() //line 52
     {
 
         controller.UpdateAgent(this);

@@ -253,7 +253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1682021026501713181, guid: 4a063165b58158846a095392b42a00f9, type: 3}
       propertyPath: teamid
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a063165b58158846a095392b42a00f9, type: 3}
@@ -1470,6 +1470,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5607432879121150512, guid: 43ebb75323df99e429bb7f1ee3110318, type: 3}
+      propertyPath: AITypeByTeam.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607432879121150512, guid: 43ebb75323df99e429bb7f1ee3110318, type: 3}
+      propertyPath: AITypeByTeam.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 601f7598ba6064b40898937cef43e080, type: 2}
+    - target: {fileID: 5607432879121150512, guid: 43ebb75323df99e429bb7f1ee3110318, type: 3}
+      propertyPath: AITypeByTeam.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: e28d49ca085fde74f9fd6ed2b09d087c, type: 2}
+    - target: {fileID: 5607432879121150512, guid: 43ebb75323df99e429bb7f1ee3110318, type: 3}
+      propertyPath: AITypeByTeam.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05ab885bef7719a499d3b200c3d43e45, type: 2}
+    - target: {fileID: 5607432879121150512, guid: 43ebb75323df99e429bb7f1ee3110318, type: 3}
+      propertyPath: AITypeByTeam.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5607432879121150513, guid: 43ebb75323df99e429bb7f1ee3110318, type: 3}
       propertyPath: m_Name
       value: TowerAIManager

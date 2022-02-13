@@ -1,25 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+[System.Serializable]
+public class AIPlayer
+{
+    public int team;
+    public int currentEnemyTeam;
+    public int numberOfUnits;
+    public float distress;
+    public List<UnitController> Towers = new List<UnitController>();
+
+    public AIPlayer(int team)
+    {
+        this.team = team;
+    }
+}
 
 public class AIManager : MonoBehaviour
 {
     GameObject[] buildings;
-    public class AIPlayer
-    {
-        public int team;
-        public int numberOfUnits;
-        public float distress;
-        public List<UnitController> Towers = new List<UnitController>();
+    public AIType[] AITypeByTeam;
+    public List<AIPlayer> AIPlayers = new List<AIPlayer>();
 
-        public AIPlayer(int team)
-        {
-            this.team = team;
-        }
+
+    public static AIManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
     }
 
-    public List<AIPlayer> AIPlayers = new List<AIPlayer>();
     private void Start()
+    {
+        CompileAIs();
+        InitiateAITeams();
+    }
+
+    void CompileAIs()
     {
         Dictionary<int, List<UnitController>> numberOfTowersPerTeam = new Dictionary<int, List<UnitController>>();
 
@@ -57,4 +74,37 @@ public class AIManager : MonoBehaviour
             AIPlayers.Add(playerTmp);
         }
     }
+
+    void InitiateAITeams()
+    {
+        foreach (AIPlayer ai in AIPlayers)
+        {
+            //Debug.Log(ai.team + "    " + AITypeByTeam.Length + "   " + (ai.team <= AITypeByTeam.Length - 1));
+            if (ai.team <= AITypeByTeam.Length - 1)//check if team ai exists
+            {
+                //Debug.Log(AITypeByTeam[ai.team].name);
+                StartCoroutine(AIClockRepeating(ai));// :( mrzim corutine
+            }
+        }
+    }
+    IEnumerator AIClockRepeating(AIPlayer ai)
+    {
+        while (true)//  kor
+        {
+            yield return new WaitForSeconds(AITypeByTeam[ai.team].clockCycleTime);
+            //Debug.Log(AITypeByTeam[ai.team].clockCycleTime);
+            AITypeByTeam[ai.team].CalculateMove(this, ai);
+        }
+    }
+
+    public void UpdateTeamTowers(UnitController tower, int oldTeam, int newTeam)
+    {
+
+
+
+        if (oldTeam >= 3)
+            AIPlayers[oldTeam - 2].Towers.Remove(tower);
+        AIPlayers[newTeam - 2].Towers.Add(tower);
+    }
+
 }
