@@ -5,10 +5,12 @@ using UnityEngine;
 public class AIPlayer
 {
     public int team;
-    public int currentEnemyTeam;
-    public int numberOfUnits;
+    public int currentEnemyTeam = -52;
+    public float numberOfUnits;
     public float distress;
     public List<UnitController> Towers = new List<UnitController>();
+    public Coroutine repeatingFunction;
+    public bool isDead = false;
 
     public AIPlayer(int team)
     {
@@ -34,6 +36,33 @@ public class AIManager : MonoBehaviour
     {
         CompileAIs();
         InitiateAITeams();
+    }
+
+    void Update()
+    {
+        //da vidimo koliko ai-ovi imaju unita :D
+        foreach (AIPlayer ai in AIPlayers)
+        {
+            ai.numberOfUnits = 0;
+            foreach (UnitController building in ai.Towers)
+            {
+                ai.numberOfUnits += building.production.product;
+            }
+        }
+
+        //prodjemo kroz sve ai timo da vidimo dal imaju 0 unita;
+        foreach (AIPlayer ai in AIPlayers)
+        {
+            if (ai.numberOfUnits <= 0 && !ai.isDead)
+            {
+                ai.isDead = true;
+                StopCoroutine(ai.repeatingFunction);//nezelimo da ai racuna svoje poteze ako nema sta da odigra :(
+                if (SoundManager.Instance != null)
+                {
+                    SoundManager.Instance.PlayAudioClip(4);
+                }
+            }
+        }
     }
 
     void CompileAIs()
@@ -83,12 +112,13 @@ public class AIManager : MonoBehaviour
             if (ai.team <= AITypeByTeam.Length - 1)//check if team ai exists
             {
                 //Debug.Log(AITypeByTeam[ai.team].name);
-                StartCoroutine(AIClockRepeating(ai));// :( mrzim corutine
+                ai.repeatingFunction = StartCoroutine(AIClockRepeating(ai));// :( mrzim corutine
             }
         }
     }
     IEnumerator AIClockRepeating(AIPlayer ai)
     {
+        yield return new WaitForSeconds(AITypeByTeam[ai.team].clockCycleTime);
         while (true)//  kor
         {
             yield return new WaitForSeconds(AITypeByTeam[ai.team].clockCycleTime);
@@ -101,10 +131,11 @@ public class AIManager : MonoBehaviour
     {
 
 
-
-        if (oldTeam >= 3)
+        if (oldTeam >= 2)
             AIPlayers[oldTeam - 2].Towers.Remove(tower);
-        AIPlayers[newTeam - 2].Towers.Add(tower);
+        if (newTeam >= 2)
+            AIPlayers[newTeam - 2].Towers.Add(tower);
+
     }
 
 }

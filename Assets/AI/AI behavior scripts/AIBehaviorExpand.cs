@@ -30,7 +30,7 @@ public class AIBehaviorExpand : AIBehavior
 
         if (sendTo != null && sendFrom != null)
         {
-            sendFrom.Attack(expandAmount, sendTo.transform);
+            sendFrom.Attack(expandAmount, sendTo.transform, false);
             return true;
         }
         return false;

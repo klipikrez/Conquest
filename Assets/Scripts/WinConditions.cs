@@ -1,13 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class WinConditions : MonoBehaviour
 {
 
     List<Team> buildings = new List<Team>();//added in Buildings Team.cs scripts Start()
     public int PlayerTeam = 1;
-    public float totalUnitsProduced = 0;
+    [Serializable]
+    public struct ValueTimePair
+    {
+        float value;
+        float time;
+
+        public ValueTimePair(float value, float time)
+        {
+            this.value = value;
+            this.time = time;
+        }
+    }
+    [SerializeField]
+    public Dictionary<int, List<ValueTimePair>> UnitsProduced = new Dictionary<int, List<ValueTimePair>>();
 
 
     public static WinConditions Instance { get; private set; }
@@ -54,19 +68,42 @@ public class WinConditions : MonoBehaviour
         }
     }
 
-    public void AddPlayerProducedUnits(float amount)
+    public void AddProducedUnits(float amount, int team)
     {
-        totalUnitsProduced += amount;
+        List<ValueTimePair> banalno = new List<ValueTimePair>();
+        ValueTimePair josBanalnije = new ValueTimePair(amount, LevelMenu.timeSinceStart);
+        banalno.Add(josBanalnije);
+
+        if (UnitsProduced.ContainsKey(team))
+        {
+            UnitsProduced[team].Add(josBanalnije);
+        }
+        else
+        {
+
+            UnitsProduced.Add(team, banalno);
+        }
     }
 
     public void Pobeda()
     {
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayAudioClip(2);
+            SoundManager.Instance.PlayAudioClip(3);
+        }
         levelMenu.WinScreen();
 
     }
 
     public void Izgubida()
     {
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayAudioClip(0);
+            SoundManager.Instance.PlayAudioClip(1);
+        }
+
         levelMenu.LoseScreen();
     }
 

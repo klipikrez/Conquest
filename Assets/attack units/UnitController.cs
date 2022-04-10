@@ -161,7 +161,7 @@ public class UnitController : MonoBehaviour
         }
     }
 
-    public void Attack(int percent, Transform attack)
+    public void Attack(int percent, Transform attack, bool dalDaSeVidiOnaLinijaKadSaljesLikoveIzmedjuSmajli = true)
     {
 
         int amount = (int)(production.product * (percent / 100f));
@@ -169,7 +169,7 @@ public class UnitController : MonoBehaviour
         if (amount >= 1)
         {
             StopAttackUnits();
-            Transform[] path = CalculatePath(transform, attack);
+            Transform[] path = CalculatePath(transform, attack, dalDaSeVidiOnaLinijaKadSaljesLikoveIzmedjuSmajli);
             if (path != null) attackCoroutine = StartCoroutine(SpawnAttackUnits(amount, path, team.teamid));
         }
     }
@@ -193,37 +193,39 @@ public class UnitController : MonoBehaviour
         }
     }
 
-    Transform[] CalculatePath(Transform from, Transform to)
+    Transform[] CalculatePath(Transform from, Transform to, bool dalDaSeVidiOnaLinijaKadSaljesLikoveIzmedjuSmajli = true)
     {
 
         Transform[] path = NavManager.Instance.CalculatePath(from, to);
         if (path != null)
         {
-            CalculateLine(path, from);
+            CalculateLine(path, from, dalDaSeVidiOnaLinijaKadSaljesLikoveIzmedjuSmajli);
         }
         return path;
     }
 
-    void CalculateLine(Transform[] points, Transform start)
+    void CalculateLine(Transform[] points, Transform start, bool dalDaSeVidiOnaLinijaKadSaljesLikoveIzmedjuSmajli)
     {
-        Vector3[] positions = new Vector3[points.Length + 1];
-        positions[0] = start.position;
-        for (int i = 0; i < points.Length; i++)
+        if (dalDaSeVidiOnaLinijaKadSaljesLikoveIzmedjuSmajli)
         {
-            positions[i + 1] = points[i].position;
-        }
-        line.enabled = true;
-        line.SetVertexCount(points.Length + 1);
-        line.SetPositions(positions);
+            Vector3[] positions = new Vector3[points.Length + 1];
+            positions[0] = start.position;
+            for (int i = 0; i < points.Length; i++)
+            {
+                positions[i + 1] = points[i].position;
+            }
+            line.enabled = true;
+            line.SetVertexCount(points.Length + 1);
+            line.SetPositions(positions);
 
-        if (lineCoroutine != null)
-        {
-            StopCoroutine(lineCoroutine);
-        }
+            if (lineCoroutine != null)
+            {
+                StopCoroutine(lineCoroutine);
+            }
 
-        lineCoroutine = StartCoroutine(DisableLine(line));
+            lineCoroutine = StartCoroutine(DisableLine(line));
+        }
     }
-
     IEnumerator DisableLine(LineRenderer line)
     {
         yield return new WaitForSeconds(1);

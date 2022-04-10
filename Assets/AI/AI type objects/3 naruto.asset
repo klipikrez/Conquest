@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb5aa0c1cfb8f4349abdf484c7683182, type: 3}
   m_Name: 3 naruto
   m_EditorClassIdentifier: 
-  TypeName: naryuobnnotg
+  TypeName: naryutorg
   clockCycleTime: 5.61
-  behaviorTEMP: {fileID: 11400000, guid: 7ca7c3c52159e5a418bcddda9fe098f3, type: 2}
+  States:
+  - {fileID: 11400000, guid: 43403f5a1d9e4cf4bb024fb5c1904535, type: 2}
+  aggresivnes: 20

@@ -78,6 +78,10 @@ public class playerSelectionDictionary : MonoBehaviour
                 }
             }
         }
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySendSound();
+        }
     }
 
     public void ContinuousAttack()
@@ -92,6 +96,10 @@ public class playerSelectionDictionary : MonoBehaviour
                 }
             }
         }
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySendSound();
+        }
     }
 
     public void Gift(int percent)
@@ -105,6 +113,10 @@ public class playerSelectionDictionary : MonoBehaviour
                     selected[pair.Key].GetComponent<UnitController>().Gift(percent, optionsActive);
                 }
             }
+        }
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayAudioClip(7);
         }
     }
 

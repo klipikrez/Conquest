@@ -83,6 +83,10 @@ public class Team : MonoBehaviour
             {
                 controller.StopAttackUnits();
                 prod.product = 0;
+                if (SoundManager.Instance != null && teamid == 1)
+                {
+                    SoundManager.Instance.PlayAudioClip(5);
+                }
                 AIManager.Instance.UpdateTeamTowers(controller, teamid, attacker.selfTeam);
                 teamid = attacker.selfTeam;
                 UpdatColor();

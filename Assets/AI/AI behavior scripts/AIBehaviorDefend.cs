@@ -11,26 +11,26 @@ public class AIBehaviorDefend : AIBehavior
     {
         UnitController sendTo = null;// zasad salje samo jednom liku, jkasnije bi voleo da podeli svim tornjevima koji su u opasnosti od napada
         List<UnitController> sendFrom = new List<UnitController>();
-        int bestNumberOfEnemyTowersNearby = 0;
+        float bestNumberOfEnemyUnitsNearby = 0;
         foreach (UnitController tower in player.Towers)
         {
-            int numberOfEnemyTowersNearby = 0;
+            float numberOfEnemyUnitsNearby = 0;
             foreach (UnitController neighbor in tower.neighbours)//pass trough all neighbours of current tower
             {
                 if (neighbor.team.teamid != player.team)// 
                 {
-                    numberOfEnemyTowersNearby++;
+                    numberOfEnemyUnitsNearby += neighbor.team.controller.production.product;
 
                 }
             }
 
-            if (numberOfEnemyTowersNearby == 0)
+            if (numberOfEnemyUnitsNearby <= 0)
             {
                 sendFrom.Add(tower);
             }
             else
             {
-                if (numberOfEnemyTowersNearby > bestNumberOfEnemyTowersNearby)
+                if (numberOfEnemyUnitsNearby > bestNumberOfEnemyUnitsNearby)
                 {
                     sendTo = tower;
                 }
@@ -41,7 +41,7 @@ public class AIBehaviorDefend : AIBehavior
         {
             foreach (UnitController from in sendFrom)
             {
-                from.Attack(expandAmount, sendTo.transform);
+                from.Attack(expandAmount, sendTo.transform, false);
             }
             return true;
         }

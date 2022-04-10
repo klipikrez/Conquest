@@ -99,6 +99,11 @@ public class UnitAgent : MonoBehaviour
                     UnitPool.Instance.ReurnUnitsToPool(enemy);// Destroy(hit.transform.gameObject);
 
                     UnitPool.Instance.ReurnUnitsToPool(this);// Destroy(gameObject);
+
+                    if (SoundManager.Instance != null)
+                    {
+                        SoundManager.Instance.PlayBattleSound(transform.position);
+                    }
                 }
             }
             else
@@ -110,6 +115,11 @@ public class UnitAgent : MonoBehaviour
                     UnitPool.Instance.ReurnUnitsToPool(enemy);// Destroy(hit.transform.gameObject);
 
                     UnitPool.Instance.ReurnUnitsToPool(this);// Destroy(gameObject);
+
+                    if (SoundManager.Instance != null)
+                    {
+                        SoundManager.Instance.PlayBattleSound(transform.position);
+                    }
                 }
             }
         }

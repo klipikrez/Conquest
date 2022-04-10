@@ -24,9 +24,9 @@ public class Production : MonoBehaviour
     private void Start()
     {
         team = GetComponent<Team>();
-        if (team.teamid == WinConditions.Instance.PlayerTeam)
+        if (WinConditions.Instance != null && team.teamid == WinConditions.Instance.PlayerTeam)
         {
-            WinConditions.Instance.AddPlayerProducedUnits(product);
+            WinConditions.Instance.AddProducedUnits(product, team.teamid);
         }
         else
         {
@@ -49,9 +49,9 @@ public class Production : MonoBehaviour
             if (product < maxUnits)
             {
                 product += productProduction * productionDullMultiplyer * Time.deltaTime;
-                if (team.teamid == WinConditions.Instance.PlayerTeam)
+                if (WinConditions.Instance != null && team.teamid == WinConditions.Instance.PlayerTeam)
                 {
-                    WinConditions.Instance.AddPlayerProducedUnits(productProduction * productionDullMultiplyer * Time.deltaTime);
+                    WinConditions.Instance.AddProducedUnits(productProduction * productionDullMultiplyer * Time.deltaTime, team.teamid);
                 }
             }
 

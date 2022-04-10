@@ -13,6 +13,8 @@ public class LevelMenu : MonoBehaviour
     public GameObject WinUI;
     public GameObject LoseUI;
 
+    public bool paused = false;
+    public static float timeSinceStart = 0f;
 
     private void Start()
     {
@@ -32,6 +34,10 @@ public class LevelMenu : MonoBehaviour
 
     private void Update()
     {
+        if (!paused)
+        {
+            timeSinceStart += Time.deltaTime;
+        }
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             if (UI.activeSelf)
@@ -47,6 +53,7 @@ public class LevelMenu : MonoBehaviour
 
     public void Pause()
     {
+        paused = true;
         UI.SetActive(true);
         //Time.timeScale = 0.0f;
         NavManager.Instance.SetPauseBuildings(true);
@@ -62,6 +69,7 @@ public class LevelMenu : MonoBehaviour
     }
     public void Resume()
     {
+        paused = false;
         //Time.timeScale = 1.0f;
         NavManager.Instance.SetPauseBuildings(false);
         UI.SetActive(false);

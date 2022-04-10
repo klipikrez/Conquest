@@ -43,3 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3464063133477340aef15e475b877e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AITypeByTeam:
+  - {fileID: 11400000, guid: 601f7598ba6064b40898937cef43e080, type: 2}
+  - {fileID: 11400000, guid: e28d49ca085fde74f9fd6ed2b09d087c, type: 2}
+  - {fileID: 11400000, guid: 05ab885bef7719a499d3b200c3d43e45, type: 2}
+  - {fileID: 11400000, guid: d281bac21cef2e84dafc31530ececaf9, type: 2}
+  AIPlayers: []

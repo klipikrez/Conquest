@@ -29,10 +29,14 @@ public class UnitDetector : MonoBehaviour
 
             if (unitAgent.Controller != controller)
             {
-                if (unitAgent.selfTeam != team.teamid  && !unitAgent.isGift) //is enemy and is not gift
+                if (unitAgent.selfTeam != team.teamid && !unitAgent.isGift) //is enemy and is not gift
                 {
+                    if (team.teamid >= 2)//znaci samo ai timove
+                    {
+                        AIManager.Instance.AIPlayers[team.teamid - 2].currentEnemyTeam = unitAgent.selfTeam;//novi neprijatelj je napadac
+                    }
                     team.Damage(unitAgent);
-                    UnitPool.Instance.ReurnUnitsToPool(unitAgent);              
+                    UnitPool.Instance.ReurnUnitsToPool(unitAgent);
                 }
                 else
                 {
