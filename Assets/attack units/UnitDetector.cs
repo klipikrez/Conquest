@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 [RequireComponent(typeof(Team))]
 [RequireComponent(typeof(Production))]
@@ -12,6 +13,7 @@ public class UnitDetector : MonoBehaviour
     Team team;
     Production production;
     UnitController controller;
+    public VisualEffect buildingCrumble;
 
     void Start()
     {
@@ -37,6 +39,11 @@ public class UnitDetector : MonoBehaviour
                     }
                     team.Damage(unitAgent);
                     UnitPool.Instance.ReurnUnitsToPool(unitAgent);
+                    buildingCrumble.SendEvent("burst");
+                    if (SoundManager.Instance != null)
+                    {
+                        SoundManager.Instance.PlayTowerSound(transform.position);
+                    }
                 }
                 else
                 {

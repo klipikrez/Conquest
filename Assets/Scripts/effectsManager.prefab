@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 24594095160517442}
   - component: {fileID: 3419446221185108373}
+  - component: {fileID: 7076161696787454817}
   m_Layer: 0
-  m_Name: SoundManager
+  m_Name: effectsManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,4 +71,30 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5a17d5dc136ce88479eefd9076ce51bb, type: 3}
   - {fileID: 8300000, guid: 63a82cc9f9b098441a88ba62a4c82f26, type: 3}
   - {fileID: 8300000, guid: df3b5bdd2a0f2864d80fcca7e8cbdd05, type: 3}
+  tower:
+  - {fileID: 8300000, guid: d52f2ebf6fecbd54cac118a6207c50d7, type: 3}
+  - {fileID: 8300000, guid: f3793fd186a3b5341a6cba6d5f3962a1, type: 3}
+  - {fileID: 8300000, guid: 1f1b38b310f989a47973c85832a55727, type: 3}
+  - {fileID: 8300000, guid: 6bf9ea1c39f7cb04c9a1fa7bddc66e8d, type: 3}
+  - {fileID: 8300000, guid: ca55c8538bcd26242bff7e49413774c0, type: 3}
+  - {fileID: 8300000, guid: 4cd0f0af11e82c14b84f5844b5f2d350, type: 3}
+  - {fileID: 8300000, guid: ef29627090180cb46b3b856cc2783ad2, type: 3}
+  - {fileID: 8300000, guid: cd4271870a929aa45a7cb03516730a64, type: 3}
+  - {fileID: 8300000, guid: d3ee39a154523a34496a0fa730d1d63d, type: 3}
+  - {fileID: 8300000, guid: 9225e01834e666343b4b1d9696505596, type: 3}
+  - {fileID: 8300000, guid: 1fa239a84d97b9145b0e9ca5f5cb6d82, type: 3}
   battleSoundPrefab: {fileID: 5342293701193922976, guid: 2cce321d71305234da82dd33cf5aaf7e, type: 3}
+--- !u!114 &7076161696787454817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4477172578591511504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94fce9b9971e2bf4688f5488fade1d3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vfx:
+  - {fileID: 3666607150640622164, guid: 7eb2a8bdef4f1ea4eae44188b570ca28, type: 3}

@@ -7,6 +7,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] audioClips;
     public AudioClip[] send;
     public AudioClip[] battle;
+    public AudioClip[] tower;
     public GameObject battleSoundPrefab;
     // Start is called before the first frame update
     public static SoundManager Instance { get; private set; }
@@ -31,7 +32,14 @@ public class SoundManager : MonoBehaviour
     }
     public void PlayBattleSound(Vector3 position)
     {
+        vfxManager.Instance.Play(position, 0);
         StartCoroutine(PlayDDD(battle[Random.Range(0, battle.Length - 1)], position));
+
+    }
+
+    public void PlayTowerSound(Vector3 position)
+    {
+        StartCoroutine(PlayDDD(tower[Random.Range(0, tower.Length - 1)], position));
     }
 
     IEnumerator PlayDDD(AudioClip audio, Vector3 position)
