@@ -5,9 +5,11 @@ using UnityEngine;
 public class MainMenuUI : MonoBehaviour
 {
     public GameObject[] GameObjectUIPanels;
+    public GameObject background;
     private void Start()
     {
         SetObjectsActive(0);
+        background.SetActive(true);
     }
     public void MainManu()
     {

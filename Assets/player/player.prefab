@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 6959027922345975452}
   - component: {fileID: 1018052702523815700}
   - component: {fileID: 7857326871114823520}
+  - component: {fileID: 6502973653392656116}
   m_Layer: 2
   m_Name: player
   m_TagString: Player
@@ -299,7 +300,7 @@ MonoBehaviour:
   payerCamera: {fileID: 8369362773196885652}
   speed: 8
   mouseSpeed: 60
-  zoomLevel: 7
+  zoomLevel: 25
   zoomSpeed: 10
   zoomChange: 5
   minZoom: 3
@@ -399,6 +400,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RenderingAsset: {fileID: 11400000, guid: 19ba41d7c0026c3459d37c2fe90c55a0, type: 2}
+--- !u!95 &6502973653392656116
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8369362771284380458}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a57ff48c5eccd0e49bf8ae0883103fc2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8369362773196885658
 GameObject:
   m_ObjectHideFlags: 0

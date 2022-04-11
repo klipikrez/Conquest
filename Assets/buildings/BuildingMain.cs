@@ -22,6 +22,7 @@ public class BuildingMain : MonoBehaviour
 
     void Start()
     {
+        Ui.SetActive(true);
         selector.SetActive(false);
         allyOptions.SetActive(false);
         enemyOptions.SetActive(false);

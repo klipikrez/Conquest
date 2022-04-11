@@ -402,7 +402,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5291480178472735026}
-  - component: {fileID: 5291480178472735024}
   - component: {fileID: 5291480178472735030}
   m_Layer: 0
   m_Name: LevelMenu Ui
@@ -426,22 +425,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 58.58, y: -0.04, z: 0}
---- !u!114 &5291480178472735024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5291480178472735031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 830d16d288b03154ab8f58aa9a4cc741, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameObjectUIPanels:
-  - {fileID: 5291480178321727953}
-  - {fileID: 5291480178824303774}
-  - {fileID: 7473315937209461096}
 --- !u!114 &5291480178472735030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,7 +438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UI: {fileID: 5682354413900010147}
-  Main: {fileID: 5291480178472735024}
+  Main: {fileID: 0}
   WinUI: {fileID: 5461486694999368967}
   LoseUI: {fileID: 301709075924142551}
   paused: 0
@@ -1349,7 +1332,7 @@ PrefabInstance:
     - target: {fileID: 3783337228397523457, guid: 0757e0ea5898ed6409b0cb56dfea121b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 5291480178472735024}
+      objectReference: {fileID: 0}
     - target: {fileID: 3783337228397523457, guid: 0757e0ea5898ed6409b0cb56dfea121b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetObjectsActive
@@ -1452,11 +1435,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0757e0ea5898ed6409b0cb56dfea121b, type: 3}
---- !u!1 &5291480178824303774 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6207607964035659825, guid: 0757e0ea5898ed6409b0cb56dfea121b, type: 3}
-  m_PrefabInstance: {fileID: 2254834063056366767}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5291480178824303771 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6207607964035659828, guid: 0757e0ea5898ed6409b0cb56dfea121b, type: 3}
@@ -1568,7 +1546,7 @@ PrefabInstance:
     - target: {fileID: 4152995815685512989, guid: 777cd2ae3ba737b4fb828f4081ee1b6b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 5291480178472735024}
+      objectReference: {fileID: 0}
     - target: {fileID: 4152995815685512989, guid: 777cd2ae3ba737b4fb828f4081ee1b6b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetObjectsActive

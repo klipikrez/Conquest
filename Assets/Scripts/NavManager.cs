@@ -93,7 +93,7 @@ public class NavManager : MonoBehaviour
         }
         else if (start == end)
         {
-            Debug.LogError("start and end of path are same");
+            Debug.LogError("start and end of path are same: " + start + " - " + end);
             return null;
         }
 

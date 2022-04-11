@@ -22,7 +22,7 @@ public class SoundManager : MonoBehaviour
     }
     public void PlayAudioClip(int index)
     {
-        Debug.Log(index);
+
         StartCoroutine(Play(audioClips[index]));
 
     }

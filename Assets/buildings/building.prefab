@@ -784,6 +784,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkRadious: 1
+  Engage: 1
+  Imune: 0
   buildingCrumble: {fileID: 6965809476395520826}
 --- !u!114 &6119051266779198907
 MonoBehaviour:
@@ -2671,7 +2673,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7574356755248953289
 RectTransform:
   m_ObjectHideFlags: 0

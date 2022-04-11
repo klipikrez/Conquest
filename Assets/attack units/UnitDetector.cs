@@ -9,6 +9,8 @@ using UnityEngine.VFX;
 public class UnitDetector : MonoBehaviour
 {
     public float checkRadious = 1f;
+    public bool Engage = true;
+    public bool Imune = false;
 
     Team team;
     Production production;
@@ -28,42 +30,58 @@ public class UnitDetector : MonoBehaviour
         foreach (Collider unit in contextColliders)
         {
             UnitAgent unitAgent = unit.GetComponent<UnitAgent>();
-
-            if (unitAgent.Controller != controller)
+            if (Engage)
             {
-                if (unitAgent.selfTeam != team.teamid && !unitAgent.isGift) //is enemy and is not gift
+                if (unitAgent.Controller != controller)
                 {
-                    if (team.teamid >= 2)//znaci samo ai timove
+                    if (unitAgent.selfTeam != team.teamid && !unitAgent.isGift) //is enemy and is not gift
                     {
-                        AIManager.Instance.AIPlayers[team.teamid - 2].currentEnemyTeam = unitAgent.selfTeam;//novi neprijatelj je napadac
-                    }
-                    team.Damage(unitAgent);
-                    UnitPool.Instance.ReurnUnitsToPool(unitAgent);
-                    buildingCrumble.SendEvent("burst");
-                    if (SoundManager.Instance != null)
-                    {
-                        SoundManager.Instance.PlayTowerSound(transform.position);
-                    }
-                }
-                else
-                {
-
-                    if (unitAgent.TrackPositions.Count <= 1)
-                    {
-                        if (unitAgent.TrackPositions.Peek() == transform)
+                        if (!Imune)
                         {
-                            team.Reinforce();
+                            if (AIManager.Instance != null && team.teamid >= 2)//znaci samo ai timove
+                            {
+                                AIManager.Instance.AIPlayers[team.teamid - 2].currentEnemyTeam = unitAgent.selfTeam;//novi neprijatelj je napadac
+                            }
+                            team.Damage(unitAgent);
+                            UnitPool.Instance.ReurnUnitsToPool(unitAgent);
+                            buildingCrumble.SendEvent("burst");
+                            if (SoundManager.Instance != null)
+                            {
+                                SoundManager.Instance.PlayTowerSound(transform.position);
+                            }
+                        }
+                        else
+                        {
                             UnitPool.Instance.ReurnUnitsToPool(unitAgent);
                         }
                     }
                     else
                     {
-                        if (unitAgent.TrackPositions.Peek() == transform)
-                        {
-                            unitAgent.GoToNext();
-                        }
-                    }
 
+                        if (unitAgent.TrackPositions.Count <= 1)
+                        {
+                            if (unitAgent.TrackPositions.Peek() == transform)
+                            {
+                                team.Reinforce();
+                                UnitPool.Instance.ReurnUnitsToPool(unitAgent);
+                            }
+                        }
+                        else
+                        {
+                            if (unitAgent.TrackPositions.Peek() == transform)
+                            {
+                                unitAgent.GoToNext();
+                            }
+                        }
+
+                    }
+                }
+            }
+            else
+            {
+                if (unitAgent.TrackPositions.Peek() == transform)
+                {
+                    unitAgent.GoToNext();
                 }
             }
         }

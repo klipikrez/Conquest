@@ -35,7 +35,10 @@ public class Team : MonoBehaviour
             {
                 ObjectAnimatior.Play("Base Layer.playerStart");
             }
-            WinConditions.Instance.AddBuildingTeam(this);
+            if (WinConditions.Instance != null)
+            {
+                WinConditions.Instance.AddBuildingTeam(this);
+            }
         }
 
 
@@ -87,13 +90,23 @@ public class Team : MonoBehaviour
                 {
                     SoundManager.Instance.PlayAudioClip(5);
                 }
-                AIManager.Instance.UpdateTeamTowers(controller, teamid, attacker.selfTeam);
-                teamid = attacker.selfTeam;
-                UpdatColor();
-                WinConditions.Instance.CheckTeams();
-
+                if (AIManager.Instance != null)
+                {
+                    AIManager.Instance.UpdateTeamTowers(controller, teamid, attacker.selfTeam);
+                }
+                ChangeTeam(attacker.selfTeam);
+                if (WinConditions.Instance != null)
+                {
+                    WinConditions.Instance.CheckTeams();
+                }
             }
         }
+    }
+
+    public void ChangeTeam(int team)
+    {
+        teamid = team;
+        UpdatColor();
     }
 
     public void Reinforce()

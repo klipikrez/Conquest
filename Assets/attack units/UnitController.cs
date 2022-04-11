@@ -49,6 +49,10 @@ public class UnitController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (UnitPool.Instance == null)
+        {
+            Debug.LogError("BUDALO GLUPA, klipice, klipikce, nemas UnitPool.cs nigde :)");
+        }
         squaredMaxSpeed = unitMaxSPeed * unitMaxSPeed;
         squaredNeighbourRadious = neighbourRadious * neighbourRadious;
         squaredAvoidenceRadious = squaredNeighbourRadious * avoidenceRadiousMultiplyer * avoidenceRadiousMultiplyer;
@@ -105,7 +109,7 @@ public class UnitController : MonoBehaviour
         //}
     }
 
-    public void UpdateAgent(UnitAgent agent)
+    public void UpdateAgent(UnitAgent agent) // UnitAgent.cs \\ line 52
     {
         if (!Paused)
         {
@@ -195,13 +199,18 @@ public class UnitController : MonoBehaviour
 
     Transform[] CalculatePath(Transform from, Transform to, bool dalDaSeVidiOnaLinijaKadSaljesLikoveIzmedjuSmajli = true)
     {
-
-        Transform[] path = NavManager.Instance.CalculatePath(from, to);
-        if (path != null)
+        if (NavManager.Instance != null)
         {
-            CalculateLine(path, from, dalDaSeVidiOnaLinijaKadSaljesLikoveIzmedjuSmajli);
+            Transform[] path = NavManager.Instance.CalculatePath(from, to);
+            if (path != null)
+            {
+                CalculateLine(path, from, dalDaSeVidiOnaLinijaKadSaljesLikoveIzmedjuSmajli);
+            }
+            return path;
         }
-        return path;
+        else { Debug.LogError("Alo BRE GLUPALO, nemas navmanagera :)"); }
+
+        return null;
     }
 
     void CalculateLine(Transform[] points, Transform start, bool dalDaSeVidiOnaLinijaKadSaljesLikoveIzmedjuSmajli)
