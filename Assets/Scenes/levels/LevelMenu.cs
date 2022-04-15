@@ -70,6 +70,7 @@ public class LevelMenu : MonoBehaviour
     public void Resume()
     {
         paused = false;
+        Main.SetObjectsActive(0);
         //Time.timeScale = 1.0f;
         NavManager.Instance.SetPauseBuildings(false);
         UI.SetActive(false);
@@ -92,7 +93,7 @@ public class LevelMenu : MonoBehaviour
     public void WinScreen()
     {
         Pause();
-        Main.SetObjectsActive(2);
+        Main.SetObjectsActive(1);
         WinUI.SetActive(true);
         LoseUI.SetActive(false);
     }
@@ -100,7 +101,7 @@ public class LevelMenu : MonoBehaviour
     public void LoseScreen()
     {
         Pause();
-        Main.SetObjectsActive(2);
+        Main.SetObjectsActive(1);
         WinUI.SetActive(false);
         LoseUI.SetActive(true);
     }

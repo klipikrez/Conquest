@@ -13,7 +13,6 @@ public class ScenesManager : MonoBehaviour
 
     private void Awake()
     {
-
         SetLoadingGizmos(false);
 
         Instance = this;
@@ -24,6 +23,7 @@ public class ScenesManager : MonoBehaviour
     }
     private void Start()
     {
+
         SceneManager.activeSceneChanged += ChangedActiveScene;
     }
 

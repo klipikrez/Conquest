@@ -316,7 +316,8 @@ MonoBehaviour:
   GameObjectUIPanels:
   - {fileID: 4952047245436306770}
   - {fileID: 4952047246007924310}
-  - {fileID: 4952047245871165469}
+  - {fileID: 2181989606348257412}
+  options: {fileID: 4952047245871165469}
   background: {fileID: 5583242452561637706}
 --- !u!1 &4952047246007924310
 GameObject:
@@ -613,6 +614,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Options
       objectReference: {fileID: 0}
+    - target: {fileID: 6207607964035659825, guid: 0757e0ea5898ed6409b0cb56dfea121b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6207607964035659828, guid: 0757e0ea5898ed6409b0cb56dfea121b, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -709,6 +714,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6207607964035659828, guid: 0757e0ea5898ed6409b0cb56dfea121b, type: 3}
   m_PrefabInstance: {fileID: 1341208706760640556}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2181989606348257412 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 926358105780547752, guid: 0757e0ea5898ed6409b0cb56dfea121b, type: 3}
+  m_PrefabInstance: {fileID: 1341208706760640556}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1343578633266629116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -722,7 +732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4152995815470495180, guid: 777cd2ae3ba737b4fb828f4081ee1b6b, type: 3}
       propertyPath: m_fontSize
-      value: 49.1
+      value: 52.4
       objectReference: {fileID: 0}
     - target: {fileID: 4152995815685512988, guid: 777cd2ae3ba737b4fb828f4081ee1b6b, type: 3}
       propertyPath: m_Pivot.x
@@ -968,7 +978,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4152995815470495180, guid: 777cd2ae3ba737b4fb828f4081ee1b6b, type: 3}
       propertyPath: m_fontSize
-      value: 49.1
+      value: 52.4
       objectReference: {fileID: 0}
     - target: {fileID: 4152995815685512988, guid: 777cd2ae3ba737b4fb828f4081ee1b6b, type: 3}
       propertyPath: m_Pivot.x
@@ -1448,7 +1458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4152995815470495180, guid: 777cd2ae3ba737b4fb828f4081ee1b6b, type: 3}
       propertyPath: m_fontSize
-      value: 49.1
+      value: 52.4
       objectReference: {fileID: 0}
     - target: {fileID: 4152995815685512988, guid: 777cd2ae3ba737b4fb828f4081ee1b6b, type: 3}
       propertyPath: m_Pivot.x

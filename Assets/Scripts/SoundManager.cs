@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] battle;
     public AudioClip[] tower;
     public GameObject battleSoundPrefab;
+    public AudioMixerGroup DD;
     // Start is called before the first frame update
     public static SoundManager Instance { get; private set; }
 
@@ -18,7 +21,10 @@ public class SoundManager : MonoBehaviour
     }
     private void Start()
     {
-        PlayAudioClip(6);
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            PlayAudioClip(6);
+        }
     }
     public void PlayAudioClip(int index)
     {
@@ -55,6 +61,7 @@ public class SoundManager : MonoBehaviour
     IEnumerator Play(AudioClip audio)
     {
         AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = DD;
         audioSource.clip = audio;
         audioSource.Play();
         yield return new WaitForSeconds(audio.length); //cekaj

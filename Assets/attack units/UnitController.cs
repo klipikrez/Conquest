@@ -49,6 +49,7 @@ public class UnitController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         if (UnitPool.Instance == null)
         {
             Debug.LogError("BUDALO GLUPA, klipice, klipikce, nemas UnitPool.cs nigde :)");

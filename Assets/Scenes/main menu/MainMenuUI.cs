@@ -1,14 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuUI : MonoBehaviour
 {
     public GameObject[] GameObjectUIPanels;
+    public GameObject options;
     public GameObject background;
+    private void Awake()
+    {
+
+
+    }
     private void Start()
     {
-        SetObjectsActive(0);
+        GameObjectUIPanels[2].SetActive(false); //opcije moraju obavezno da budu ukljucene
+        options.SetActive(true);
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            SetObjectsActive(0);
+        }
         background.SetActive(true);
     }
     public void MainManu()
