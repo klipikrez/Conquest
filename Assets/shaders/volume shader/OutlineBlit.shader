@@ -7,6 +7,7 @@ Shader "Hidden/OutlineBlit"
 		_Delta ("Line Thickness", Range(0.0005, 0.25)) = 0.001
         _Pow ("power", Range(0,1000))= 50
         _Add("add", Range(0,0.1))= 0.0001
+        _Cut("cut", Range(0,10))= 0.1
 		[Toggle(RAW_OUTLINE)]_Raw ("Outline Only", Float) = 0
         [Toggle(REVERSED_OUTLINE)]_Reversed ("Outline Reversed", Float) = 0
     }
@@ -35,6 +36,7 @@ Shader "Hidden/OutlineBlit"
             float _Delta;
             float _Pow;
             float _Add;
+            float _Cut;
             half4 _OutlineCol;
             int _PosterizationCount;
             
@@ -73,16 +75,20 @@ Shader "Hidden/OutlineBlit"
                 hr += SampleDepth(uv + float2( 1.0,  0.0) * delta) * -2.0;
                 hr += SampleDepth(uv + float2(-1.0,  1.0) * delta) *  1.0;
                 hr += SampleDepth(uv + float2( 1.0,  1.0) * delta) * -1.0;
-                
+              
                 vt += SampleDepth(uv + float2(-1.0, -1.0) * delta) *  1.0;
                 vt += SampleDepth(uv + float2( 0.0, -1.0) * delta) *  2.0;
                 vt += SampleDepth(uv + float2( 1.0, -1.0) * delta) *  1.0;
                 vt += SampleDepth(uv + float2(-1.0,  1.0) * delta) * -1.0;
                 vt += SampleDepth(uv + float2( 0.0,  1.0) * delta) * -2.0;
                 vt += SampleDepth(uv + float2( 1.0,  1.0) * delta) * -1.0;
-                
-                return sqrt((hr * hr + vt * vt)/**(SampleDepth(uv))*/);
+
+            
+                 return sqrt((hr * hr + vt * vt)/**(SampleDepth(uv))*/);
             }
+            
+
+
             
             Varyings vert(Attributes input)
             {
@@ -101,7 +107,11 @@ Shader "Hidden/OutlineBlit"
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
                 
                 float s = pow((1 - saturate(sobel(input.uv))+_Add), _Pow);
+                
                 s = clamp(s ,0 ,1 );
+                                float mask = clamp(floor(s*_Cut),0 ,1);
+
+                s = lerp(s, 1, mask);
 #ifdef RAW_OUTLINE
                 return half4(s.xxx, 1);
 #else

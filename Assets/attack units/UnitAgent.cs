@@ -66,7 +66,7 @@ public class UnitAgent : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(new Vector3(velocity.x, 0, velocity.y));
             transform.position += new Vector3(velocity.x * Time.deltaTime, SetHeight(), velocity.y * Time.deltaTime);
             CheckAttack(velocity);
-            UpdateObjectPos3(incrementMove);
+            //UpdateObjectPos3(incrementMove);
         }
     }
 

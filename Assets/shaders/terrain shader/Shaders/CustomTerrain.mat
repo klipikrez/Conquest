@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_d0ed0e8cf71348c7a400a6b0f9052f33:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -129,6 +133,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Radius: 2.6
+    - Vector1_67e76c1ae3304173983590707a6293de: -5.24
+    - Vector1_750ddc93968d4352a418c4edd0534787: 91.27
+    - Vector1_8836933fb07041868522d575fd24b386: -1.19
+    - Vector1_e2f0cbfc75524d2bb3949a3028e4b383: 0.14
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -161,12 +169,17 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - BaseColor: {r: 1, g: 1, b: 1, a: 0}
+    - Color_642b33e044684a10940a810ceeb3db38: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 0}
     - Color_71F4F326: {r: 0, g: 0, b: 0, a: 0}
     - DangerColor: {r: 1, g: 0.2688679, b: 0.2688679, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _Specular0: {r: 1, g: 1, b: 1, a: 0}
+    - _Specular1: {r: 1, g: 1, b: 1, a: 0}
+    - _Specular2: {r: 1, g: 1, b: 1, a: 0}
+    - _Specular3: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &4605406975785806821
 MonoBehaviour:

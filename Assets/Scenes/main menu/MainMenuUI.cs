@@ -8,6 +8,7 @@ public class MainMenuUI : MonoBehaviour
     public GameObject[] GameObjectUIPanels;
     public GameObject options;
     public GameObject background;
+    public GameObject ScenesManagerSpawn;
     private void Awake()
     {
 
@@ -15,6 +16,10 @@ public class MainMenuUI : MonoBehaviour
     }
     private void Start()
     {
+        if (ScenesManager.Instance == null)
+        {
+            Instantiate(ScenesManagerSpawn);
+        }
         GameObjectUIPanels[2].SetActive(false); //opcije moraju obavezno da budu ukljucene
         options.SetActive(true);
         if (SceneManager.GetActiveScene().buildIndex == 0)

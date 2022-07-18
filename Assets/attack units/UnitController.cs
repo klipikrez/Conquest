@@ -137,11 +137,19 @@ public class UnitController : MonoBehaviour
     {
         List<Transform> context = new List<Transform>();
         Collider[] contextColliders = Physics.OverlapSphere(agent.transform.position, neighbourRadious, LayerMask.GetMask("unit"));
-        foreach (Collider coll in contextColliders)
+        /*foreach (Collider coll in contextColliders)
         {
             if (coll != agent.AgentCollider)
             {
                 context.Add(coll.transform);
+            }
+        }*/
+
+        for (int i = 0; i < 10 && i < contextColliders.Length; i++)//max 10 - 1(the unit itself) neighbors
+        {
+            if (contextColliders[i] != agent.AgentCollider)
+            {
+                context.Add(contextColliders[i].transform);
             }
         }
         return context;
@@ -244,6 +252,7 @@ public class UnitController : MonoBehaviour
 
     IEnumerator SpawnAttackUnits(int amount, Transform[] attack, int teamid)
     {
+
         while (true)
         {
 
@@ -261,15 +270,40 @@ public class UnitController : MonoBehaviour
                 InitializeUnit(newAgent, attack, teamid);
                 agents.Add(newAgent);
             }
-            yield return new WaitForSeconds(timeBetweenDispatches); //cekaj
+            yield return new WaitForSeconds(0.1f); //cekaj
         }
+        /*
+        //while (true)
+        //{
+
+        for (int i = amount; i > 0; i -= 5)
+        {
+                //if (production.product - 1 <= 0 || amount < 0)
+                //{
+                //    yield break;
+                //}
+            for (int j = 0; j < 5; j--)
+            {
+                production.product--;
+
+                UnitAgent newAgent = UnitPool.Instance.Get();
+                InitializeUnit(newAgent, attack, teamid);
+                agents.Add(newAgent);
+            }
+            yield return new WaitForSeconds(0.01f);
+        }
+        //cekaj
+        //}*/
     }
 
     IEnumerator SpawnContinuousAttackUnits(Transform[] attack, int teamid)
     {
+
+
         while (true)
         {
-            if (production.product - 1f >= maxDispatchRate)
+            //if (production.product - 1f >= maxDispatchRate)
+            while (production.product > maxDispatchRate)
             {
                 for (int i = 0; i < maxDispatchRate; i++)
                 {
@@ -279,10 +313,41 @@ public class UnitController : MonoBehaviour
                     UnitAgent newAgent = UnitPool.Instance.Get();
                     InitializeUnit(newAgent, attack, teamid);
                     agents.Add(newAgent);
+
+                }
+                yield return new WaitForSeconds(0.1f);
+            }
+            if (production.product > 1)
+            {
+                for (int i = 0; i < production.product; i++)
+                {
+
+                    production.product--;
+
+                    UnitAgent newAgent = UnitPool.Instance.Get();
+                    InitializeUnit(newAgent, attack, teamid);
+                    agents.Add(newAgent);
+
                 }
             }
             yield return new WaitForSeconds(timeBetweenDispatches); //cekaj
+
+
         }
+
+        /*while (true)
+        {
+            while (production.product > 1)
+            {
+                production.product--;
+
+                UnitAgent newAgent = UnitPool.Instance.Get();
+                InitializeUnit(newAgent, attack, teamid);
+                agents.Add(newAgent);
+            }
+
+            yield return new WaitForSeconds(timeBetweenDispatches); //cekaj
+        }*/
     }
 
     IEnumerator SpawnGiftUnits(int amount, Transform[] attack, int teamid)

@@ -6,14 +6,21 @@ using UnityEngine;
 public class BuildingOptions : MonoBehaviour
 {
 
+    public BuildingPresetCompiler presetCompiler;
+
     public void FullAttack(int percent)
     {
-        playerSelectionDictionary.Instance.Attack(playerSelectionDictionary.Instance.optionsActive.transform , percent);
+        playerSelectionDictionary.Instance.Attack(playerSelectionDictionary.Instance.optionsActive.transform, percent);
     }
 
     public void ContinuousAttack()
     {
         playerSelectionDictionary.Instance.ContinuousAttack();
+    }
+
+    public void Upgrade(int index)
+    {
+        presetCompiler.InitializeBuilding(index, GetComponent<UnitController>());
     }
 
     public void Gift(int percent)

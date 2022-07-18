@@ -8,6 +8,9 @@ public class WinConditions : MonoBehaviour
 
     List<Team> buildings = new List<Team>();//added in Buildings Team.cs scripts Start()
     public int PlayerTeam = 1;
+    bool noMoreEnwmyTowersLeft = false;
+    bool noMorePlayerTowersLeft = false;
+    bool GameOver = false;
     [Serializable]
     public struct ValueTimePair
     {
@@ -36,6 +39,35 @@ public class WinConditions : MonoBehaviour
     {
         levelMenu = GameObject.FindObjectOfType<LevelMenu>();
     }
+
+    private void Update()
+    {
+        if (noMoreEnwmyTowersLeft || noMorePlayerTowersLeft)
+        {
+            if (AIManager.Instance.Player.numberOfUnits <= 0)
+            {
+                if (!GameOver)
+                    Izgubida();
+            }
+            else
+            {
+                bool win = true;
+                foreach (AIPlayer ai in AIManager.Instance.AIPlayers)
+                {
+                    if (ai.numberOfUnits > 0)
+                    {
+                        win = false;
+                    }
+                }
+                if (win)
+                {
+                    if (!GameOver)
+                        Pobeda();
+                }
+            }
+        }
+    }
+
     public void AddBuildingTeam(Team team)
     {
         buildings.Add(team);
@@ -43,30 +75,44 @@ public class WinConditions : MonoBehaviour
 
     public void CheckTeams()
     {
-        bool Player = true, Enemy = true;
-        foreach (Team t in buildings)
+        bool value = true;
+        foreach (AIPlayer ai in AIManager.Instance.AIPlayers)
         {
-            if (t.teamid == PlayerTeam)
+
+            if (ai.Towers.Count > 0)
             {
-                Enemy = false;
-            }
-            else
-            {
-                Player = false;
+                value = false;
             }
         }
-        if (Player ^ Enemy)
+        noMorePlayerTowersLeft = AIManager.Instance.Player.Towers.Count == 0 ? true : false;
+        noMoreEnwmyTowersLeft = value;
+
+    }
+
+    /*bool Player = true, Enemy = true;
+    foreach (Team t in buildings)
+    {
+        if (t.teamid == PlayerTeam)
         {
-            if (Player)
-            {
-                Pobeda();
-            }
-            else
-            {
-                Izgubida();
-            }
+            Enemy = false;
+        }
+        else
+        {
+            Player = false;
         }
     }
+    if (Player ^ Enemy)
+    {
+        if (Player)
+        {
+            Pobeda();
+        }
+        else
+        {
+            Izgubida();
+        }
+    }*/
+
 
     public void AddProducedUnits(float amount, int team)
     {
@@ -93,7 +139,7 @@ public class WinConditions : MonoBehaviour
             SoundManager.Instance.PlayAudioClip(3);
         }
         levelMenu.WinScreen();
-
+        GameOver = true;
     }
 
     public void Izgubida()
@@ -105,6 +151,7 @@ public class WinConditions : MonoBehaviour
         }
 
         levelMenu.LoseScreen();
+        GameOver = true;
     }
 
 }

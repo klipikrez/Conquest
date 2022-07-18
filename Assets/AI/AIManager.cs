@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 [System.Serializable]
 public class AIPlayer
 {
     public int team;
     public int currentEnemyTeam = -52;
-    public float numberOfUnits;
+    public float numberOfUnits = 0;
     public float distress;
     public List<UnitController> Towers = new List<UnitController>();
     public Coroutine repeatingFunction;
@@ -20,7 +21,10 @@ public class AIPlayer
 
 public class AIManager : MonoBehaviour
 {
+    public AIPlayer Player = new AIPlayer(1);
+    public BuildingBehaviorCompiler bbc;
     GameObject[] buildings;
+    List<UnitController> unitControllers = new List<UnitController>();
     public AIType[] AITypeByTeam;
     public List<AIPlayer> AIPlayers = new List<AIPlayer>();
 
@@ -40,13 +44,37 @@ public class AIManager : MonoBehaviour
 
     void Update()
     {
-        //da vidimo koliko ai-ovi imaju unita :D
+        //ovo je samo za playereaza
+        Player.numberOfUnits = 0;
+        foreach (UnitController building in Player.Towers)
+        {
+            Player.numberOfUnits += building.production.product;
+        }
+
+        //da vidimo koliko ai-ovi imaju unita :D u towerima
         foreach (AIPlayer ai in AIPlayers)
         {
             ai.numberOfUnits = 0;
             foreach (UnitController building in ai.Towers)
             {
                 ai.numberOfUnits += building.production.product;
+            }
+        }
+
+
+        //za sve unite koji su na talonu trenutno
+        foreach (UnitController controller in unitControllers)
+        {
+            foreach (UnitAgent agent in controller.agents)
+            {
+                if (agent.selfTeam == 1)
+                {
+                    Player.numberOfUnits++;
+                }
+                else
+                {
+                    AIPlayers[agent.selfTeam - 2].numberOfUnits++;
+                }
             }
         }
 
@@ -63,6 +91,7 @@ public class AIManager : MonoBehaviour
                 }
             }
         }
+        UnitAmountBarCalculator.Instance.UpdateValues();
     }
 
     void CompileAIs()
@@ -74,20 +103,27 @@ public class AIManager : MonoBehaviour
         {
 
             UnitController controller = building.GetComponent<UnitController>();
-            if (controller.GetTeam().teamid != 0 && controller.GetTeam().teamid != 1)//znaci da nije siv i player
+            unitControllers.Add(controller);
+            if (controller.GetTeam().teamid != 0)//znaci da nije siv i player
             {
 
-
-                if (numberOfTowersPerTeam.ContainsKey(controller.GetTeam().teamid))// checks if team already exists in numberOfTowersPerTeam
+                if (controller.GetTeam().teamid != 1)
                 {
-                    //if AIPlayers List contains, then add tower to numberOfTowersPerTeam dictionary
-                    numberOfTowersPerTeam[controller.GetTeam().teamid].Add(controller);
+                    if (numberOfTowersPerTeam.ContainsKey(controller.GetTeam().teamid))// checks if team already exists in numberOfTowersPerTeam
+                    {
+                        //if AIPlayers List contains, then add tower to numberOfTowersPerTeam dictionary
+                        numberOfTowersPerTeam[controller.GetTeam().teamid].Add(controller);
+                    }
+                    else
+                    {
+                        //else add new AIPlayer object to AIPlayers list
+                        numberOfTowersPerTeam.Add(controller.GetTeam().teamid, new List<UnitController>());
+                        numberOfTowersPerTeam[controller.GetTeam().teamid].Add(controller);
+                    }
                 }
                 else
                 {
-                    //else add new AIPlayer object to AIPlayers list
-                    numberOfTowersPerTeam.Add(controller.GetTeam().teamid, new List<UnitController>());
-                    numberOfTowersPerTeam[controller.GetTeam().teamid].Add(controller);
+                    Player.Towers.Add(controller);
                 }
             }
         }
@@ -133,8 +169,14 @@ public class AIManager : MonoBehaviour
 
         if (oldTeam >= 2)
             AIPlayers[oldTeam - 2].Towers.Remove(tower);
+        else
+            if (oldTeam == 1)
+            Player.Towers.Remove(tower);
         if (newTeam >= 2)
             AIPlayers[newTeam - 2].Towers.Add(tower);
+        else
+            if (newTeam == 1)
+            Player.Towers.Add(tower);
 
     }
 

@@ -14,6 +14,8 @@ public class Team : MonoBehaviour
     Production prod;
     [System.NonSerialized]
     public UnitController controller;
+    public float vulnerability = 0.81f;
+
 
     void Start()
     {
@@ -35,10 +37,7 @@ public class Team : MonoBehaviour
             {
                 ObjectAnimatior.Play("Base Layer.playerStart");
             }
-            if (WinConditions.Instance != null)
-            {
-                WinConditions.Instance.AddBuildingTeam(this);
-            }
+
         }
 
 
@@ -66,14 +65,6 @@ public class Team : MonoBehaviour
             float materalTeamTextureOffset = 1f / markerRend.material.mainTexture.height;
             markerRend.material.mainTextureOffset = new Vector2(0, -materalTeamTextureOffset * teamid);
         }
-        if (teamid != 0)
-        {
-            prod.productionDullMultiplyer = 1;
-        }
-        else
-        {
-            prod.productionDullMultiplyer = 0.2f;
-        }
     }
 
     public void Damage(UnitAgent attacker)
@@ -81,7 +72,8 @@ public class Team : MonoBehaviour
 
         if (isBuilding)
         {
-            prod.product -= 0.81f;
+            prod.product -= vulnerability;
+            ;
             if (prod.product < 0)
             {
                 controller.StopAttackUnits();

@@ -8,6 +8,9 @@ public class BuildingUnitPresetSpawnBehavior : BuildingBehavior
     public Color color = Color.white;
     public float[] scale;
     public Mesh[] mesh;
+    public Mesh[] defaultBuildingMesh;
+    public Mesh[] defenseBuildingMesh;
+    public Mesh[] productionBuildingMesh;
     public Material[] matrial;
 
     public override void InitializeUnit(UnitAgent newAgent, Transform[] path, UnitController unitController, int team, bool isGift, float updateTime)

@@ -12,10 +12,14 @@ public class SpawnEssentials : MonoBehaviour
         {
             Instantiate(eyBabyWasYarNumbah);
         }
+
+
+    }
+    private void Start()
+    {
         if (ScenesManager.Instance == null)
         {
             Instantiate(ScenesManagerSpawn);
         }
-
     }
 }

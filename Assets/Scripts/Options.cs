@@ -43,7 +43,7 @@ public class Options : MonoBehaviour
 
     private void Awake()
     {//ptickixcce idu tut tut
-        settings = JsonUtility.FromJson<Settings>(File.ReadAllText(Application.dataPath + "/Wision5252/klipik.rez"));
+        settings = JsonUtility.FromJson<Settings>(File.ReadAllText(Application.dataPath + "/StreamingAssets/klipik.rez"));
         Debug.Log(settings.fps);
         Debug.Log(settings.fullScreen);
         Debug.Log("-------------------------------------------");
@@ -131,7 +131,7 @@ public class Options : MonoBehaviour
               fullScreen != -1 ? (fullScreen == 1 ? true : false) : Screen.fullScreen,
                hz != -1 ? (hz) : Application.targetFrameRate);
 
-        File.WriteAllText(Application.dataPath + "/Wision5252/klipik.rez", JsonUtility.ToJson(settings));//update setings json
+        File.WriteAllText(Application.dataPath + "/StreamingAssets/klipik.rez", JsonUtility.ToJson(settings));//update setings json
     }
 
     /*
