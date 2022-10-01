@@ -11,6 +11,7 @@ public class BuildingUnitPresetSpawnBehavior : BuildingBehavior
     public Mesh[] defaultBuildingMesh;
     public Mesh[] defenseBuildingMesh;
     public Mesh[] productionBuildingMesh;
+    public Mesh[] specialBuildingMesh;
     public Material[] matrial;
 
     public override void InitializeUnit(UnitAgent newAgent, Transform[] path, UnitController unitController, int team, bool isGift, float updateTime)

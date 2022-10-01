@@ -19,8 +19,13 @@ MonoBehaviour:
   - {fileID: -5053925668127403250, guid: 5e04b228599e79d48af96077a401fc57, type: 3}
   - {fileID: -1550514412580984892, guid: 5e04b228599e79d48af96077a401fc57, type: 3}
   - {fileID: -8678823145569952518, guid: 5e04b228599e79d48af96077a401fc57, type: 3}
-  BuildingMesh:
-  - {fileID: 0}
-  - {fileID: 0}
+  defaultBuildingMesh:
+  - {fileID: -6505552537926968463, guid: 6d9bc90e23eec924eadb3bd33fe40feb, type: 3}
+  defenseBuildingMesh:
+  - {fileID: 2534964839176971238, guid: b934f3fb94d00a54babfc228f3fbedf2, type: 3}
+  productionBuildingMesh:
+  - {fileID: 2363565981455421637, guid: d1b4f89b92d62794a9d5c6f68418c537, type: 3}
+  - {fileID: -4453806867672132484, guid: 778bb04804eb67c4f959ed5f7c9aefa8, type: 3}
+  - {fileID: 6593217175389860584, guid: 3bd5903ca354d274ea678cd7612616b1, type: 3}
   matrial:
   - {fileID: 2100000, guid: 14509c78aae114644b321c5dc0bd47d2, type: 2}

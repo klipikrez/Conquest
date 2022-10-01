@@ -27,7 +27,7 @@ public class AIBehaviorExpand : AIBehavior
                 }
             }
         }
-
+        Debug.Log(sendFrom.name + " " + sendTo.name);
         if (sendTo != null && sendFrom != null)
         {
             sendFrom.Attack(expandAmount, sendTo.transform, false);

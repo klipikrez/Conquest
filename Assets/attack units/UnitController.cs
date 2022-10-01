@@ -15,6 +15,10 @@ public class UnitController : MonoBehaviour
     [System.NonSerialized]
     public Production production;
     public Team team { get; private set; }
+    [System.NonSerialized]
+    public BuildingMain buildingMain;
+    [System.NonSerialized]
+    public BuildingOptions buildingOptions;
     LineRenderer line;
 
     public int maxDispatchRate = 5;
@@ -59,6 +63,8 @@ public class UnitController : MonoBehaviour
         squaredAvoidenceRadious = squaredNeighbourRadious * avoidenceRadiousMultiplyer * avoidenceRadiousMultiplyer;
         avoidenceRadious = neighbourRadious * avoidenceRadious;
         production = GetComponent<Production>();
+        buildingMain = GetComponent<BuildingMain>();
+        buildingOptions = GetComponent<BuildingOptions>();
         //team = GetComponent<Team>();
         GetTeam();
         line = GetComponent<LineRenderer>();
@@ -74,7 +80,30 @@ public class UnitController : MonoBehaviour
         //CylinderMeshGizmo = (Mesh)Resources.Load("Levels/Cylinder");
 
     }
-
+    public BuildingOptions GetBuildingOptions()
+    {
+        if (buildingOptions == null)
+        {
+            buildingOptions = GetComponent<BuildingOptions>();
+        }
+        return buildingOptions;
+    }
+    public BuildingMain GetBuildingMain()
+    {
+        if (buildingMain == null)
+        {
+            buildingMain = GetComponent<BuildingMain>();
+        }
+        return buildingMain;
+    }
+    public Production GetProduction()
+    {
+        if (production == null)
+        {
+            production = GetComponent<Production>();
+        }
+        return production;
+    }
     public Team GetTeam()
     {
         if (team == null)
@@ -263,7 +292,7 @@ public class UnitController : MonoBehaviour
                     yield break;
                 }
 
-                production.product--;
+                production.SubtractProduct(1);
                 amount--;
 
                 UnitAgent newAgent = UnitPool.Instance.Get();
@@ -308,7 +337,7 @@ public class UnitController : MonoBehaviour
                 for (int i = 0; i < maxDispatchRate; i++)
                 {
 
-                    production.product--;
+                    production.SubtractProduct(1);
 
                     UnitAgent newAgent = UnitPool.Instance.Get();
                     InitializeUnit(newAgent, attack, teamid);
@@ -322,7 +351,7 @@ public class UnitController : MonoBehaviour
                 for (int i = 0; i < production.product; i++)
                 {
 
-                    production.product--;
+                    production.SubtractProduct(1);
 
                     UnitAgent newAgent = UnitPool.Instance.Get();
                     InitializeUnit(newAgent, attack, teamid);
@@ -362,7 +391,7 @@ public class UnitController : MonoBehaviour
                     yield break;
                 }
 
-                production.product--;
+                production.SubtractProduct(1);
                 amount--;
 
                 UnitAgent newAgent = UnitPool.Instance.Get();

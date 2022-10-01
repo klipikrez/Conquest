@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddd1ad76a7d7c9043b438d5761654402, type: 3}
   m_Name: Default Building Preset Compiler
   m_EditorClassIdentifier: 
-  defaultPreset: {fileID: 11400000, guid: 9d10121e87797bb4bb9895f0c25267d3, type: 2}
-  presetDefensive: []
-  presetGenertor: []
-  presetSpecial: []
+  presets:
+  - {fileID: 11400000, guid: 9d10121e87797bb4bb9895f0c25267d3, type: 2}
+  - {fileID: 11400000, guid: f9830963c98be3d48baed1cdcd698316, type: 2}
+  - {fileID: 11400000, guid: af0bd8bd78eb8ab49a1123db9790fb92, type: 2}
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 318913be7d61c334089cbcda0a42a256, type: 2}
+  - {fileID: 11400000, guid: 9c1e967ca2bde294483099eac7c816eb, type: 2}
+  - {fileID: 11400000, guid: 80f2025218063864cac484759bf2d6fd, type: 2}

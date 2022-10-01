@@ -8,6 +8,11 @@ public class AIStatePeaceful : AIState
 
     public override void CalculateMove(AIManager manager, AIPlayer player)
     {
+
+        int action = GetAction();
+        Debug.Log(action);
+        chanceBehaviorsTable[action].behavior.ExecuteMove(manager, player);
+        /*
         //za sd samo jedna sttvar
         //Be00GraD
         //Be0-Grad
@@ -59,7 +64,7 @@ public class AIStatePeaceful : AIState
 
 
 
-
+*/
     }
 
 }

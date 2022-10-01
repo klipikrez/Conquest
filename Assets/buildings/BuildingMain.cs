@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BuildingMain : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class BuildingMain : MonoBehaviour
     public GameObject sword;
     public GameObject allyOptions;
     public GameObject enemyOptions;
+    public Button[] otherOptions;
+    public TextMeshProUGUI[] optionsCost;
     public int screenEdgeBuffer = 40;
     [System.NonSerialized]
     public Team team;

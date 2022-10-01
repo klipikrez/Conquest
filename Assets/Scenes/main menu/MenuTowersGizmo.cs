@@ -21,11 +21,10 @@ public class MenuTowersGizmo : MonoBehaviour
 
     void TekiJebeJapanceUSvomSlobodnomVremenuZarezVerujteMiVideoSamGaZarezOcesMozdaDaSePridruzisMojojNedostiznojMisijiDaBijemTekijaZarezTekiZapravoNePostojiOnJeFigmentTwojeMasteZarezIdiSsadISpavajKlipiceZaresZnasJaObozavamKruskeRekaoBiCakDaSuBoljeOdJabukaZarezMsmStvarnoKoBiJosVoleoJabukeZarezNajVanilaHranaNaSvetuZaresOnoKaoBurazJaviMiSeKadNaucisDaRaspoznajesUkusnuOdGrozneHraneBruh()
     {
-        //vidis ovaj kod nesto radi, al necu da ti kazem sta ;)
 
         foreach (UnitController obo in mainTowers)
         {
-            obo.production.product = Random.Range(5, 50);
+            obo.production.SetProduct(Random.Range(5, 50));
             obo.team.ChangeTeam(Random.Range(0, 3));
         }
 

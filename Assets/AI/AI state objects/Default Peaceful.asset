@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 372432c9a045d1b48bead30e92e6da9d, type: 3}
   m_Name: Default Peaceful
   m_EditorClassIdentifier: 
-  rngStateChances: 05000000230000003c000000
-  attackBehavior: {fileID: 11400000, guid: 131281444a73a7b498488048c2be4dda, type: 2}
-  defendBehavior: {fileID: 11400000, guid: 671a1612adc9f7e4bab43e9fe589939d, type: 2}
-  expandBehavior: {fileID: 11400000, guid: 7ca7c3c52159e5a418bcddda9fe098f3, type: 2}
+  chanceBehaviorsTable:
+  - chance: 20
+    behavior: {fileID: 11400000, guid: 7ca7c3c52159e5a418bcddda9fe098f3, type: 2}
+  - chance: 20
+    behavior: {fileID: 11400000, guid: b91cfc14def5aca48a1365ed6956b768, type: 2}
+  - chance: 55
+    behavior: {fileID: 11400000, guid: 671a1612adc9f7e4bab43e9fe589939d, type: 2}
+  - chance: 5
+    behavior: {fileID: 11400000, guid: 131281444a73a7b498488048c2be4dda, type: 2}

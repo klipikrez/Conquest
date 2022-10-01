@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Default Building Production 1 Preset
   m_EditorClassIdentifier: 
   presetName: default generator 1
+  enableOptions: 04000000
   size: 1
-  product: 5
-  cost: 5
-  productProduction: 0.8
+  product: 10
+  cost: 10
+  productProduction: 0.6
   maxUnits: 20
   vulnerability: 0.81
   meshType: 2

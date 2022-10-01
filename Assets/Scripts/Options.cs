@@ -44,9 +44,6 @@ public class Options : MonoBehaviour
     private void Awake()
     {//ptickixcce idu tut tut
         settings = JsonUtility.FromJson<Settings>(File.ReadAllText(Application.dataPath + "/StreamingAssets/klipik.rez"));
-        Debug.Log(settings.fps);
-        Debug.Log(settings.fullScreen);
-        Debug.Log("-------------------------------------------");
         Instance = this;
     }
 
@@ -91,7 +88,6 @@ public class Options : MonoBehaviour
         {
             settings.vsync = value;
             QualitySettings.vSyncCount = value ? 1 : 0;
-            Debug.Log(QualitySettings.vSyncCount);
         }
     }
 

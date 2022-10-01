@@ -17,18 +17,48 @@ public class AIPlayer
     {
         this.team = team;
     }
+
+    public static bool operator ==(AIPlayer a, AIPlayer b)
+    {
+        if (a.team == b.team)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static bool operator !=(AIPlayer a, AIPlayer b)
+    {
+        if (a.team != b.team)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
 public class AIManager : MonoBehaviour
 {
+    //player stats for ai
     public AIPlayer Player = new AIPlayer(1);
+    //just a compiler object refrence
     public BuildingBehaviorCompiler bbc;
+    //all buildigs in the game
     GameObject[] buildings;
+    //unit controllers for getting current number of units for each ai and plaer
     List<UnitController> unitControllers = new List<UnitController>();
+    //ai object types
     public AIType[] AITypeByTeam;
+    //curently active ais
     public List<AIPlayer> AIPlayers = new List<AIPlayer>();
 
-
+    //instranca
     public static AIManager Instance { get; private set; }
 
     private void Awake()
@@ -148,12 +178,13 @@ public class AIManager : MonoBehaviour
             if (ai.team <= AITypeByTeam.Length - 1)//check if team ai exists
             {
                 //Debug.Log(AITypeByTeam[ai.team].name);
-                ai.repeatingFunction = StartCoroutine(AIClockRepeating(ai));// :( mrzim corutine
+                ai.repeatingFunction = StartCoroutine(AIClockRepeating(ai));
             }
         }
     }
     IEnumerator AIClockRepeating(AIPlayer ai)
     {
+        //just a timer on witch ais will be calculating their moves
         yield return new WaitForSeconds(AITypeByTeam[ai.team].clockCycleTime);
         while (true)//  kor
         {
@@ -165,8 +196,8 @@ public class AIManager : MonoBehaviour
 
     public void UpdateTeamTowers(UnitController tower, int oldTeam, int newTeam)
     {
-
-
+        //magicno odredimo sta se desi kad neko zauzme nesto
+        //inace nemam pojma sta se desava
         if (oldTeam >= 2)
             AIPlayers[oldTeam - 2].Towers.Remove(tower);
         else

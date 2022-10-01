@@ -10,6 +10,7 @@ public class Team : MonoBehaviour
     public int teamid = 0;
     public MeshRenderer meshRenderer;
     public MeshRenderer markerRend;
+    public MeshFilter meshFilter;
     public Animator ObjectAnimatior;
     Production prod;
     [System.NonSerialized]
@@ -67,17 +68,25 @@ public class Team : MonoBehaviour
         }
     }
 
+    public void SetMesh(Mesh mesh)
+    {
+        if (meshFilter != null)
+        {
+            meshFilter.mesh = mesh;
+        }
+    }
+
     public void Damage(UnitAgent attacker)
     {
 
         if (isBuilding)
         {
-            prod.product -= vulnerability;
+            prod.SubtractProduct(vulnerability);
             ;
             if (prod.product < 0)
             {
                 controller.StopAttackUnits();
-                prod.product = 0;
+                prod.SetProduct(0);
                 if (SoundManager.Instance != null && teamid == 1)
                 {
                     SoundManager.Instance.PlayAudioClip(5);
@@ -105,7 +114,7 @@ public class Team : MonoBehaviour
     {
         if (isBuilding)
         {
-            prod.product += 1f;
+            prod.AddProduct(1f);
         }
     }
 
