@@ -15,15 +15,22 @@ MonoBehaviour:
   version: 4
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: tree
   m_Shader: {fileID: 4800000, guid: 5354841ef6d24a94ab5a4d1b80a940fb, type: 3}
-  m_ShaderKeywords: _COLOR_TINT _INTERACTION_OFF _LIGHTING_QUALITY_LOW _SPECULARHIGHLIGHTS_OFF
-    _WIND_AUTO
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _COLOR_TINT
+  - _LIGHTING_QUALITY_LOW
+  - _SPECULARHIGHLIGHTS_OFF
+  - _WIND_AUTO
+  m_InvalidKeywords:
+  - _INTERACTION_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -35,6 +42,7 @@ Material:
   - TransparentDepthPrepass
   - TransparentDepthPostpass
   - TransparentBackface
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -110,6 +118,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaClip: 0
     - _AlphaTest: 0

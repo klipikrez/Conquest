@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 38.7156, y: -72.4149, z: 69.10179}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3957589408201558163}
   m_Father: {fileID: 0}
@@ -64,7 +65,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3957589408201558163
 Transform:
   m_ObjectHideFlags: 0
@@ -75,6 +76,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8728029338322808397}
   - {fileID: 7194412397037493410}
@@ -86,6 +88,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 3957589408201558163}
     m_Modifications:
     - target: {fileID: 4391811564392492828, guid: acba58cae093c9642b755869c1cba2e9, type: 3}
@@ -136,7 +139,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: slimeGizmo
       objectReference: {fileID: 0}
+    - target: {fileID: 7290096953404152883, guid: acba58cae093c9642b755869c1cba2e9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: acba58cae093c9642b755869c1cba2e9, type: 3}
 --- !u!4 &7194412397037493410 stripped
 Transform:
@@ -148,6 +156,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 3957589408201558163}
     m_Modifications:
     - target: {fileID: 2179104942461387541, guid: 6351dc6e3ba17134a96bb9ee4f0a282e, type: 3}
@@ -239,6 +248,7 @@ PrefabInstance:
       value: Canvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 6351dc6e3ba17134a96bb9ee4f0a282e, type: 3}
 --- !u!224 &8728029338322808397 stripped
 RectTransform:
