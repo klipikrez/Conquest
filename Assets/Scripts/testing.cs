@@ -23,7 +23,6 @@ public class testing : MonoBehaviour
     {
 
     }
-    public Texture2D tex;
     void SaveTerrain(string levelName, TerrainData terrain)
     {
 
@@ -37,10 +36,11 @@ public class testing : MonoBehaviour
     void LoadTerrain(string levelName, TerrainData terrain)
     {
         CheckLevelFolder(levelName);
+        LoadTerrainDetails(levelName, terrain);
         LoadTerrainHeight(levelName, terrain);
         LoadTerrainAlpha(levelName, terrain);
         LoadTerrainTrees(levelName, terrain);
-        LoadTerrainDetails(levelName, terrain);
+
     }
 
     [System.Serializable]
@@ -158,8 +158,9 @@ public class testing : MonoBehaviour
     public class DetailStorage
     {
 
-        public GameObject prototype;
-        /*ne znam cemu ovo gvno sluzi... i necu da ga dodajem :)*/
+        //public GameObject prototype;
+        public string prototypeName;
+        /*ovo ne koristimo :)*/
         public Texture2D PrototypeTexture;
         public float MinWidth;
         public float MaxWidth;
@@ -173,7 +174,7 @@ public class testing : MonoBehaviour
         public DetailStorage(DetailPrototype treePrototype)
         {
 
-            this.prototype = treePrototype.prototype;
+            this.prototypeName = treePrototype.prototype.name;
             this.PrototypeTexture = treePrototype.prototypeTexture;
             this.MinWidth = treePrototype.minWidth;
             this.MaxWidth = treePrototype.maxWidth;
@@ -188,8 +189,8 @@ public class testing : MonoBehaviour
         public DetailPrototype Copy()
         {
             DetailPrototype detailPrototype = new DetailPrototype();
-
-            detailPrototype.prototype = this.prototype;
+            Debug.Log(Resources.Load("Folage/" + this.prototypeName) as GameObject);
+            detailPrototype.prototype = Resources.Load("Folage/" + this.prototypeName) as GameObject;
             detailPrototype.prototypeTexture = this.PrototypeTexture;
             detailPrototype.minWidth = this.MinWidth;
             detailPrototype.maxWidth = this.MaxWidth;
@@ -199,7 +200,7 @@ public class testing : MonoBehaviour
             detailPrototype.healthyColor = this.HealthyColor;
             detailPrototype.dryColor = this.DryColor;
             detailPrototype.renderMode = this.RenderMode;
-
+            detailPrototype.usePrototypeMesh = true; // uvek koristimo mesh
             return detailPrototype;
         }
     }
@@ -210,14 +211,13 @@ public class testing : MonoBehaviour
 
         for (int dp = 0; dp < workPrototypes.Length; dp++)
         {
-            tex = terrain.detailPrototypes[dp].prototypeTexture;
-            Debug.Log(terrain.detailPrototypes[dp].prototypeTexture);
+
             DetailPrototype clonedPrototype = new DetailPrototype();
 
             // prototype
             clonedPrototype.prototype = terrain.detailPrototypes[dp].prototype;
             // prototypeTexture
-            /*ne znam cemu ovo gvno sluzi... i necu da ga dodajem :)*/
+            /*ovo ne koristimo :)*/
             clonedPrototype.prototypeTexture = terrain.detailPrototypes[dp].prototypeTexture;
             // minWidth
             clonedPrototype.minWidth = terrain.detailPrototypes[dp].minWidth;
@@ -245,7 +245,7 @@ public class testing : MonoBehaviour
         string filePath = Path.Combine(folderPath, levelName + "_Details.rez");
         File.WriteAllText(filePath, JsonUtility.ToJson(details));//update setings json
 
-
+        //ovde je deo sto ne valja
         int numDetailLayers = terrain.detailPrototypes.Length;
         for (int layNum = 0; layNum < numDetailLayers; layNum++)
         {
@@ -280,10 +280,21 @@ public class testing : MonoBehaviour
         for (int ti = 0; ti < details.details.Length; ti++)
         {
             clonedDetails.Add(details.details[ti].Copy());
+
         }
         terrain.detailPrototypes = clonedDetails.ToArray();
 
 
+        renderTexture = new RenderTexture(renderTexture.width, renderTexture.height, 24);
+        renderTexture.enableRandomWrite = true;
+        renderTexture.Create();
+        Color[] pixels = new Color[renderTexture.width * renderTexture.height];
+        //tex = new Texture2D(renderTexture.width, renderTexture.width);
+        //renderer.material.mainTexture = texture;
+        //RenderTexture.active = renderTexture;
+        //don't forget that you need to specify rendertexture before you call readpixels
+        //otherwise it will read screen pixels.
+        //texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
         int layNum = 0;
         while (true)
         {
@@ -293,47 +304,43 @@ public class testing : MonoBehaviour
             Debug.Log(path);
 
 
-            if (!File.Exists(path)) return;
+            if (!File.Exists(path)) break;
 
             int[,] dat = terrain.GetDetailLayer(0, 0, terrain.detailWidth, terrain.detailHeight, layNum);
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
             BinaryReader br = new BinaryReader(fs);
-            br.BaseStream.Seek(0, SeekOrigin.Begin);
+            //br.BaseStream.Seek(0, SeekOrigin.Begin);
+            Debug.Log(terrain.detailHeight + " " + terrain.detailWidth);
             for (int i = 0; i < terrain.detailHeight; i++)
             {
+                int au = 1;
+
                 for (int j = 0; j < terrain.detailWidth; j++)
                 {
-                    dat[i, j] = (int)br.Read();
+                    au = (int)br.Read();
+                    pixels[i * terrain.detailWidth + j] = new Color(0, au > 0 ? 1 : 0, 0, 1);
+                    //texture.SetPixel(i, j, new Color(1, 0, 0));
+
+                    dat[i, j] = au;
                 }
+
+                Debug.Log(au);
             }
             br.Close();
             terrain.SetDetailLayer(0, 0, layNum++, dat);
 
-        }
 
-
-        /*int numDetailLayers = terrain.detailPrototypes.Length;
-        for (int layNum = 0; layNum < numDetailLayers; layNum++)
-        {
-            filePath = Path.Combine(folderPath, levelName + "_DetailMap" + layNum + ".rez");
-            int[,] thisDetailLayer = terrain.GetDetailLayer(0, 0, terrain.detailWidth, terrain.detailHeight, layNum);
-
-            FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
-            BinaryWriter bw = new BinaryWriter(fs);
-            for (int i = 0; i < terrain.detailHeight; i++)
-            {
-                for (int j = 0; j < terrain.detailWidth; j++)
-                {
-                    bw.Write(thisDetailLayer[i, j]);
-                }
-            }
-            bw.Close();
-        }*/
-
-
-
-        //workData.SetDetailLayer(0, 0, layNum, thisDetailLayer);
+        }        //tex.SetPixels(pixels);
+                 //tex.Apply();
+        tex.SetPixels(pixels);
+        tex.Apply();
     }
+
+    int at = 0;
+
+    public RenderTexture renderTexture; // renderTextuer that you will be rendering stuff on
+                                        // public Renderer renderer; // renderer in which you will apply changed texture
+    public Texture2D tex;
 
     void SaveTerrainTrees(string levelName, TerrainData terrain)
     {
