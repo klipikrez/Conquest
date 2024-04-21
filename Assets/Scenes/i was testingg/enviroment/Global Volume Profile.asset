@@ -27,42 +27,31 @@ MonoBehaviour:
   m_Name: Bloom
   m_EditorClassIdentifier: 
   active: 1
-  m_AdvancedMode: 0
   threshold:
-    m_OverrideState: 0
-    m_Value: 0.9
-    min: 0
+    m_OverrideState: 1
+    m_Value: 1
   intensity:
     m_OverrideState: 1
     m_Value: 1
-    min: 0
   scatter:
     m_OverrideState: 0
     m_Value: 0
-    min: 0
-    max: 1
   clamp:
     m_OverrideState: 0
     m_Value: 24
-    min: 0
   tint:
     m_OverrideState: 1
     m_Value: {r: 1, g: 0.8316375, b: 0.4764151, a: 1}
-    hdr: 0
-    showAlpha: 0
-    showEyeDropper: 1
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 1
   skipIterations:
     m_OverrideState: 0
     m_Value: 5
-    min: 0
-    max: 16
   dirtTexture:
     m_OverrideState: 0
     m_Value: {fileID: 2800000, guid: 13718c4c143155948bb85cc9e0c511d3, type: 3}
+    dimension: 1
   dirtIntensity:
     m_OverrideState: 0
     m_Value: 1
-    min: 0

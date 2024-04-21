@@ -75,17 +75,30 @@ public class outline : ScriptableRendererFeature
 
     // Here you can inject one or multiple render passes in the renderer.
     // This method is called when setting up the renderer once per-camera.
+    /* public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
+     {
+         if (settings.blitMaterial == null)
+         {
+             Debug.LogWarningFormat("Missing Blit Material. {0} blit pass will not execute. Check for missing reference in the assigned renderer.", GetType().Name);
+             return;
+         }
+
+         blitPass.source = renderer.cameraColorTarget;
+         renderer.EnqueuePass(blitPass);
+     }*/
+
+    public override void SetupRenderPasses(ScriptableRenderer renderer, in RenderingData renderingData)
+    {
+        blitPass.source = renderer.cameraColorTarget;
+
+    }
+
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
-        if (settings.blitMaterial == null)
-        {
-            Debug.LogWarningFormat("Missing Blit Material. {0} blit pass will not execute. Check for missing reference in the assigned renderer.", GetType().Name);
-            return;
-        }
 
-        blitPass.source = renderer.cameraColorTarget;
         renderer.EnqueuePass(blitPass);
     }
+
 }
 
 
