@@ -534,7 +534,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrain1: {fileID: 1308607000}
   terrain2: {fileID: 201010000}
-  tex: {fileID: 0}
+  renderTexture: {fileID: 8400000, guid: c4e3799fba1a9bc4bb428773824a671d, type: 2}
+  tex: {fileID: 2800000, guid: 82c423a901cb54045ac5b1451b959b91, type: 3}
 --- !u!4 &1014644726
 Transform:
   m_ObjectHideFlags: 0

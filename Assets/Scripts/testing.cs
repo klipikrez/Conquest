@@ -5,6 +5,17 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+
+///////////////////////////////////////////////////////////////////
+//                                                               //
+//     Storage classes - for temp storage of unity classes,      //
+//                 to be able to read/write them                 //
+//                                                               //
+//     Compiled classes -  for easier manipulation of arrays     //
+//                                                               //
+///////////////////////////////////////////////////////////////////
+
+
 public class testing : MonoBehaviour
 {
     public Terrain terrain1;
@@ -44,9 +55,9 @@ public class testing : MonoBehaviour
     }
 
     [System.Serializable]
-    public class TerrainTrees
+    public class TerrainTreesCompiled
     {
-        public TerrainTrees(TreeInstance[] instances, TreePrototype[] prototypes)
+        public TerrainTreesCompiled(TreeInstance[] instances, TreePrototype[] prototypes)
         {
 
             List<TreeInstanceStorage> bob = new List<TreeInstanceStorage>();
@@ -137,9 +148,9 @@ public class testing : MonoBehaviour
     }
 
     [System.Serializable]
-    public class TerrainDetails
+    public class TerrainDetailsCompiled
     {
-        public TerrainDetails(DetailPrototype[] instances)
+        public TerrainDetailsCompiled(DetailPrototype[] instances)
         {
 
             List<DetailStorage> bob = new List<DetailStorage>();
@@ -239,13 +250,13 @@ public class testing : MonoBehaviour
             workPrototypes[dp] = clonedPrototype;
         }
 
-        TerrainDetails details = new TerrainDetails(workPrototypes);
+        TerrainDetailsCompiled details = new TerrainDetailsCompiled(workPrototypes);
 
         string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Details.rez");
         File.WriteAllText(filePath, JsonUtility.ToJson(details));//update setings json
 
-        //ovde je deo sto ne valja
+
         int numDetailLayers = terrain.detailPrototypes.Length;
         for (int layNum = 0; layNum < numDetailLayers; layNum++)
         {
@@ -258,7 +269,7 @@ public class testing : MonoBehaviour
             {
                 for (int j = 0; j < terrain.detailWidth; j++)
                 {
-                    bw.Write(thisDetailLayer[i, j]);
+                    bw.Write((int)thisDetailLayer[i, j]);
                 }
             }
             bw.Close();
@@ -274,7 +285,7 @@ public class testing : MonoBehaviour
         string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Details.rez");
 
-        TerrainDetails details = JsonUtility.FromJson<TerrainDetails>(File.ReadAllText(filePath));//update setings json
+        TerrainDetailsCompiled details = JsonUtility.FromJson<TerrainDetailsCompiled>(File.ReadAllText(filePath));//update setings json
 
         List<DetailPrototype> clonedDetails = new List<DetailPrototype>();
         for (int ti = 0; ti < details.details.Length; ti++)
@@ -285,16 +296,6 @@ public class testing : MonoBehaviour
         terrain.detailPrototypes = clonedDetails.ToArray();
 
 
-        renderTexture = new RenderTexture(renderTexture.width, renderTexture.height, 24);
-        renderTexture.enableRandomWrite = true;
-        renderTexture.Create();
-        Color[] pixels = new Color[renderTexture.width * renderTexture.height];
-        //tex = new Texture2D(renderTexture.width, renderTexture.width);
-        //renderer.material.mainTexture = texture;
-        //RenderTexture.active = renderTexture;
-        //don't forget that you need to specify rendertexture before you call readpixels
-        //otherwise it will read screen pixels.
-        //texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
         int layNum = 0;
         while (true)
         {
@@ -309,7 +310,7 @@ public class testing : MonoBehaviour
             int[,] dat = terrain.GetDetailLayer(0, 0, terrain.detailWidth, terrain.detailHeight, layNum);
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
             BinaryReader br = new BinaryReader(fs);
-            //br.BaseStream.Seek(0, SeekOrigin.Begin);
+
             Debug.Log(terrain.detailHeight + " " + terrain.detailWidth);
             for (int i = 0; i < terrain.detailHeight; i++)
             {
@@ -317,11 +318,7 @@ public class testing : MonoBehaviour
 
                 for (int j = 0; j < terrain.detailWidth; j++)
                 {
-                    au = (int)br.Read();
-                    pixels[i * terrain.detailWidth + j] = new Color(0, au > 0 ? 1 : 0, 0, 1);
-                    //texture.SetPixel(i, j, new Color(1, 0, 0));
-
-                    dat[i, j] = au;
+                    dat[i, j] = (int)br.ReadInt32();
                 }
 
                 Debug.Log(au);
@@ -330,17 +327,8 @@ public class testing : MonoBehaviour
             terrain.SetDetailLayer(0, 0, layNum++, dat);
 
 
-        }        //tex.SetPixels(pixels);
-                 //tex.Apply();
-        tex.SetPixels(pixels);
-        tex.Apply();
+        }
     }
-
-    int at = 0;
-
-    public RenderTexture renderTexture; // renderTextuer that you will be rendering stuff on
-                                        // public Renderer renderer; // renderer in which you will apply changed texture
-    public Texture2D tex;
 
     void SaveTerrainTrees(string levelName, TerrainData terrain)
     {
@@ -389,7 +377,7 @@ public class testing : MonoBehaviour
         //workData.treePrototypes = workTreePrototypes;
 
 
-        TerrainTrees trees = new TerrainTrees(workTrees, workTreePrototypes);
+        TerrainTreesCompiled trees = new TerrainTreesCompiled(workTrees, workTreePrototypes);
 
         string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Trees.rez");
@@ -404,7 +392,7 @@ public class testing : MonoBehaviour
 
         string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Trees.rez");
-        TerrainTrees trees = JsonUtility.FromJson<TerrainTrees>(File.ReadAllText(filePath));//update setings json
+        TerrainTreesCompiled trees = JsonUtility.FromJson<TerrainTreesCompiled>(File.ReadAllText(filePath));//update setings json
 
 
 
@@ -427,22 +415,22 @@ public class testing : MonoBehaviour
 
     }
 
-    private void SaveTerrainAlpha(string levelName, TerrainData terrainData)
+    void SaveTerrainAlpha(string levelName, TerrainData terrain)
     {
 
         string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Splat.txt");
 
 
-        float[,,] numArray = terrainData.GetAlphamaps(0, 0, terrainData.alphamapWidth, terrainData.alphamapHeight);
+        float[,,] numArray = terrain.GetAlphamaps(0, 0, terrain.alphamapWidth, terrain.alphamapHeight);
         BinaryWriter writer = new BinaryWriter(new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None));
         int num = 0;
-        while (num < terrainData.alphamapWidth)
+        while (num < terrain.alphamapWidth)
         {
             int num2 = 0;
             while (true)
             {
-                if (num2 >= terrainData.alphamapHeight)
+                if (num2 >= terrain.alphamapHeight)
                 {
                     num++;
                     break;
@@ -465,24 +453,24 @@ public class testing : MonoBehaviour
         writer.Close();
     }
 
-    private void LoadTerrainAlpha(string levelName, TerrainData terrainData)
+    void LoadTerrainAlpha(string levelName, TerrainData terrain)
     {
 
         string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Splat.txt");
 
 
-        float[,,] numArray = terrainData.GetAlphamaps(0, 0, terrainData.alphamapWidth, terrainData.alphamapHeight);
+        float[,,] numArray = terrain.GetAlphamaps(0, 0, terrain.alphamapWidth, terrain.alphamapHeight);
         BinaryReader reader = new BinaryReader(new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None));
         //reader.BaseStream.Seek(0, SeekOrigin.Begin);
 
         int num = 0;
-        while (num < terrainData.alphamapWidth)
+        while (num < terrain.alphamapWidth)
         {
             int num2 = 0;
             while (true)
             {
-                if (num2 >= terrainData.alphamapHeight)
+                if (num2 >= terrain.alphamapHeight)
                 {
                     num++;
                     break;
@@ -503,7 +491,7 @@ public class testing : MonoBehaviour
             }
         }
 
-        terrainData.SetAlphamaps(0, 0, numArray);
+        terrain.SetAlphamaps(0, 0, numArray);
         reader.Close();
     }
 
