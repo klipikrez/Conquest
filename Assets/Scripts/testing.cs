@@ -200,7 +200,6 @@ public class testing : MonoBehaviour
         public DetailPrototype Copy()
         {
             DetailPrototype detailPrototype = new DetailPrototype();
-            Debug.Log(Resources.Load("Folage/" + this.prototypeName) as GameObject);
             detailPrototype.prototype = Resources.Load("Folage/" + this.prototypeName) as GameObject;
             detailPrototype.prototypeTexture = this.PrototypeTexture;
             detailPrototype.minWidth = this.MinWidth;
@@ -302,7 +301,6 @@ public class testing : MonoBehaviour
 
 
             string path = Application.streamingAssetsPath + "/Levels/" + levelName + "/" + levelName + "_DetailMap" + layNum + ".rez";
-            Debug.Log(path);
 
 
             if (!File.Exists(path)) break;
@@ -311,17 +309,13 @@ public class testing : MonoBehaviour
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
             BinaryReader br = new BinaryReader(fs);
 
-            Debug.Log(terrain.detailHeight + " " + terrain.detailWidth);
             for (int i = 0; i < terrain.detailHeight; i++)
             {
-                int au = 1;
-
                 for (int j = 0; j < terrain.detailWidth; j++)
                 {
                     dat[i, j] = (int)br.ReadInt32();
                 }
 
-                Debug.Log(au);
             }
             br.Close();
             terrain.SetDetailLayer(0, 0, layNum++, dat);
