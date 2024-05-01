@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Drawing;
 
 public class FlyCamera : MonoBehaviour
 {
@@ -18,15 +19,16 @@ public class FlyCamera : MonoBehaviour
     public float shiftAdd = 250.0f; //multiplied by how long shift is held.  Basically running
     public float maxShift = 1000.0f; //Maximum speed when holdin gshift
     public float camSens = 0.25f; //How sensitive it with mouse
-    private Vector3 lastMouse = new Vector3(255, 255, 255); //kind of in the middle of the screen, rather than at the top (play)
     private float totalRun = 1.0f;
     public Camera PlayerCamera;
+    bool wrapMouse = false;
 
     void Update()
     {
         if (Input.GetMouseButtonDown(2))
         {
-            UnityEditor.EditorGUIUtility.SetWantsMouseJumping(1);
+            wrapMouse = true;
+            //UnityEditor.EditorGUIUtility.SetWantsMouseJumping(1);
         }
         if (Input.GetMouseButton(2))
         {
@@ -56,15 +58,19 @@ public class FlyCamera : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(2))
         {
-            UnityEditor.EditorGUIUtility.SetWantsMouseJumping(0);
+            //UnityEditor.EditorGUIUtility.SetWantsMouseJumping(0);
+            wrapMouse = false;
         }
-        //Mouse  camera angle done.  
+
+        if (wrapMouse)
+            WrapCursor();
+
 
         //Keyboard commands
         Vector3 p = GetBaseInput();
         if (p.sqrMagnitude > 0)
         { // only move while a direction key is pressed
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftControl))
             {
                 totalRun += Time.deltaTime;
                 p = p * totalRun * shiftAdd;
@@ -122,5 +128,36 @@ public class FlyCamera : MonoBehaviour
             p_Velocity += new Vector3(0, -1, 0);
         }
         return p_Velocity;
+    }
+
+
+
+    void WrapCursor()
+    {
+        // Get the mouse position in world coordinates
+        Vector3 pos = Input.mousePosition;
+
+        //Debug.Log(Screen.width);
+        // Check if the mouse is outside the screen boundaries
+        if (pos.x >= Screen.width - 2)
+        {
+            UnityEngine.InputSystem.Mouse.current.WarpCursorPosition(new Vector2(5, pos.y));
+        }
+        else if (pos.x <= 0 + 2)
+        {
+            UnityEngine.InputSystem.Mouse.current.WarpCursorPosition(new Vector2(Screen.width - 5, pos.y));
+        }
+
+        if (pos.y >= Screen.height - 2)
+        {
+            UnityEngine.InputSystem.Mouse.current.WarpCursorPosition(new Vector2(pos.x, 5));
+        }
+        else if (pos.y <= 0 + 2)
+        {
+            UnityEngine.InputSystem.Mouse.current.WarpCursorPosition(new Vector2(pos.x, Screen.height - 5));
+        }
+
+        // Update the mouse position
+
     }
 }

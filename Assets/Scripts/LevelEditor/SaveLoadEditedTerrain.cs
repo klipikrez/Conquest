@@ -16,7 +16,7 @@ using UnityEngine.UIElements;
 ///////////////////////////////////////////////////////////////////
 
 
-public class testing : MonoBehaviour
+public class SaveLoadEditedTerrain : MonoBehaviour
 {
     public Terrain terrain1;
     public Terrain terrain2;
@@ -530,15 +530,15 @@ public class testing : MonoBehaviour
 
     void CheckLevelFolder(string levelName)
     {
-        if (!AssetDatabase.IsValidFolder("Assets/StreamingAssets/Levels"))
+        if (!System.IO.Directory.Exists("Assets/StreamingAssets/Levels"))
         {
-            string guid = AssetDatabase.CreateFolder("Assets/StreamingAssets", "Levels");
+            System.IO.Directory.CreateDirectory("Assets/StreamingAssets/Levels");
 
 
         }
-        if (!AssetDatabase.IsValidFolder("Assets/StreamingAssets/Levels/" + levelName))
+        if (!System.IO.Directory.Exists("Assets/StreamingAssets/Levels/" + levelName))
         {
-            string guid = AssetDatabase.CreateFolder("Assets/StreamingAssets/levels", levelName);
+            System.IO.Directory.CreateDirectory("Assets/StreamingAssets/levels/" + levelName);
 
 
         }

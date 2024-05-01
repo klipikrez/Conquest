@@ -33,7 +33,7 @@ public class Selection : MonoBehaviour
     //the vertices of our meshcollider
     Vector3[] verts;
     Vector3[] vecs;
-
+    bool startedSelecting = false;
 
     // Start is called before the first frame update
     void Start()
@@ -59,8 +59,9 @@ public class Selection : MonoBehaviour
         }
 
         //1. when left mouse button clicked (but not released)
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
+            startedSelecting = true;
             p1 = Input.mousePosition;
             Ray rej = Camera.main.ScreenPointToRay(p1);
             if (Physics.Raycast(rej, out hit, 50000.0f, LayerMask.GetMask("terrain")))
@@ -75,7 +76,7 @@ public class Selection : MonoBehaviour
         }
 
         //2. while left mouse button held
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && startedSelecting)
         {
             Ray rej = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(rej, out hit, 50000.0f, LayerMask.GetMask("terrain")))
@@ -95,8 +96,9 @@ public class Selection : MonoBehaviour
         }
 
         //3. when mouse button comes up
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && startedSelecting)
         {
+            startedSelecting = false;
             if (dragSelect == false) //single select
             {
                 RayCastLeftClick();
@@ -106,6 +108,7 @@ public class Selection : MonoBehaviour
                 p2 = Input.mousePosition;
 
                 p1 = Camera.main.WorldToScreenPoint(P1Point); //p1 to LAst recorded p1 raycast from camera to terrain and again to camera
+                Debug.Log(p1 + " " + p2);
                 verts = new Vector3[4];
                 vecs = new Vector3[4];
                 int i = 0;
@@ -115,15 +118,18 @@ public class Selection : MonoBehaviour
                 foreach (Vector2 corner in corners)
                 {
                     Ray ray = Camera.main.ScreenPointToRay(corner);
-
-                    if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("terrain")))
+                    Debug.DrawRay(transform.position, ray.direction * 50000f, Color.blue, 2f);
+                    /*9if (!Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("terrain")))
                     {
-                        //ovde se serem
-                        /*verts[i] = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-                        vecs[i] = ray.origin - hit.point;*/
-                        verts[i] = new Vector3(hit.point.x - transform.position.x, hit.point.y - transform.position.y, hit.point.z - transform.position.z).normalized * 50000.0f;
-                        vecs[i] = (ray.origin - hit.point).normalized * 50000.0f;
-                    }
+                        hit.point = ray.direction * 50000f;
+                    }*/
+                    hit.point = ray.direction * 50000f;
+                    //ovde se serem
+                    /*verts[i] = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                    vecs[i] = ray.origin - hit.point;*/
+                    verts[i] = new Vector3(hit.point.x - transform.position.x, hit.point.y - transform.position.y, hit.point.z - transform.position.z).normalized * 50000.0f;
+                    vecs[i] = (ray.origin - hit.point).normalized * 50000.0f;
+
                     i++;
                 }
 
@@ -140,7 +146,7 @@ public class Selection : MonoBehaviour
                     selectedDictionary.RemoveAll();
                 }
 
-                Destroy(selectionBox, 0.02f);
+                Destroy(selectionBox, 1.2f);
 
 
                 /* { // OLD SELECION
