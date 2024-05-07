@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.iOS;
 using UnityEngine.UI;
@@ -16,8 +17,12 @@ public class EditorOptions : MonoBehaviour
     public int brushSize = 5;
     public float brushStrenth = 15;
     public GameObject editorMenu;
-    public static EditorOptions Instance;
     public Texture2D BrushImage;
+    public TMP_InputField terrainNameInput;
+    public GameObject saveTerrainButton;
+    public GameObject cancelSetPlayerPosButtons;
+    public GameObject modeTabs;
+    public GameObject setPlayerSpawnButton;
     public float brushHeight = 0.51f;
     public float folageDensity = 1;
     public int selectedTexture = 0;
@@ -25,6 +30,7 @@ public class EditorOptions : MonoBehaviour
     public float maxScale = 1;
     public int selectedTree = 0;
     public float treeSpacing = 3f;
+    public static EditorOptions Instance;
 
     private void Awake()
     {
@@ -50,7 +56,6 @@ public class EditorOptions : MonoBehaviour
 
     public void UpdateFolageDensity(float val)
     {
-        Debug.Log("Fola: " + val / 16);
         FolageSlider.value = val;
         folageDensity = val / 16;
     }
@@ -71,60 +76,73 @@ public class EditorOptions : MonoBehaviour
     public void SetMenuActive(int val)
     {
         editorMenu.SetActive(true);
+        modeTabs.SetActive(true);
+
+        cancelSetPlayerPosButtons.SetActive(false);
+        brushHeightSlider.gameObject.SetActive(false);
+        brushSizeSlider.gameObject.SetActive(false);
+        brushStrenthSlider.gameObject.SetActive(false);
+        BrushTabs.SetActive(false);
+        FolageSlider.gameObject.SetActive(false);
+        terrainNameInput.gameObject.SetActive(false);
+        saveTerrainButton.SetActive(false);
+        BrushView.SetActive(false);
+        TextureView.SetActive(false);
+        setPlayerSpawnButton.SetActive(false);
         switch (val)
         {
             case 0:
                 {
-                    brushHeightSlider.gameObject.SetActive(false);
                     brushSizeSlider.gameObject.SetActive(true);
                     brushStrenthSlider.gameObject.SetActive(true);
                     BrushTabs.SetActive(true);
                     BrushView.SetActive(true);
-                    TextureView.SetActive(false);
-                    FolageSlider.gameObject.SetActive(false);
                     break;
                 }
             case 1:
                 {
-                    brushHeightSlider.gameObject.SetActive(false);
                     brushSizeSlider.gameObject.SetActive(true);
                     brushStrenthSlider.gameObject.SetActive(true);
-                    BrushTabs.SetActive(false);
                     BrushView.SetActive(true);
                     TextureView.SetActive(true);
-                    FolageSlider.gameObject.SetActive(false);
                     break;
                 }
             case 2:
                 {
-                    brushHeightSlider.gameObject.SetActive(false);
                     brushSizeSlider.gameObject.SetActive(true);
                     brushStrenthSlider.gameObject.SetActive(true);
-                    BrushTabs.SetActive(false);
-                    BrushView.SetActive(false);
-                    TextureView.SetActive(false);
-                    FolageSlider.gameObject.SetActive(false);
                     break;
                 }
             case 3:
                 {
-                    brushHeightSlider.gameObject.SetActive(false);
                     brushSizeSlider.gameObject.SetActive(true);
                     brushStrenthSlider.gameObject.SetActive(true);
-                    BrushTabs.SetActive(false);
                     BrushView.SetActive(true);
-                    TextureView.SetActive(false);
                     FolageSlider.gameObject.SetActive(true);
+                    break;
+                }
+            case 4:
+                {
+                    break;
+                }
+            case 5:
+                {
+                    terrainNameInput.gameObject.SetActive(true);
+                    saveTerrainButton.SetActive(true);
+                    setPlayerSpawnButton.SetActive(true);
+                    break;
+                }
+            case 6:
+                {
+                    cancelSetPlayerPosButtons.SetActive(true);
+                    modeTabs.SetActive(false);
                     break;
                 }
             default:
                 {
-                    brushHeightSlider.gameObject.SetActive(false);
-                    brushSizeSlider.gameObject.SetActive(false);
-                    brushStrenthSlider.gameObject.SetActive(false);
-                    BrushTabs.SetActive(false);
+                    modeTabs.SetActive(true);
                     editorMenu.SetActive(false);
-                    FolageSlider.gameObject.SetActive(false);
+
                     break;
                 }
         }

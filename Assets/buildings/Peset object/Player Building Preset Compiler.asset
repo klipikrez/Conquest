@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddd1ad76a7d7c9043b438d5761654402, type: 3}
+  m_Name: Player Building Preset Compiler
+  m_EditorClassIdentifier: 
+  presets:
+  - {fileID: 11400000, guid: 408308f0a3b86cc4b9dc85e0f13bdb76, type: 2}
+  - {fileID: 11400000, guid: 7ef050476c352cb42b5d85817e8b3c57, type: 2}
+  - {fileID: 11400000, guid: f9830963c98be3d48baed1cdcd698316, type: 2}
+  - {fileID: 11400000, guid: 3c27c81c660f9e04fa7282dc5f2875e3, type: 2}
+  - {fileID: 11400000, guid: 8eb98eda7fda440429a13dfbc7e01460, type: 2}
+  - {fileID: 11400000, guid: 80f2025218063864cac484759bf2d6fd, type: 2}

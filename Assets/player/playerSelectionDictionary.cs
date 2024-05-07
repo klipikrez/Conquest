@@ -5,7 +5,7 @@ using UnityEngine;
 public class playerSelectionDictionary : MonoBehaviour
 {
     public Dictionary<int, GameObject> selected = new Dictionary<int, GameObject>();
-    public BuildingMain optionsActive;
+    public BuildingUI optionsActive;
 
     public static playerSelectionDictionary Instance { get; private set; }
 
@@ -21,15 +21,28 @@ public class playerSelectionDictionary : MonoBehaviour
         if (!(selected.ContainsKey(key)))
         {
             selected.Add(key, add);
-            add.GetComponent<BuildingMain>().Selected();
+            add.GetComponent<BuildingUI>().Selected();
+        }
+    }
+
+    public void AddSelectedEditor(GameObject add)
+    {
+        int key = add.GetInstanceID();
+
+        if (!(selected.ContainsKey(key)))
+        {
+            selected.Add(key, add);
+            add.GetComponent<EditorTower>().Selected();
         }
     }
 
     public void RemoveSelected(int removeKey)//key id .GetInstanceID()
     {
-        selected[removeKey].GetComponent<BuildingMain>().Deselected();
+        selected[removeKey].GetComponent<BuildingUI>().Deselected();
         selected.Remove(removeKey);
     }
+
+
 
     public void RemoveAll()
     {
@@ -42,13 +55,32 @@ public class playerSelectionDictionary : MonoBehaviour
         {
             if (pair.Value != null)
             {
-                selected[pair.Key].GetComponent<BuildingMain>().Deselected();
+                selected[pair.Key].GetComponent<BuildingUI>().Deselected();
             }
         }
         selected.Clear();
     }
 
-    public void addOprionsSelected(BuildingMain building)
+    public void RemoveAllEditor()
+    {
+        foreach (KeyValuePair<int, GameObject> pair in selected)
+        {
+            if (pair.Value != null)
+            {
+                selected[pair.Key].GetComponent<EditorTower>().Deselected();
+            }
+        }
+        selected.Clear();
+    }
+
+    public void RemoveSelectedEditor(int removeKey)//key id .GetInstanceID()
+    {
+        Debug.Log(selected[removeKey].name);
+        selected[removeKey].GetComponent<EditorTower>().Deselected();
+        selected.Remove(removeKey);
+    }
+
+    public void addOprionsSelected(BuildingUI building)
     {
         optionsActive = building;
     }

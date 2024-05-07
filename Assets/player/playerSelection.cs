@@ -67,7 +67,7 @@ public class playerSelection : Selection
 
         if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("building")) && !EventSystem.current.IsPointerOverGameObject())
         {
-            BuildingMain hitBuilding = hit.transform.GetComponent<BuildingMain>();
+            BuildingUI hitBuilding = hit.transform.GetComponent<BuildingUI>();
 
             selectedDictionary.removeOprionsSelected();
             selectedDictionary.addOprionsSelected(hitBuilding);
@@ -91,7 +91,7 @@ public class playerSelection : Selection
     private void OnTriggerEnter(Collider other)
     {
 
-        if (other.gameObject.GetComponent<BuildingMain>() != null)
+        if (other.gameObject.GetComponent<BuildingUI>() != null)
         {
             if (selfTeam.teamid == other.gameObject.GetComponent<Team>().teamid)
             {

@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class Production : MonoBehaviour
 {
-    public int size = 1;
     public float productStartAmountAdd = 0;
     [System.NonSerialized]
     public float product = 0f;
@@ -60,10 +59,10 @@ public class Production : MonoBehaviour
                     WinConditions.Instance.AddProducedUnits(productProduction * Time.deltaTime, team.teamid);
                 }*/
             }
-
-            if (product > maxUnits + 1)
+            else
+             if (product > maxUnits + 1)
             {
-                product -= (productProduction) * (((product - maxUnits) / 50) + 0.3f) * Time.deltaTime;
+                product -= productProduction * (((product - maxUnits) / 50) + 0.3f) * Time.deltaTime;
             }
             numberRefrence.text = "<mspace=0.6em>" + ((int)product).ToString() + "</mspace>";
         }

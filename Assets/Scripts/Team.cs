@@ -21,7 +21,7 @@ public class Team : MonoBehaviour
     void Start()
     {
 
-        if (GetComponent<BuildingMain>() != null)//isnt Player
+        if (GetComponent<BuildingUI>() != null)//isnt Player
         {
             isBuilding = true;
             prod = GetComponent<Production>();
@@ -82,11 +82,10 @@ public class Team : MonoBehaviour
         if (isBuilding)
         {
             prod.SubtractProduct(vulnerability);
-            ;
             if (prod.product < 0)
             {
                 controller.StopAttackUnits();
-                prod.SetProduct(0);
+                prod.SetProduct(1);
                 if (SoundManager.Instance != null && teamid == 1)
                 {
                     SoundManager.Instance.PlayAudioClip(5);

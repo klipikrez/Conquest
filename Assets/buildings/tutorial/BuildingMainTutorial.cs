@@ -8,11 +8,11 @@ public class BuildingMainTutorial : MonoBehaviour
     public GameObject rect;
     public GameObject mainCanvas;
 
-    BuildingMain buildingMain;
+    BuildingUI buildingMain;
 
     private void Start()
     {
-        buildingMain = GetComponent<BuildingMain>();
+        buildingMain = GetComponent<BuildingUI>();
     }
 
     // Update is called once per frame

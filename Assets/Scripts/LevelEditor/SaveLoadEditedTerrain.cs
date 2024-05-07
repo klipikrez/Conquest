@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -18,15 +19,15 @@ using UnityEngine.UIElements;
 
 public class SaveLoadEditedTerrain : MonoBehaviour
 {
-    public Terrain terrain1;
-    public Terrain terrain2;
+    public Terrain terrain;
+    //public Terrain terrain2;
 
     // Start is called before the first frame update
     void Start()
     {
 
-        SaveTerrain("bababoj", terrain1.terrainData);
-        LoadTerrain("bababoj", terrain2.terrainData);
+        //SaveTerrain("bababoj", terrain1.terrainData);
+        LoadTerrain("trki");
     }
 
     // Update is called once per frame
@@ -34,23 +35,31 @@ public class SaveLoadEditedTerrain : MonoBehaviour
     {
 
     }
-    void SaveTerrain(string levelName, TerrainData terrain)
+    public void SaveTerrain()
     {
+        Debug.Log(EditorManager.Instance.playerSpawn + " : " + Vector3.negativeInfinity + "   ----   " + (EditorManager.Instance.playerSpawn == Vector3.negativeInfinity));
+        string levelName = EditorOptions.Instance.terrainNameInput.text;
+        if (levelName == "" || levelName == null) { ErrorManager.Instance.SendError("Name your level, bruh..."); return; }
+        if (!levelName.All(char.IsLetterOrDigit)) { ErrorManager.Instance.SendError("Only letters and numbers are allowed in level name >:V"); return; }
+        if (char.IsDigit(levelName[0])) { ErrorManager.Instance.SendError("The first character in the save name can't be a number :("); return; }
+        if (EditorManager.Instance.playerSpawn.x < float.MinValue) { ErrorManager.Instance.SendError("Player spawn location not set :P"); return; }
 
+        Debug.Log("" + levelName);
         CheckLevelFolder(levelName);
-        SaveTerrainHeight(levelName, terrain);
-        SaveTerrainAlpha(levelName, terrain);
-        SaveTerrainTrees(levelName, terrain);
-        SaveTerrainDetails(levelName, terrain);
+        SaveTerrainHeight(levelName, terrain.terrainData);
+        SaveTerrainAlpha(levelName, terrain.terrainData);
+        SaveTerrainTrees(levelName, terrain.terrainData);
+        SaveTerrainDetails(levelName, terrain.terrainData);
+        ErrorManager.Instance.SendSucsess("Oops...\n we successfully saved your level ;D"); return;
     }
 
-    void LoadTerrain(string levelName, TerrainData terrain)
+    public void LoadTerrain(string levelName)
     {
         CheckLevelFolder(levelName);
-        LoadTerrainDetails(levelName, terrain);
-        LoadTerrainHeight(levelName, terrain);
-        LoadTerrainAlpha(levelName, terrain);
-        LoadTerrainTrees(levelName, terrain);
+        LoadTerrainHeight(levelName, terrain.terrainData);
+        LoadTerrainAlpha(levelName, terrain.terrainData);
+        LoadTerrainTrees(levelName, terrain.terrainData);
+        LoadTerrainDetails(levelName, terrain.terrainData);
 
     }
 
@@ -260,6 +269,119 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         for (int layNum = 0; layNum < numDetailLayers; layNum++)
         {
             filePath = Path.Combine(folderPath, levelName + "_DetailMap" + layNum + ".rez");
+            float[,] thisDetailLayer = EditorManager.Instance.folage;
+
+            FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
+            BinaryWriter bw = new BinaryWriter(fs);
+            for (int i = 0; i < terrain.detailHeight; i++)
+            {
+                for (int j = 0; j < terrain.detailWidth; j++)
+                {
+                    bw.Write((float)thisDetailLayer[i, j]);
+                }
+            }
+            bw.Close();
+        }
+
+
+
+    }
+
+    void LoadTerrainDetails(string levelName, TerrainData terrain)
+    {
+
+        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string filePath = Path.Combine(folderPath, levelName + "_Details.rez");
+
+        TerrainDetailsCompiled details = JsonUtility.FromJson<TerrainDetailsCompiled>(File.ReadAllText(filePath));//update setings json
+
+        List<DetailPrototype> clonedDetails = new List<DetailPrototype>();
+        for (int ti = 0; ti < details.details.Length; ti++)
+        {
+            clonedDetails.Add(details.details[ti].Copy());
+
+        }
+        terrain.detailPrototypes = clonedDetails.ToArray();
+
+
+        int layNum = 0;
+        while (true)
+        {
+
+
+            string path = Application.streamingAssetsPath + "/Levels/" + levelName + "/" + levelName + "_DetailMap" + layNum++ + ".rez";
+
+
+            if (!File.Exists(path)) break;
+
+            float[,] dat = new float[terrain.detailWidth, terrain.detailHeight];
+            FileStream fs = new FileStream(path, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+            BinaryReader br = new BinaryReader(fs);
+
+            for (int i = 0; i < terrain.detailHeight; i++)
+            {
+                for (int j = 0; j < terrain.detailWidth; j++)
+                {
+                    dat[i, j] = (float)br.ReadSingle();
+                }
+
+            }
+            br.Close();
+
+            EditorManager.Instance.RefreshDetailTerrain(dat);
+
+
+            //terrain.SetDetailLayer(0, 0, layNum++, dat);
+
+
+        }
+    }
+
+    void SaveTerrainDetailsOld(string levelName, TerrainData terrain)
+    {
+        DetailPrototype[] workPrototypes = new DetailPrototype[terrain.detailPrototypes.Length];
+
+        for (int dp = 0; dp < workPrototypes.Length; dp++)
+        {
+
+            DetailPrototype clonedPrototype = new DetailPrototype();
+
+            // prototype
+            clonedPrototype.prototype = terrain.detailPrototypes[dp].prototype;
+            // prototypeTexture
+            /*ovo ne koristimo :)*/
+            clonedPrototype.prototypeTexture = terrain.detailPrototypes[dp].prototypeTexture;
+            // minWidth
+            clonedPrototype.minWidth = terrain.detailPrototypes[dp].minWidth;
+            // maxWidth
+            clonedPrototype.maxWidth = terrain.detailPrototypes[dp].maxWidth;
+            // minHeight
+            clonedPrototype.minHeight = terrain.detailPrototypes[dp].minHeight;
+            // maxHeight
+            clonedPrototype.maxHeight = terrain.detailPrototypes[dp].maxHeight;
+            // noiseSpread
+            clonedPrototype.noiseSpread = terrain.detailPrototypes[dp].noiseSpread;
+            // healthyColor
+            clonedPrototype.healthyColor = terrain.detailPrototypes[dp].healthyColor;
+            // dryColor
+            clonedPrototype.dryColor = terrain.detailPrototypes[dp].dryColor;
+            // renderMode
+            clonedPrototype.renderMode = terrain.detailPrototypes[dp].renderMode;
+
+            workPrototypes[dp] = clonedPrototype;
+        }
+
+        TerrainDetailsCompiled details = new TerrainDetailsCompiled(workPrototypes);
+
+        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string filePath = Path.Combine(folderPath, levelName + "_Details.rez");
+        File.WriteAllText(filePath, JsonUtility.ToJson(details));//update setings json
+
+
+        int numDetailLayers = terrain.detailPrototypes.Length;
+        for (int layNum = 0; layNum < numDetailLayers; layNum++)
+        {
+            filePath = Path.Combine(folderPath, levelName + "_DetailMap" + layNum + ".rez");
             int[,] thisDetailLayer = terrain.GetDetailLayer(0, 0, terrain.detailWidth, terrain.detailHeight, layNum);
 
             FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
@@ -278,7 +400,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
     }
 
-    void LoadTerrainDetails(string levelName, TerrainData terrain)
+    void LoadTerrainDetailsOld(string levelName, TerrainData terrain)
     {
 
         string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
@@ -397,13 +519,13 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         }
         terrain.treeInstances = clonedTree.ToArray();
 
-
-        List<TreePrototype> workTreePrototypes = new List<TreePrototype>();
+        //ovo ti je ako oces u buducce da das koisniku da doda svoje drvece
+        /*List<TreePrototype> workTreePrototypes = new List<TreePrototype>();
         for (int tp = 0; tp < trees.workTreePrototypes.Length; tp++)
         {
             workTreePrototypes.Add(trees.workTreePrototypes[tp].Copy());
         }
-        terrain.treePrototypes = workTreePrototypes.ToArray();
+        terrain.treePrototypes = workTreePrototypes.ToArray();*/
 
 
 

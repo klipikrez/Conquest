@@ -19,8 +19,8 @@ public class TerrainSmooth : EditorBehaviour
     public override void EditorUpdate(EditorManager editor)
     {
         timer += Time.deltaTime;
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) { editor.terrain.drawTreesAndFoliage = false; editing = true; }
-        if (Input.GetMouseButtonUp(0)) { editor.terrain.drawTreesAndFoliage = true; editing = false; }
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) { editor.terrain.drawTreesAndFoliage = false; editor.HideObjects(); editing = true; }
+        if (Input.GetMouseButtonUp(0)) { editor.terrain.drawTreesAndFoliage = true; editor.ShowObjects(); editing = false; editor.RecalculateObjectsHeight(); }
 
         if (timer > time)
         {

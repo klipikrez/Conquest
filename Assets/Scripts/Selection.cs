@@ -34,6 +34,7 @@ public class Selection : MonoBehaviour
     Vector3[] verts;
     Vector3[] vecs;
     bool startedSelecting = false;
+    public bool notInEditor = true;
 
     // Start is called before the first frame update
     void Start()
@@ -108,7 +109,7 @@ public class Selection : MonoBehaviour
                 p2 = Input.mousePosition;
 
                 p1 = Camera.main.WorldToScreenPoint(P1Point); //p1 to LAst recorded p1 raycast from camera to terrain and again to camera
-                Debug.Log(p1 + " " + p2);
+                //Debug.Log(p1 + " " + p2);
                 verts = new Vector3[4];
                 vecs = new Vector3[4];
                 int i = 0;
@@ -135,7 +136,6 @@ public class Selection : MonoBehaviour
 
                 //generate the mesh
                 selectionMesh = generateSelectionMesh(verts, vecs);
-
                 selectionBox = gameObject.AddComponent<MeshCollider>();
                 selectionBox.sharedMesh = selectionMesh;
                 selectionBox.convex = true;
@@ -143,7 +143,10 @@ public class Selection : MonoBehaviour
                 if (!Input.GetKey(KeyCode.LeftShift) && !EventSystem.current.IsPointerOverGameObject())
                 {
 
-                    selectedDictionary.RemoveAll();
+                    if (notInEditor)
+                        selectedDictionary.RemoveAll();
+                    else
+                        selectedDictionary.RemoveAllEditor();
                 }
 
                 Destroy(selectionBox, 1.2f);

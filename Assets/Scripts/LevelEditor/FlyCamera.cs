@@ -47,7 +47,7 @@ public class FlyCamera : MonoBehaviour
                 PlayerCamera.gameObject.transform.eulerAngles.z);
 
 
-            transform.Rotate(new Vector3(0, look.x, 0));
+            PlayerCamera.transform.parent.transform.Rotate(new Vector3(0, look.x, 0));
 
 
             /*lastMouse = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0);
@@ -86,9 +86,9 @@ public class FlyCamera : MonoBehaviour
 
             p = p * Time.deltaTime;
             Vector3 newPosition = PlayerCamera.transform.position;
-            if (Input.GetKey(KeyCode.Space))
+            if (!Input.GetKey(KeyCode.Space))
             { //If player wants to move on X and Z axis only
-                transform.Translate(p);
+                transform.Translate(p, PlayerCamera.transform.parent);
                 /*newPosition.x = transform.position.x;
                 newPosition.z = transform.position.z;
                 transform.position = newPosition;*/

@@ -44,7 +44,6 @@ public class CreateTextureButtons : MonoBehaviour
                 if (i == 0)
                 {
                     b.selecotr.color = new Color(1, 1, 1, 1);
-                    EditorOptions.Instance.SetBrushImage(tt);
                 }
                 textureButtons.Add(b);
                 i++;

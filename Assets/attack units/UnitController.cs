@@ -16,7 +16,7 @@ public class UnitController : MonoBehaviour
     public Production production;
     public Team team { get; private set; }
     [System.NonSerialized]
-    public BuildingMain buildingMain;
+    public BuildingUI buildingMain;
     [System.NonSerialized]
     public BuildingOptions buildingOptions;
     LineRenderer line;
@@ -63,7 +63,7 @@ public class UnitController : MonoBehaviour
         squaredAvoidenceRadious = squaredNeighbourRadious * avoidenceRadiousMultiplyer * avoidenceRadiousMultiplyer;
         avoidenceRadious = neighbourRadious * avoidenceRadious;
         production = GetComponent<Production>();
-        buildingMain = GetComponent<BuildingMain>();
+        buildingMain = GetComponent<BuildingUI>();
         buildingOptions = GetComponent<BuildingOptions>();
         //team = GetComponent<Team>();
         GetTeam();
@@ -88,11 +88,11 @@ public class UnitController : MonoBehaviour
         }
         return buildingOptions;
     }
-    public BuildingMain GetBuildingMain()
+    public BuildingUI GetBuildingMain()
     {
         if (buildingMain == null)
         {
-            buildingMain = GetComponent<BuildingMain>();
+            buildingMain = GetComponent<BuildingUI>();
         }
         return buildingMain;
     }
@@ -223,7 +223,7 @@ public class UnitController : MonoBehaviour
         if (path != null) attackCoroutine = StartCoroutine(SpawnContinuousAttackUnits(path, team.teamid));
     }
 
-    public void Gift(int percent, BuildingMain gift)
+    public void Gift(int percent, BuildingUI gift)
     {
         int amount = (int)(production.product * (percent / 100f));
 
@@ -262,7 +262,8 @@ public class UnitController : MonoBehaviour
                 positions[i + 1] = points[i].position;
             }
             line.enabled = true;
-            line.SetVertexCount(points.Length + 1);
+            //line.SetVertexCount(points.Length + 1);
+            line.positionCount = points.Length + 1;
             line.SetPositions(positions);
 
             if (lineCoroutine != null)

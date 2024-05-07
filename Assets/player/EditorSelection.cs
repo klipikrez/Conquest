@@ -30,28 +30,29 @@ public class EditorSelection : Selection
         }
         else
         {
-            selectedDictionary.RemoveAll();
+
+
         }
 
     }
 
     public override void RayCastRightClick()
     {
-        Ray ray = Camera.main.ScreenPointToRay(p1);
+        /* Ray ray = Camera.main.ScreenPointToRay(p1);
 
-        if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("building")) && !EventSystem.current.IsPointerOverGameObject())
-        {
+         if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("building")) && !EventSystem.current.IsPointerOverGameObject())
+         {
 
-        }
-        return;
+         }
+         return;*/
     }
 
     private void OnTriggerEnter(Collider other)
     {
-
-        if (other.gameObject.GetComponent<BuildingMain>() != null)
+        Debug.Log("" + other.gameObject.name);
+        if (other.gameObject.GetComponent<EditorTower>() != null)
         {
-
+            selectedDictionary.AddSelectedEditor(other.gameObject);
         }
     }
 }

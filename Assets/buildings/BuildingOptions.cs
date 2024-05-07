@@ -17,15 +17,13 @@ public class BuildingOptions : MonoBehaviour
         if (overridePreset == null)
         {
             currentUpgrade = 0;
-            controller.GetProduction().AddProduct(presetCompiler.presets[0].cost);
-            //Upgrade(0);//initialize building as default if ovveride is null
-            presetCompiler.InitializeBuilding(0, controller);
+            presetCompiler.InitializeBuilding(0, controller, true);
             controller.GetProduction().AddProduct(presetCompiler.presets[0].product);
 
         }
         else
         {
-            int index = 0;//matematka
+            int index = 0;
             foreach (BuildingPreset preset in presetCompiler.presets)
             {
                 if (preset == overridePreset)
@@ -36,8 +34,8 @@ public class BuildingOptions : MonoBehaviour
                 index++;
             }
 
-            controller.GetProduction().AddProduct(overridePreset.cost);
-            overridePreset.InitializeBuilding(controller);
+            //controller.GetProduction().AddProduct(overridePreset.cost);
+            overridePreset.InitializeBuilding(controller, true);
             controller.GetProduction().AddProduct(overridePreset.product);
 
 

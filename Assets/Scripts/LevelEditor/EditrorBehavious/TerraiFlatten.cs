@@ -20,8 +20,8 @@ public class TerraiFlatten : EditorBehaviour
     {
 
         timer += Time.deltaTime;
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) { editor.terrain.drawTreesAndFoliage = false; editing = true; }
-        if (Input.GetMouseButtonUp(0)) { editor.terrain.drawTreesAndFoliage = true; editing = false; }
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) { editor.terrain.drawTreesAndFoliage = false; editor.HideObjects(); editing = true; }
+        if (Input.GetMouseButtonUp(0)) { editor.terrain.drawTreesAndFoliage = true; editor.ShowObjects(); editing = false; editor.RecalculateObjectsHeight(); }
 
         if (timer > time)
         {
@@ -69,7 +69,6 @@ public class TerraiFlatten : EditorBehaviour
         // string a = "";
 
 
-        Debug.Log(pixels[(int)x, (int)y] + "   ---   " + EditorOptions.Instance.folageDensity);
         for (int i = (int)(x - (radious / 2)); i < (int)(x + (radious / 2)); i++)
         {
             for (int j = (int)(y - (radious / 2)); j < (int)(y + (radious / 2)); j++)
@@ -81,15 +80,16 @@ public class TerraiFlatten : EditorBehaviour
                     float val = 0.0001f * multiplyer * (
    EditorOptions.Instance.BrushImage.GetPixelBilinear((i - (x - (radious / 2))) / radious, (j - (y - (radious / 2))) / radious).r);
 
-                    if (pixels[j, i] > EditorOptions.Instance.folageDensity && pixels[j, i] + val > EditorOptions.Instance.folageDensity)
-                        pixels[j, i] -= val;
-                    else if (pixels[j, i] > EditorOptions.Instance.folageDensity && pixels[j, i] + val < EditorOptions.Instance.folageDensity)
-                        pixels[j, i] = Math.Clamp(EditorOptions.Instance.folageDensity, 0f, 1f);
 
-                    if (pixels[j, i] < EditorOptions.Instance.folageDensity && pixels[j, i] + val < EditorOptions.Instance.folageDensity)
+                    if (pixels[j, i] > EditorOptions.Instance.brushHeight && pixels[j, i] + val > EditorOptions.Instance.brushHeight)
+                        pixels[j, i] -= val;
+                    else if (pixels[j, i] > EditorOptions.Instance.brushHeight && pixels[j, i] + val < EditorOptions.Instance.brushHeight)
+                        pixels[j, i] = Math.Clamp(EditorOptions.Instance.brushHeight, 0f, 1f);
+
+                    if (pixels[j, i] < EditorOptions.Instance.brushHeight && pixels[j, i] + val < EditorOptions.Instance.brushHeight)
                         pixels[j, i] += val;
-                    else if (pixels[j, i] < EditorOptions.Instance.folageDensity && pixels[j, i] + val > EditorOptions.Instance.folageDensity)
-                        pixels[j, i] = Math.Clamp(EditorOptions.Instance.folageDensity, 0f, 1f);
+                    else if (pixels[j, i] < EditorOptions.Instance.brushHeight && pixels[j, i] + val > EditorOptions.Instance.brushHeight)
+                        pixels[j, i] = Math.Clamp(EditorOptions.Instance.brushHeight, 0f, 1f);
 
 
                 }
@@ -148,8 +148,6 @@ public class TerraiFlatten : EditorBehaviour
                     float val = 0.0001f * multiplyer * Mathf.Max((radious / 2 - distance) / radious, 0);
 
                     //pixels[j, i] += Input.GetKey(KeyCode.LeftShift) ? -1 : 1 * 0.0001f * multiplyer * Mathf.Max((radious / 2 - distance) / radious, 0);
-
-
                     if (pixels[j, i] > EditorOptions.Instance.brushHeight && pixels[j, i] + val > EditorOptions.Instance.brushHeight)
                         pixels[j, i] -= val;
                     else if (pixels[j, i] > EditorOptions.Instance.brushHeight && pixels[j, i] + val < EditorOptions.Instance.brushHeight)

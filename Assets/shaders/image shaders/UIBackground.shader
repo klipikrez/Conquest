@@ -108,22 +108,24 @@ Shader "UI/Background"
 
             fixed4 frag(v2f IN) : SV_Target
             {
-                half4 color = IN.color * (tex2D(_MainTex,( IN.texcoord * 1.9 - _Time[0])%1) + _TextureSampleAdd);
+                half4 color = (tex2D(_MainTex,( IN.texcoord * 1.9 - _Time[0])%1) + _TextureSampleAdd);
 
-IN.texcoord.y=IN.texcoord.y - 0.25;
+                IN.texcoord.y=IN.texcoord.y - 0.25;
 
-color = (color + IN.color * (tex2D(_MainTex,( -IN.texcoord * 1.9 - _Time[0])%1) + _TextureSampleAdd));
+                color = max(color ,  (tex2D(_MainTex,( -IN.texcoord * 1.9 - _Time[0])%1) + _TextureSampleAdd));
 
                 #ifdef UNITY_UI_CLIP_RECT
                 half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(IN.mask.xy)) * IN.mask.zw);
                 color.a *= m.x * m.y;
                 #endif
-
+                
                 #ifdef UNITY_UI_ALPHACLIP
                 clip (color.a - 0.001);
                 #endif
-
+                color.a = min(color.a,IN.color.a);
+                color.rgb*=IN.color ;
                 color.rgb *= /* clamp(color.a+0.5,0,1)*/color.a;
+                
 
                 return color;
             }

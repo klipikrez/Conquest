@@ -41,6 +41,27 @@ public class AIPlayer
             return false;
         }
     }
+
+    public override bool Equals(object obj)
+    {
+        var item = obj as AIPlayer;
+
+        if (item == null)
+        {
+            return false;
+        }
+
+        return this.team.Equals(item.team);
+    }
+
+    public override int GetHashCode()
+    {
+        // Which is preferred?
+
+        return base.GetHashCode();
+
+        //return this.FooId.GetHashCode();
+    }
 }
 
 public class AIManager : MonoBehaviour

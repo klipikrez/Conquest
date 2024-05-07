@@ -6,8 +6,8 @@ public class Tutorial : MonoBehaviour
 {
 
     public int phaze = 1;
-    BuildingMain building;
-    BuildingMain buildingEmemy;
+    BuildingUI building;
+    BuildingUI buildingEmemy;
     public BuildingMainTutorial tutorialBuilding;
     public BuildingMainTutorial tutorialBuildingEnemy;
     private void Awake()
@@ -16,16 +16,16 @@ public class Tutorial : MonoBehaviour
     }
     private void Start()
     {
-        building = tutorialBuilding.gameObject.GetComponent<BuildingMain>();
-        buildingEmemy = tutorialBuildingEnemy.gameObject.GetComponent<BuildingMain>();
+        building = tutorialBuilding.gameObject.GetComponent<BuildingUI>();
+        buildingEmemy = tutorialBuildingEnemy.gameObject.GetComponent<BuildingUI>();
         tutorialBuildingEnemy.rect.SetActive(false);
 
 
-                    tutorialBuilding.rect.SetActive(true);
-                    tutorialBuilding.mainCanvas.SetActive(true);
-                    tutorialBuildingEnemy.mainCanvas.SetActive(true);
-                    building.enabled = true;
-                    buildingEmemy.enabled = true;
+        tutorialBuilding.rect.SetActive(true);
+        tutorialBuilding.mainCanvas.SetActive(true);
+        tutorialBuildingEnemy.mainCanvas.SetActive(true);
+        building.enabled = true;
+        buildingEmemy.enabled = true;
 
     }
 
