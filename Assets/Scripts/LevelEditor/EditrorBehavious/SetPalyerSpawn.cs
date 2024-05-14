@@ -11,6 +11,17 @@ public class SetPalyerSpawn : EditorBehaviour
     {
         editing = false;
 
+        if (editor.playerSpawn.x > float.MinValue)
+        {
+            if (playerPointer == null)
+            {
+                playerPointer = Object.Instantiate(editor.playerSpawnPrefab);
+            }
+            playerPointer.transform.position = editor.playerSpawn;
+
+
+        }
+
     }
 
     public override void EditorUpdate(EditorManager editor)

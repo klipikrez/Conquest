@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using Siccity.GLTFUtility;
 
 public class CreateTowerButtons : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class CreateTowerButtons : MonoBehaviour
     public GameObject towerButtonPrefab;
     public slider startingUnitsSlider;
 
-    public slider[] sliders;
+
 
 
     // Start is called before the first frame update
@@ -36,20 +38,35 @@ public class CreateTowerButtons : MonoBehaviour
             {
                 if (IsJson(file))
                 {
-                    Debug.Log(file);
 
-                    TowerPresetData presetData = JsonUtility.FromJson<TowerPresetData>(File.ReadAllText(file));//update setings json
+                    TowerPresetData presetData = JsonUtility.FromJson<TowerPresetData>(File.ReadAllText(file));//get tower
 
                     //load icon image
-                    Byte[] pngBytes = System.IO.File.ReadAllBytes(dirName + "\\" + presetData.imagePath);
+                    Byte[] pngBytes = System.IO.File.ReadAllBytes(dirName + "\\icon.png");
                     Texture2D tt = new Texture2D(52, 52);
                     tt.LoadImage(pngBytes);//moguce je ede da dovo treba da se sacuva negde na disky
                     tt.alphaIsTransparency = true;
-                    tt.name = Path.GetFileName(dirName + "\\" + presetData.imagePath);
+                    tt.name = Path.GetFileName(dirName + "\\icon.png");
 
                     TowerButton b = Instantiate(towerButtonPrefab, transform).GetComponent<TowerButton>();
                     b.SetTexture(tt);
                     b.presetData = presetData;
+                    b.SetName(Path.GetFileName(dirName));
+                    Debug.Log(b.GetName());
+
+                    // Load the GLTF file
+                    if (presetData.meshPath != null && presetData.meshPath.Length > 0 && presetData.meshPath[0] != "")
+                    {
+                        foreach (string path in presetData.meshPath)
+                        {
+                            GameObject result = Importer.LoadFromFile(dirName + "\\" + path);
+                            Mesh mesh = result.GetComponent<MeshFilter>().sharedMesh;
+                            mesh.name = path;
+                            // Debug.Log(mesh.name + " -- " + path);
+                            b.AddMesh(mesh, path);
+                            //ImportGLTFAsync(dirName + "\\" + path, b);
+                        }
+                    }
                     b.master = this;
 
 
@@ -60,7 +77,9 @@ public class CreateTowerButtons : MonoBehaviour
                     if (i == 0)
                     {
                         b.selecotr.color = new Color(1, 1, 1, 1);
-                        SelectedTowerPreset(b);
+                        EditorManager.Instance.towerPresets = b;
+                        EditorOptions.Instance.SelectedTowerPreset(b);
+
                     }
                     else
                     {
@@ -77,6 +96,18 @@ public class CreateTowerButtons : MonoBehaviour
         //DeselectAll();
 
     }
+
+    /* void ImportGLTFAsync(string filepath, TowerButton targetObject)
+     {
+         Importer.ImportGLTFAsync(filepath, new ImportSettings(), (result, animations) => OnFinishAsync(result, animations, targetObject));
+     }
+ */
+    /*void OnFinishAsync(GameObject result, AnimationClip[] animations, TowerButton targetObject)
+    {
+        targetObject.AddMesh(result.GetComponent<MeshFilter>().sharedMesh);
+
+        Debug.Log("Finished importing " + result.name + " and applied it to " + targetObject.name);
+    }*/
     private bool IsJson(string fileName)
     {
         string extension = Path.GetExtension(fileName).ToLower();
@@ -100,45 +131,5 @@ public class CreateTowerButtons : MonoBehaviour
         }
     }
 
-    public void SelectedTowerPreset(TowerButton btn)
-    {
 
-        /*startingUnitsSlider.specialValue[0] = btn.presetData.product;
-        startingUnitsSlider.specialValue[1] = btn.presetData.product;
-        startingUnitsSlider.sliderElement.value = (btn.presetData.product);*/
-
-
-
-
-        int i = 0;
-        foreach (slider slider in sliders)
-        {
-            float val = -99520;
-            switch (i++)
-            {
-                case 0:
-                    val = btn.presetData.product;
-                    break;
-                case 1:
-                    val = btn.presetData.maxUnits;
-                    break;
-                case 2:
-                    val = btn.presetData.productProduction;
-                    break;
-                case 3:
-                    val = btn.presetData.cost;
-                    break;
-                case 4:
-                    val = btn.presetData.vulnerability;
-                    break;
-            };
-            SetupSliders(slider, val);
-        }
-    }
-    void SetupSliders(slider slider, float val)
-    {
-        slider.specialValue[0] = val;
-        slider.specialValue[1] = val;
-        slider.sliderElement.value = val;
-    }
 }

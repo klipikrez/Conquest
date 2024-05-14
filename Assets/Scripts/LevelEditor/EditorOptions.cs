@@ -5,6 +5,11 @@ using UnityEngine;
 using UnityEngine.iOS;
 using UnityEngine.UI;
 
+public class LevelOptions
+{
+    public Vector3 playerPos;
+}
+
 public class EditorOptions : MonoBehaviour
 {
     public Slider brushSizeSlider;
@@ -23,6 +28,7 @@ public class EditorOptions : MonoBehaviour
     public GameObject cancelSetPlayerPosButtons;
     public GameObject modeTabs;
     public GameObject setPlayerSpawnButton;
+    public GameObject[] towerOverrideInputs;
     public float brushHeight = 0.51f;
     public float folageDensity = 1;
     public int selectedTexture = 0;
@@ -30,7 +36,9 @@ public class EditorOptions : MonoBehaviour
     public float maxScale = 1;
     public int selectedTree = 0;
     public float treeSpacing = 3f;
+    public slider[] sliders;
     public static EditorOptions Instance;
+    TowerButton selectedTowerButton;
 
     private void Awake()
     {
@@ -78,6 +86,8 @@ public class EditorOptions : MonoBehaviour
         editorMenu.SetActive(true);
         modeTabs.SetActive(true);
 
+        foreach (GameObject obj in towerOverrideInputs)
+            obj.SetActive(false);
         cancelSetPlayerPosButtons.SetActive(false);
         brushHeightSlider.gameObject.SetActive(false);
         brushSizeSlider.gameObject.SetActive(false);
@@ -123,6 +133,8 @@ public class EditorOptions : MonoBehaviour
                 }
             case 4:
                 {
+                    foreach (GameObject obj in towerOverrideInputs)
+                        obj.SetActive(true);
                     break;
                 }
             case 5:
@@ -164,6 +176,118 @@ public class EditorOptions : MonoBehaviour
                 selectedTexture = i;
                 //                Debug.Log("" + selectedTexture);
             }
+        }
+    }
+
+    public void SelectedTowerPreset(TowerButton btn)
+    {
+
+        selectedTowerButton = btn;
+
+
+        int i = 0;
+        foreach (slider slider in sliders)
+        {
+            float val = float.NaN;
+            switch (i++)
+            {
+                case 0:
+                    val = btn.presetData.product;
+                    break;
+                case 1:
+                    val = btn.presetData.maxUnits;
+                    break;
+                case 2:
+                    val = btn.presetData.productProduction;
+                    break;
+                case 3:
+                    val = btn.presetData.cost;
+                    break;
+                case 4:
+                    val = btn.presetData.vulnerability;
+                    break;
+            };
+            SetupSliders(slider, val);
+        }
+        foreach (KeyValuePair<int, GameObject> tower in EditorManager.Instance.editorSelection.selectedDictionary.selected)
+        {
+            tower.Value.GetComponent<EditorTower>().SetPreset(btn.presetData, btn.textName.text, btn.GetRandomMesh());
+        }
+    }
+
+    public void UpdateOverrideValue(string name, float value)
+    {
+        foreach (KeyValuePair<int, GameObject> tower in EditorManager.Instance.editorSelection.selectedDictionary.selected)
+        {
+            tower.Value.GetComponent<EditorTower>().AddOverride(name, value);
+        }
+    }
+    public void ClearOverride(string name)
+    {
+        foreach (KeyValuePair<int, GameObject> tower in EditorManager.Instance.editorSelection.selectedDictionary.selected)
+        {
+            tower.Value.GetComponent<EditorTower>().ClearOverride(name);
+        }
+    }
+    public void ClearAllOverrides()
+    {
+        foreach (KeyValuePair<int, GameObject> tower in EditorManager.Instance.editorSelection.selectedDictionary.selected)
+        {
+            tower.Value.GetComponent<EditorTower>().ClearOverrides();
+        }
+    }
+
+    public void SelectedEditorTowers()
+    {
+        if (EditorManager.Instance.editorSelection.selectedDictionary.selected.Count == 0)
+        {
+            SelectedTowerPreset(selectedTowerButton);
+            return;
+        }
+        float[] ovverrides = new float[5];
+
+        int i = 0;
+
+        foreach (KeyValuePair<int, GameObject> obj in EditorManager.Instance.editorSelection.selectedDictionary.selected)
+        {
+            TowerPresetData preset = obj.Value.gameObject.GetComponent<EditorTower>().preset;
+            Dictionary<string, object> towerOverrides = obj.Value.gameObject.GetComponent<EditorTower>().towerOverrides;
+            if (i++ == 0)
+            {
+                ovverrides[0] = towerOverrides.ContainsKey("Starting units") ? (float)towerOverrides["Starting units"] : preset.product;
+                ovverrides[1] = towerOverrides.ContainsKey("Max units") ? (float)towerOverrides["Max units"] : preset.maxUnits;
+                ovverrides[2] = towerOverrides.ContainsKey("Unit production") ? (float)towerOverrides["Unit production"] : preset.productProduction;
+                ovverrides[3] = towerOverrides.ContainsKey("Cost as an upgrade") ? (float)towerOverrides["Cost as an upgrade"] : preset.cost;
+                ovverrides[4] = towerOverrides.ContainsKey("Vulnerability") ? (float)towerOverrides["Vulnerability"] : preset.vulnerability;
+
+            }
+            else
+            {
+                if (ovverrides[0] != (towerOverrides.ContainsKey("Starting units") ? (float)towerOverrides["Starting units"] : preset.product)) ovverrides[0] = float.NaN;
+                if (ovverrides[1] != (towerOverrides.ContainsKey("Max units") ? (float)towerOverrides["Max units"] : preset.maxUnits)) ovverrides[1] = float.NaN;
+                if (ovverrides[2] != (towerOverrides.ContainsKey("Unit production") ? (float)towerOverrides["Unit production"] : preset.productProduction)) ovverrides[2] = float.NaN;
+                if (ovverrides[3] != (towerOverrides.ContainsKey("Cost as an upgrade") ? (float)towerOverrides["Cost as an upgrade"] : preset.cost)) ovverrides[3] = float.NaN;
+                if (ovverrides[4] != (towerOverrides.ContainsKey("Vulnerability") ? (float)towerOverrides["Vulnerability"] : preset.vulnerability)) ovverrides[4] = float.NaN;
+            }
+
+        }
+        Debug.Log(ovverrides[1]);
+        i = 0;
+        foreach (slider slider in sliders)
+        {
+            float val = ovverrides[i++];
+            SetupSliders(slider, val);
+        }
+    }
+
+    void SetupSliders(slider slider, float val)
+    {
+        slider.specialValue[0] = !float.IsNaN(val) ? val : -1;
+        slider.specialValue[1] = !float.IsNaN(val) ? val : -1;
+        slider.sliderElement.value = !float.IsNaN(val) ? val : slider.sliderElement.maxValue;
+        if (float.IsNaN(val))
+        {
+            slider.SetText("(X_X)");
         }
     }
 

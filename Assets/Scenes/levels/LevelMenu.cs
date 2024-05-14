@@ -8,7 +8,8 @@ public class LevelMenu : MonoBehaviour
     public GameObject UI;
     public MainMenuUI Main;
     List<playerMovement> movementScripts = new List<playerMovement>();
-    List<playerSelection> selectionScripts = new List<playerSelection>();
+    FlyCamera editorMovement;
+    List<Selection> selectionScripts = new List<Selection>();
 
     public GameObject WinUI;
     public GameObject LoseUI;
@@ -18,18 +19,22 @@ public class LevelMenu : MonoBehaviour
 
     private void Start()
     {
-        Resume();
+
 
         GameObject[] objs = GameObject.FindGameObjectsWithTag("Player");
 
         foreach (GameObject obj in objs)
         {
-            movementScripts.Add(obj.GetComponent<playerMovement>());
+            playerMovement mv = obj.GetComponent<playerMovement>();
+            if (mv != null)
+                movementScripts.Add(mv);
         }
+        if (movementScripts.Count == 0) editorMovement = objs[0].GetComponent<FlyCamera>();
         foreach (GameObject obj in objs)
         {
-            selectionScripts.Add(obj.GetComponent<playerSelection>());
+            selectionScripts.Add(obj.GetComponent<Selection>());
         }
+        Resume();
     }
 
     private void Update()
@@ -56,11 +61,16 @@ public class LevelMenu : MonoBehaviour
         paused = true;
         UI.SetActive(true);
         //Time.timeScale = 0.0f;
-        NavManager.Instance.SetPauseBuildings(true);
+        if (NavManager.Instance != null) NavManager.Instance.SetPauseBuildings(true);
         Main.SetObjectsActive(0);
-        foreach (playerMovement pm in movementScripts)
+        if (movementScripts.Count != 0)
+            foreach (playerMovement pm in movementScripts)
+            {
+                pm.Paused = true;
+            }
+        else
         {
-            pm.Paused = true;
+            editorMovement.Paused = true;
         }
         foreach (playerSelection pm in selectionScripts)
         {
@@ -72,11 +82,16 @@ public class LevelMenu : MonoBehaviour
         paused = false;
         Main.SetObjectsActive(0);
         //Time.timeScale = 1.0f;
-        NavManager.Instance.SetPauseBuildings(false);
+        if (NavManager.Instance != null) NavManager.Instance.SetPauseBuildings(false);
         UI.SetActive(false);
-        foreach (playerMovement pm in movementScripts)
+        if (movementScripts.Count != 0)
+            foreach (playerMovement pm in movementScripts)
+            {
+                pm.Paused = false;
+            }
+        else
         {
-            pm.Paused = false;
+            editorMovement.Paused = false;
         }
         foreach (playerSelection pm in selectionScripts)
         {

@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Siccity.GLTFUtility;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 
@@ -20,6 +24,8 @@ using UnityEngine.UIElements;
 public class SaveLoadEditedTerrain : MonoBehaviour
 {
     public Terrain terrain;
+    public GameObject towerDefaultPrefab;
+    public GameObject editorTowerPrefab;
     //public Terrain terrain2;
 
     // Start is called before the first frame update
@@ -27,7 +33,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
     {
 
         //SaveTerrain("bababoj", terrain1.terrainData);
-        LoadTerrain("trki");
+        LoadLevelEditor("brki");
     }
 
     // Update is called once per frame
@@ -43,6 +49,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         if (!levelName.All(char.IsLetterOrDigit)) { ErrorManager.Instance.SendError("Only letters and numbers are allowed in level name >:V"); return; }
         if (char.IsDigit(levelName[0])) { ErrorManager.Instance.SendError("The first character in the save name can't be a number :("); return; }
         if (EditorManager.Instance.playerSpawn.x < float.MinValue) { ErrorManager.Instance.SendError("Player spawn location not set :P"); return; }
+        //if (levelName == "brki") { ErrorManager.Instance.SendError("Nuh Uh ;) change your level name."); return; }
 
         Debug.Log("" + levelName);
         CheckLevelFolder(levelName);
@@ -50,17 +57,36 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         SaveTerrainAlpha(levelName, terrain.terrainData);
         SaveTerrainTrees(levelName, terrain.terrainData);
         SaveTerrainDetails(levelName, terrain.terrainData);
+        SaveTerrainTowers(levelName);
+        SaveLevelOptionsEditor(levelName);
         ErrorManager.Instance.SendSucsess("Oops...\n we successfully saved your level ;D"); return;
     }
 
-    public void LoadTerrain(string levelName)
+    public void LoadLevelEditor(string levelName)
     {
         CheckLevelFolder(levelName);
         LoadTerrainHeight(levelName, terrain.terrainData);
         LoadTerrainAlpha(levelName, terrain.terrainData);
         LoadTerrainTrees(levelName, terrain.terrainData);
         LoadTerrainDetails(levelName, terrain.terrainData);
+        LoadTerrainTowersEditor(levelName);
+        LoadLevelOptionsEditor(levelName);
+        if (levelName != "brki")
+        {
+            EditorOptions.Instance.terrainNameInput.text = levelName;
+        }
 
+    }
+
+    public void LoadLevel(string levelName)
+    {
+        CheckLevelFolder(levelName);
+        LoadTerrainHeight(levelName, terrain.terrainData);
+        LoadTerrainAlpha(levelName, terrain.terrainData);
+        LoadTerrainTrees(levelName, terrain.terrainData);
+        LoadTerrainDetails(levelName, terrain.terrainData);
+        LoadTerrainTowers(levelName);
+        LoadLevelOptions(levelName);
     }
 
     [System.Serializable]
@@ -220,8 +246,228 @@ public class SaveLoadEditedTerrain : MonoBehaviour
             detailPrototype.dryColor = this.DryColor;
             detailPrototype.renderMode = this.RenderMode;
             detailPrototype.usePrototypeMesh = true; // uvek koristimo mesh
+            detailPrototype.useInstancing = true;
             return detailPrototype;
         }
+    }
+
+
+    [System.Serializable]
+    public struct TwerOverrideStorage
+    {
+        public string overrideName;
+        public object value;
+    }
+    [System.Serializable]
+    public class TowerStorage
+    {
+        public int id;
+        public TowerPresetData preset;
+        public string modelPath;
+        public string presetName;
+        public TwerOverrideStorage[] towerOverrides;
+        public int[] connections;
+        public Vector3 position;
+        public quaternion rotation;
+        public float scale;
+        public TowerStorage(int id, TowerPresetData preset, Dictionary<string, object> towerOverrides, int[] connections, Vector3 pos, quaternion rotation, string modelPath, string presetName)
+        {
+            this.id = id;
+            this.preset = preset;
+            this.towerOverrides = new TwerOverrideStorage[towerOverrides.Count];
+            this.connections = connections;
+            this.position = pos;
+            this.modelPath = modelPath;
+            this.rotation = rotation;
+            this.presetName = presetName;
+
+            int i = 0;
+            foreach (KeyValuePair<string, object> kvp in towerOverrides)
+            {
+                this.towerOverrides[i].overrideName = kvp.Key;
+                this.towerOverrides[i++].value = kvp.Value;
+            }
+        }
+
+
+    }
+
+    public class TowerCompiled
+    {
+        public TowerStorage[] towers;
+        public TowerCompiled(EditorTower[] editorTowers)
+        {
+            towers = new TowerStorage[editorTowers.Length];
+            for (int i = 0; i < editorTowers.Length; i++)
+            {
+                int[] conn = new int[editorTowers[i].connections.Count];
+                int j = 0;
+                foreach (TowerConnection twr in editorTowers[i].connections)
+                {
+                    if (editorTowers[i] == twr.tower1) conn[j] = twr.tower2.selfID;
+                    if (editorTowers[i] == twr.tower2) conn[j] = twr.tower1.selfID;
+                    /*                    if (twr.line1.enabled && twr.line2.enabled)
+                                        {
+                                            if (editorTowers[i] == twr.tower1) conn[j] = twr.tower2.selfID;
+                                            if (editorTowers[i] == twr.tower2) conn[j] = twr.tower1.selfID;
+
+                                        }
+                                        else
+                                        if (!twr.line1.enabled && twr.line2.enabled)
+                                        {
+                                            if (editorTowers[i] == twr.tower1) conn[j] = twr.tower2.selfID;
+                                        }
+                                        else
+                                            if (editorTowers[i] == twr.tower2) conn[j] = twr.tower1.selfID;*/
+                    j++;
+
+                }
+                Debug.Log(editorTowers[i].meshName);
+                towers[i] = new TowerStorage(editorTowers[i].selfID, editorTowers[i].preset, editorTowers[i].towerOverrides, conn, editorTowers[i].transform.position, editorTowers[i].transform.rotation, editorTowers[i].meshName, editorTowers[i].presetName);
+
+            }
+        }
+
+        public void InstantiateInLevel(GameObject towerDefaultPrefab, bool editorMode = false)
+        {
+            if (editorMode)
+            {
+                Dictionary<int, EditorTower> tempTowers = new Dictionary<int, EditorTower>();
+                foreach (TowerStorage t in towers)
+                {
+                    EditorTower tower = Instantiate(towerDefaultPrefab, t.position, t.rotation).GetComponent<EditorTower>();
+                    foreach (TwerOverrideStorage tOverride in t.towerOverrides)
+                    {
+                        tower.towerOverrides.Add(tOverride.overrideName, tOverride.value);
+                    }
+
+                    tower.gameObject.transform.position = t.position;
+                    tower.gameObject.transform.rotation = t.rotation;
+                    tower.SetId(t.id);
+                    tempTowers.Add(t.id, tower);
+                    EditorManager.Instance.editorTowers.Add(tower);
+
+                    string file = "Assets\\StreamingAssets\\TowerPresets\\" + t.presetName + "\\" + t.modelPath;
+                    Debug.Log(file);
+                    // Load the GLTF file
+                    GameObject result = Importer.LoadFromFile(file);
+                    tower.SetPreset(t.preset, t.presetName, new meshAndName { mesh = result.GetComponent<MeshFilter>().sharedMesh, name = t.modelPath });
+                    //ImportGLTFAsync(dirName + "\\" + path, b);
+
+
+                }
+
+                foreach (TowerStorage t in towers)
+                {
+                    EditorTower tower = tempTowers[t.id];
+
+                    foreach (int conn in t.connections)
+                        tower.AddConnection(tempTowers[conn], 1);
+                }
+            }
+            else
+            {
+                foreach (TowerStorage t in towers)
+                {
+                    UnitController tower = Instantiate(towerDefaultPrefab, t.position, t.rotation).GetComponent<UnitController>();
+                    Dictionary<string, object> map = new Dictionary<string, object>();
+                    foreach (TwerOverrideStorage tOverride in t.towerOverrides)
+                    {
+                        map.Add(tOverride.overrideName, tOverride.value);
+                    }
+
+                    tower.GetProduction().SetProduct(map.ContainsKey("Starting units") ? (float)map["Starting units"] : t.preset.product);
+                    tower.GetProduction().maxUnits = (int)(map.ContainsKey("Max units") ? (float)map["Max units"] : t.preset.maxUnits);
+                    tower.GetProduction().productProduction = (map.ContainsKey("Unit production") ? (float)map["Unit production"] : t.preset.productProduction);
+                    //tower.GetProduction().SetProduct(t.towerOverrides.ContainsKey("Cost as an upgrade") ? (float)t.towerOverrides["Cost as an upgrade"] : t.preset.cost);
+                    tower.GetTeam().vulnerability = (map.ContainsKey("Vulnerability") ? (float)map["Vulnerability"] : t.preset.vulnerability);
+
+
+                    string file = "Assets\\StreamingAssets\\TowerPresets\\" + t.presetName + "\\" + t.modelPath;
+
+                    // Load the GLTF file
+                    if (t.preset.meshPath != null && t.preset.meshPath.Length > 0 && t.preset.meshPath[0] != "")
+                    {
+
+                        GameObject result = Importer.LoadFromFile(file);
+                        tower.GetTeam().SetMesh(result.GetComponent<MeshFilter>().sharedMesh);
+                        //ImportGLTFAsync(dirName + "\\" + path, b);
+
+                    }
+                    else
+                    {
+                        Debug.LogError("it no exist :::: " + file);
+                    }
+                }
+            }
+        }
+    }
+
+    void SaveTerrainTowers(string levelName)
+    {
+
+        TowerCompiled towers = new TowerCompiled(EditorManager.Instance.editorTowers.ToArray());
+
+
+        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string filePath = Path.Combine(folderPath, levelName + "_Towers.rez");
+        File.WriteAllText(filePath, JsonUtility.ToJson(towers, true));//update setings json
+
+
+    }
+
+    void LoadTerrainTowers(string levelName)
+    {
+        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string filePath = Path.Combine(folderPath, levelName + "_Towers.rez");
+
+        TowerCompiled towers = JsonUtility.FromJson<TowerCompiled>(File.ReadAllText(filePath));//update setings json
+
+        towers.InstantiateInLevel(towerDefaultPrefab);
+    }
+
+    void LoadTerrainTowersEditor(string levelName)
+    {
+        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string filePath = Path.Combine(folderPath, levelName + "_Towers.rez");
+
+        TowerCompiled towers = JsonUtility.FromJson<TowerCompiled>(File.ReadAllText(filePath));//update setings json
+
+        towers.InstantiateInLevel(editorTowerPrefab, true);
+    }
+
+    void SaveLevelOptionsEditor(string levelName)
+    {
+        LevelOptions options = new LevelOptions
+        {
+            playerPos = EditorManager.Instance.playerSpawn
+        };
+        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string filePath = Path.Combine(folderPath, levelName + "_Options.rez");
+        File.WriteAllText(filePath, JsonUtility.ToJson(options));//update setings json
+    }
+
+    void LoadLevelOptionsEditor(string levelName)
+    {
+
+        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string filePath = Path.Combine(folderPath, levelName + "_Options.rez");
+
+        LevelOptions options = JsonUtility.FromJson<LevelOptions>(File.ReadAllText(filePath));//update setings json
+
+
+        EditorManager.Instance.playerSpawn = options.playerPos;
+    }
+
+    void LoadLevelOptions(string levelName)
+    {
+        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string filePath = Path.Combine(folderPath, levelName + "_Options.rez");
+
+        LevelOptions options = JsonUtility.FromJson<LevelOptions>(File.ReadAllText(filePath));//update setings json
+
+        GameObject player = GameObject.FindWithTag("Player");
+        player.transform.position = options.playerPos + Vector3.up * 22;
     }
 
     void SaveTerrainDetails(string levelName, TerrainData terrain)
@@ -270,7 +516,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         {
             filePath = Path.Combine(folderPath, levelName + "_DetailMap" + layNum + ".rez");
             float[,] thisDetailLayer = EditorManager.Instance.folage;
-
+            Debug.Log(filePath);
             FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
             BinaryWriter bw = new BinaryWriter(fs);
             for (int i = 0; i < terrain.detailHeight; i++)

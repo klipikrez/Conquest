@@ -4,6 +4,7 @@ using System.Runtime.Serialization.Formatters;
 using UnityEditor.Scripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 
 
@@ -37,33 +38,35 @@ public class TowersPlace : EditorBehaviour
                     editorConnection.gameObject.SetActive(true);
             }
         }
-
-
         if (Input.GetMouseButtonUp(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             //delete/edit connection
-            if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("connection")) && !EventSystem.current.IsPointerOverGameObject())
+            if (startingConnection == null && Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("connection")) && !EventSystem.current.IsPointerOverGameObject())
             {
                 Debug.Log("aaa");
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
-
-                    hit.collider.transform.parent.gameObject.GetComponent<TowerConnection>().Delete();
+                    TowerConnection conn = hit.collider.transform.parent.gameObject.GetComponent<TowerConnection>();
+                    if (conn != null)
+                    {
+                        conn.Delete();
+                    }
                 }
                 else
                 {
                     hit.collider.transform.parent.gameObject.GetComponent<TowerConnection>().CycleConnectionType();
                 }
             }
-            else //finish connecting towers
+            //finish connecting towers
             if (startingConnection != null)
             {
                 if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("building")) && !EventSystem.current.IsPointerOverGameObject())
                 {
                     EditorTower connectTower = hit.collider.gameObject.GetComponent<EditorTower>();
                     startingConnection.AddConnection(connectTower);
+
                 }
                 startingConnection = null;
                 editorConnection.gameObject.SetActive(false);
@@ -83,6 +86,9 @@ public class TowersPlace : EditorBehaviour
             }
         }
 
+
+
+
         //delete selected towers
         if (Input.GetKeyUp(KeyCode.Delete) || Input.GetKeyUp(KeyCode.X))
         {
@@ -90,9 +96,12 @@ public class TowersPlace : EditorBehaviour
             foreach (KeyValuePair<int, GameObject> tower in editor.editorSelection.selectedDictionary.selected)
             {
                 editor.editorTowers.Remove(tower.Value.GetComponent<EditorTower>());
+                tower.Value.GetComponent<EditorTower>().RemoveID();
                 Object.Destroy(tower.Value);
+
             }
             editor.editorSelection.selectedDictionary.RemoveAllEditor();
+            EditorOptions.Instance.SelectedEditorTowers();
         }
 
         //check what we are clicking on
@@ -100,12 +109,14 @@ public class TowersPlace : EditorBehaviour
         {
             if (!EventSystem.current.IsPointerOverGameObject())
             {
-                editor.terrain.drawTreesAndFoliage = true;
                 CheckIfClickedOnBuilding(editor);//if click on building select it/ if on terrain place new building
             }
             else
             {
+                if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.tag == "uiDontTest") { Debug.Log(EventSystem.current.currentSelectedGameObject.name); return; }
+
                 editor.editorSelection.selectedDictionary.RemoveAllEditor();
+                EditorOptions.Instance.SelectedEditorTowers();
             }
 
 
@@ -123,13 +134,24 @@ public class TowersPlace : EditorBehaviour
             {
 
                 GameObject obj = Object.Instantiate(editor.editorTowerPrefab, hit.point, Quaternion.identity);
-                EditorManager.Instance.editorTowers.Add(obj.GetComponent<EditorTower>());
+                EditorTower tower = obj.GetComponent<EditorTower>();
+                //apply default preset and overrides if there are any
+                tower.SetPreset(editor.towerPresets.presetData, editor.towerPresets.GetName());
+                foreach (towerEditorToggle toggle in editor.toggles)
+                {
+                    if (!toggle.toggle.isOn)
+                    {
+                        tower.AddOverride(toggle.slider.textString, toggle.slider.sliderElement.value);
+                    }
+                }
+                EditorManager.Instance.editorTowers.Add(tower);
+                tower.SetId();
                 if (!Input.GetKey(KeyCode.LeftShift))
                 {
                     editor.editorSelection.selectedDictionary.RemoveAllEditor();
                 }
                 editor.editorSelection.selectedDictionary.AddSelectedEditor(obj);
-
+                EditorOptions.Instance.SelectedEditorTowers();
 
             }
             else
@@ -159,7 +181,7 @@ public class TowersPlace : EditorBehaviour
                                     editor.editorSelection.selectedDictionary.AddSelectedEditor(hit.collider.gameObject);
                             }
 
-
+                            EditorOptions.Instance.SelectedEditorTowers();
 
                         }
                     }

@@ -14,6 +14,8 @@ public class Error : MonoBehaviour
     public TextMeshProUGUI textUI;
     public RawImage image;
     public Texture2D[] errorImages;
+    public Button button;
+    public Animator animator;
     // Start is called before the first frame update
     public void Initiate(string text, messageType type)
     {
@@ -30,5 +32,13 @@ public class Error : MonoBehaviour
         timer += Time.deltaTime;
         if (timer > time)
             Destroy(gameObject);
+    }
+
+    public void End()
+    {
+        button.enabled = false;
+        Destroy(button.gameObject);
+        animator.Play("End");
+        timer = time - 1;
     }
 }

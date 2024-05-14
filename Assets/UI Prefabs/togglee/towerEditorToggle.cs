@@ -11,15 +11,18 @@ public class towerEditorToggle : MonoBehaviour
     {
         slider.sliderElement.value = (slider.specialValue[0]);
         toggle.SetIsOnWithoutNotify(true);
+        EditorOptions.Instance.ClearOverride(slider.textString);
     }
 
     public void UpdateValue()
     {
-        Debug.Log(slider.text.text + "   ---   " + slider.specilaText + "  ====  " + (slider.text.text == slider.specilaText));
+
 
         toggle.SetIsOnWithoutNotify(slider.text.text == slider.specilaText);
-
+        EditorOptions.Instance.UpdateOverrideValue(slider.textString, slider.sliderElement.value);
 
     }
+
+
 
 }

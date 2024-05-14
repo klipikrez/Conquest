@@ -22,9 +22,12 @@ public class FlyCamera : MonoBehaviour
     private float totalRun = 1.0f;
     public Camera PlayerCamera;
     bool wrapMouse = false;
+    public bool Paused = false;
 
     void Update()
     {
+        if (Paused) return;
+
         if (Input.GetMouseButtonDown(2))
         {
             wrapMouse = true;

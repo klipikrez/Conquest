@@ -18,9 +18,13 @@ public class EditorManager : MonoBehaviour
     public GameObject editorTowerPrefab;
     public GameObject editorConnection;
     public towerEditorToggle[] toggles;
+    public TowerButton towerPresets;
 
 
     public List<EditorTower> editorTowers = new List<EditorTower>();
+
+    public List<TowerConnection> editorconnections = new List<TowerConnection>();
+
 
     private void Awake()
     {
@@ -70,6 +74,8 @@ public class EditorManager : MonoBehaviour
         }
         selectedBehaivour.ChangedEditorMode(this);
     }
+
+
 
     public void SetPlayerSpawn(Vector3 pos)
     {

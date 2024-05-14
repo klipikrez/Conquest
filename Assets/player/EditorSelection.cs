@@ -22,17 +22,7 @@ public class EditorSelection : Selection
 
     public override void RayCastLeftClick()
     {
-        Ray ray = Camera.main.ScreenPointToRay(p1);
 
-        if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("building")) && !EventSystem.current.IsPointerOverGameObject())
-        {
-
-        }
-        else
-        {
-
-
-        }
 
     }
 
@@ -53,6 +43,7 @@ public class EditorSelection : Selection
         if (other.gameObject.GetComponent<EditorTower>() != null)
         {
             selectedDictionary.AddSelectedEditor(other.gameObject);
+            EditorOptions.Instance.SelectedEditorTowers();
         }
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8035814926340465983}
   m_Layer: 5
   m_Name: outline
-  m_TagString: Untagged
+  m_TagString: uiDontTest
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 7371059131298414624}
   m_Layer: 5
   m_Name: Tower
-  m_TagString: Untagged
+  m_TagString: uiDontTest
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -229,6 +229,7 @@ MonoBehaviour:
   TowerPresetImage: {fileID: 8641976697096856680}
   master: {fileID: 0}
   textName: {fileID: 7233563413897528048}
+  meshes: []
 --- !u!1 &6460332186102963285
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +243,7 @@ GameObject:
   - component: {fileID: 8641976697096856680}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: uiDontTest
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -315,7 +316,7 @@ GameObject:
   - component: {fileID: 7233563413897528048}
   m_Layer: 5
   m_Name: Text (TMP)
-  m_TagString: Untagged
+  m_TagString: uiDontTest
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -395,7 +396,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.2
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

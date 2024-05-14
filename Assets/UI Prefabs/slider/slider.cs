@@ -10,7 +10,6 @@ public class slider : MonoBehaviour
     public string textString;
     public float[] specialValue = { 0, 1 };
     public string specilaText;
-    [NonSerialized]
     public Slider sliderElement;
     public TMP_Text percent;
     public TMP_Text text;
@@ -70,5 +69,10 @@ public class slider : MonoBehaviour
         akoOvoRadi.anchoredPosition = -new Vector3(436.22f - 436.22f * (value / (sliderElement.maxValue - sliderElement.minValue)), 0, 0);
         NemaSanse.anchoredPosition = new Vector3(436.22f - 436.22f * (value / (sliderElement.maxValue - sliderElement.minValue)), 0, 0);
         percent.text = (value).ToString("0.0");
+    }
+
+    public void SetText(string text)
+    {
+        percent.text = text;
     }
 }
