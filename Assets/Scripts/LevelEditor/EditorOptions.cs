@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.iOS;
 using UnityEngine.UI;
 
 public class LevelOptions

@@ -20,7 +20,7 @@ public class CreateBrushButtons : MonoBehaviour
         }*/
 
         CheckBrushFolder();
-        string folderPath = "Assets\\StreamingAssets\\Blushes";
+        string folderPath = Application.dataPath + "/StreamingAssets/Blushes";
 
         string[] Files = Directory.GetFiles(folderPath); //Getting Text files
 
@@ -33,7 +33,7 @@ public class CreateBrushButtons : MonoBehaviour
                 Byte[] pngBytes = System.IO.File.ReadAllBytes(file);
                 Texture2D tt = new Texture2D(52, 52);
                 tt.LoadImage(pngBytes);//moguce je ede da dovo treba da se sacuva negde na disky
-                tt.alphaIsTransparency = true;
+                //tt.alphaIsTransparency = true;
                 tt.name = Path.GetFileName(file);
                 BrushButton b = Instantiate(brushButtonPrefab, transform).GetComponent<BrushButton>();
                 b.SetTexture(tt);
@@ -67,9 +67,9 @@ public class CreateBrushButtons : MonoBehaviour
 
     void CheckBrushFolder()
     {
-        if (!System.IO.Directory.Exists("Assets/StreamingAssets/Blushes"))
+        if (!System.IO.Directory.Exists(Application.dataPath + "/StreamingAssets/Blushes"))
         {
-            System.IO.Directory.CreateDirectory("Assets/StreamingAssets/Blushes");
+            System.IO.Directory.CreateDirectory(Application.dataPath + "/StreamingAssets/Blushes");
 
 
         }

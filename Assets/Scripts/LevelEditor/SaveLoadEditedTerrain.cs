@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Siccity.GLTFUtility;
+using GLTFast;
+using GLTFast.Addons;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
@@ -347,12 +348,12 @@ public class SaveLoadEditedTerrain : MonoBehaviour
                     tempTowers.Add(t.id, tower);
                     EditorManager.Instance.editorTowers.Add(tower);
 
-                    string file = "Assets\\StreamingAssets\\TowerPresets\\" + t.presetName + "\\" + t.modelPath;
+                    string file = Application.dataPath + "/StreamingAssets/TowerPresets/" + t.presetName + "/" + t.modelPath;
                     Debug.Log(file);
-                    // Load the GLTF file
-                    GameObject result = Importer.LoadFromFile(file);
-                    tower.SetPreset(t.preset, t.presetName, new meshAndName { mesh = result.GetComponent<MeshFilter>().sharedMesh, name = t.modelPath });
-                    //ImportGLTFAsync(dirName + "\\" + path, b);
+
+
+                    AsyncSetTowerEditor(file, tower, t);
+                    //ImportGLTFAsync(dirName + "/" + path, b);
 
 
                 }
@@ -383,15 +384,13 @@ public class SaveLoadEditedTerrain : MonoBehaviour
                     tower.GetTeam().vulnerability = (map.ContainsKey("Vulnerability") ? (float)map["Vulnerability"] : t.preset.vulnerability);
 
 
-                    string file = "Assets\\StreamingAssets\\TowerPresets\\" + t.presetName + "\\" + t.modelPath;
+                    string file = Application.dataPath + "/StreamingAssets/TowerPresets/" + t.presetName + "/" + t.modelPath;
 
                     // Load the GLTF file
                     if (t.preset.meshPath != null && t.preset.meshPath.Length > 0 && t.preset.meshPath[0] != "")
                     {
 
-                        GameObject result = Importer.LoadFromFile(file);
-                        tower.GetTeam().SetMesh(result.GetComponent<MeshFilter>().sharedMesh);
-                        //ImportGLTFAsync(dirName + "\\" + path, b);
+                        AsyncSetTower(file, tower, t);
 
                     }
                     else
@@ -401,6 +400,53 @@ public class SaveLoadEditedTerrain : MonoBehaviour
                 }
             }
         }
+
+        private async void AsyncSetTowerEditor(string file, EditorTower tower, TowerStorage t)
+        {
+
+            // Load the GLTF file
+            byte[] data = File.ReadAllBytes(file);
+            var gltf = new GltfImport();
+            bool success = await gltf.LoadGltfBinary(
+                data,
+                // The URI of the original data is important for resolving relative URIs within the glTF
+                new Uri(file)
+                );
+
+            if (success)
+            {
+                tower.SetPreset(t.preset, t.presetName, new meshAndName { mesh = gltf.GetMeshes()[0], name = t.modelPath });
+            }
+            else
+            {
+                Debug.Log("nevalja::" + file);
+            }
+
+        }
+
+        private async void AsyncSetTower(string file, UnitController tower, TowerStorage t)
+        {
+
+
+            // Load the GLTF file
+            byte[] data = File.ReadAllBytes(file);
+            var gltf = new GltfImport();
+            bool success = await gltf.LoadGltfBinary(
+                data,
+                // The URI of the original data is important for resolving relative URIs within the glTF
+                new Uri(file)
+                );
+
+            if (success)
+            {
+                tower.GetTeam().SetMesh(gltf.GetMeshes()[0]);
+            }
+            else
+            {
+                Debug.Log("nevalja::" + file);
+            }
+
+        }
     }
 
     void SaveTerrainTowers(string levelName)
@@ -409,7 +455,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         TowerCompiled towers = new TowerCompiled(EditorManager.Instance.editorTowers.ToArray());
 
 
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Towers.rez");
         File.WriteAllText(filePath, JsonUtility.ToJson(towers, true));//update setings json
 
@@ -418,7 +464,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
     void LoadTerrainTowers(string levelName)
     {
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Towers.rez");
 
         TowerCompiled towers = JsonUtility.FromJson<TowerCompiled>(File.ReadAllText(filePath));//update setings json
@@ -428,7 +474,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
     void LoadTerrainTowersEditor(string levelName)
     {
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Towers.rez");
 
         TowerCompiled towers = JsonUtility.FromJson<TowerCompiled>(File.ReadAllText(filePath));//update setings json
@@ -440,9 +486,9 @@ public class SaveLoadEditedTerrain : MonoBehaviour
     {
         LevelOptions options = new LevelOptions
         {
-            playerPos = EditorManager.Instance.playerSpawn
+            playerPos = levelName != "brki" ? EditorManager.Instance.playerSpawn : Vector3.negativeInfinity
         };
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Options.rez");
         File.WriteAllText(filePath, JsonUtility.ToJson(options));//update setings json
     }
@@ -450,7 +496,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
     void LoadLevelOptionsEditor(string levelName)
     {
 
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Options.rez");
 
         LevelOptions options = JsonUtility.FromJson<LevelOptions>(File.ReadAllText(filePath));//update setings json
@@ -461,7 +507,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
     void LoadLevelOptions(string levelName)
     {
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Options.rez");
 
         LevelOptions options = JsonUtility.FromJson<LevelOptions>(File.ReadAllText(filePath));//update setings json
@@ -506,7 +552,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
         TerrainDetailsCompiled details = new TerrainDetailsCompiled(workPrototypes);
 
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Details.rez");
         File.WriteAllText(filePath, JsonUtility.ToJson(details));//update setings json
 
@@ -536,7 +582,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
     void LoadTerrainDetails(string levelName, TerrainData terrain)
     {
 
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Details.rez");
 
         TerrainDetailsCompiled details = JsonUtility.FromJson<TerrainDetailsCompiled>(File.ReadAllText(filePath));//update setings json
@@ -555,7 +601,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         {
 
 
-            string path = Application.streamingAssetsPath + "/Levels/" + levelName + "/" + levelName + "_DetailMap" + layNum++ + ".rez";
+            string path = Application.dataPath + "/StreamingAssets/Levels/" + levelName + "/" + levelName + "_DetailMap" + layNum++ + ".rez";
 
 
             if (!File.Exists(path)) break;
@@ -619,7 +665,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
         TerrainDetailsCompiled details = new TerrainDetailsCompiled(workPrototypes);
 
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Details.rez");
         File.WriteAllText(filePath, JsonUtility.ToJson(details));//update setings json
 
@@ -649,7 +695,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
     void LoadTerrainDetailsOld(string levelName, TerrainData terrain)
     {
 
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Details.rez");
 
         TerrainDetailsCompiled details = JsonUtility.FromJson<TerrainDetailsCompiled>(File.ReadAllText(filePath));//update setings json
@@ -668,7 +714,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         {
 
 
-            string path = Application.streamingAssetsPath + "/Levels/" + levelName + "/" + levelName + "_DetailMap" + layNum + ".rez";
+            string path = Application.dataPath + "/StreamingAssets/Levels/" + levelName + "/" + levelName + "_DetailMap" + layNum + ".rez";
 
 
             if (!File.Exists(path)) break;
@@ -741,7 +787,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
         TerrainTreesCompiled trees = new TerrainTreesCompiled(workTrees, workTreePrototypes);
 
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Trees.rez");
         File.WriteAllText(filePath, JsonUtility.ToJson(trees));//update setings json
 
@@ -752,7 +798,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
 
 
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Trees.rez");
         TerrainTreesCompiled trees = JsonUtility.FromJson<TerrainTreesCompiled>(File.ReadAllText(filePath));//update setings json
 
@@ -780,7 +826,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
     void SaveTerrainAlpha(string levelName, TerrainData terrain)
     {
 
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Splat.txt");
 
 
@@ -818,7 +864,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
     void LoadTerrainAlpha(string levelName, TerrainData terrain)
     {
 
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Splat.txt");
 
 
@@ -859,7 +905,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
     void SaveTerrainHeight(string levelName, TerrainData terrain)
     {
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Heightmap.txt");
 
         float[,] dat = terrain.GetHeights(0, 0, terrain.heightmapResolution, terrain.heightmapResolution);
@@ -878,7 +924,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
     void LoadTerrainHeight(string levelName, TerrainData terrain)
     {
         CheckLevelFolder(levelName);
-        string folderPath = "Assets\\StreamingAssets\\Levels\\" + levelName;
+        string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, levelName + "_Heightmap.txt");
         float[,] dat = terrain.GetHeights(0, 0, terrain.heightmapResolution, terrain.heightmapResolution);
         FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
@@ -898,17 +944,33 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
     void CheckLevelFolder(string levelName)
     {
-        if (!System.IO.Directory.Exists("Assets/StreamingAssets/Levels"))
+        if (!System.IO.Directory.Exists(Application.dataPath + "/StreamingAssets/Levels"))
         {
-            System.IO.Directory.CreateDirectory("Assets/StreamingAssets/Levels");
+            System.IO.Directory.CreateDirectory(Application.dataPath + "/StreamingAssets/Levels");
 
 
         }
-        if (!System.IO.Directory.Exists("Assets/StreamingAssets/Levels/" + levelName))
+        if (!System.IO.Directory.Exists(Application.dataPath + "/StreamingAssets/Levels/" + levelName))
         {
-            System.IO.Directory.CreateDirectory("Assets/StreamingAssets/levels/" + levelName);
+            System.IO.Directory.CreateDirectory(Application.dataPath + "/StreamingAssets/levels/" + levelName);
 
 
+        }
+    }
+
+    async void LoadGltfBinaryFromMemory()
+    {
+        var filePath = "/path/to/file.glb";
+        byte[] data = File.ReadAllBytes(filePath);
+        var gltf = new GltfImport();
+        bool success = await gltf.LoadGltfBinary(
+            data,
+            // The URI of the original data is important for resolving relative URIs within the glTF
+            new Uri(filePath)
+            );
+        if (success)
+        {
+            success = await gltf.InstantiateMainSceneAsync(transform);
         }
     }
 

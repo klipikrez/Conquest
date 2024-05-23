@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
-using Siccity.GLTFUtility;
+using GLTFast;
+using GLTFast.Addons;
 
 public class CreateTowerButtons : MonoBehaviour
 {
@@ -25,7 +25,7 @@ public class CreateTowerButtons : MonoBehaviour
         }*/
 
         CheckTowerFolder();
-        string folderPath = "Assets\\StreamingAssets\\TowerPresets";
+        string folderPath = Application.dataPath + "/StreamingAssets/TowerPresets";
 
         string[] dir = Directory.GetDirectories(folderPath);
         int i = 0;
@@ -42,11 +42,11 @@ public class CreateTowerButtons : MonoBehaviour
                     TowerPresetData presetData = JsonUtility.FromJson<TowerPresetData>(File.ReadAllText(file));//get tower
 
                     //load icon image
-                    Byte[] pngBytes = System.IO.File.ReadAllBytes(dirName + "\\icon.png");
+                    Byte[] pngBytes = System.IO.File.ReadAllBytes(dirName + "/icon.png");
                     Texture2D tt = new Texture2D(52, 52);
                     tt.LoadImage(pngBytes);//moguce je ede da dovo treba da se sacuva negde na disky
-                    tt.alphaIsTransparency = true;
-                    tt.name = Path.GetFileName(dirName + "\\icon.png");
+                                           // tt.alphaIsTransparency = true;
+                    tt.name = Path.GetFileName(dirName + "/icon.png");
 
                     TowerButton b = Instantiate(towerButtonPrefab, transform).GetComponent<TowerButton>();
                     b.SetTexture(tt);
@@ -54,19 +54,7 @@ public class CreateTowerButtons : MonoBehaviour
                     b.SetName(Path.GetFileName(dirName));
                     Debug.Log(b.GetName());
 
-                    // Load the GLTF file
-                    if (presetData.meshPath != null && presetData.meshPath.Length > 0 && presetData.meshPath[0] != "")
-                    {
-                        foreach (string path in presetData.meshPath)
-                        {
-                            GameObject result = Importer.LoadFromFile(dirName + "\\" + path);
-                            Mesh mesh = result.GetComponent<MeshFilter>().sharedMesh;
-                            mesh.name = path;
-                            // Debug.Log(mesh.name + " -- " + path);
-                            b.AddMesh(mesh, path);
-                            //ImportGLTFAsync(dirName + "\\" + path, b);
-                        }
-                    }
+
                     b.master = this;
 
 
@@ -74,18 +62,16 @@ public class CreateTowerButtons : MonoBehaviour
                     b.textName.text = Path.GetFileName(dirName);
 
                     towerButtons.Add(b);
-                    if (i == 0)
-                    {
-                        b.selecotr.color = new Color(1, 1, 1, 1);
-                        EditorManager.Instance.towerPresets = b;
-                        EditorOptions.Instance.SelectedTowerPreset(b);
 
-                    }
-                    else
+                    // Load the GLTF file
+                    if (presetData.meshPath != null && presetData.meshPath.Length > 0 && presetData.meshPath[0] != "")
                     {
-                        b.selecotr.color = new Color(1, 1, 1, 0);
-                    }
+                        foreach (string path in presetData.meshPath)
+                        {
+                            AsyncLoadMesh(dirName, path, b, i);
 
+                        }
+                    }
 
                     i++;
                     break;
@@ -94,6 +80,41 @@ public class CreateTowerButtons : MonoBehaviour
         }
 
         //DeselectAll();
+
+    }
+
+    private async void AsyncLoadMesh(string dirName, string path, TowerButton b, int i)
+    {
+        byte[] data = File.ReadAllBytes(dirName + "/" + path);
+        var gltf = new GltfImport();
+        bool success = await gltf.LoadGltfBinary(
+            data,
+            // The URI of the original data is important for resolving relative URIs within the glTF
+            new Uri(dirName + "/" + path)
+            );
+
+        if (success)
+        {
+            Mesh mesh = gltf.GetMeshes()[0];
+            mesh.name = path;
+            b.AddMesh(mesh, path);
+
+            if (i == 0)
+            {
+                b.selecotr.color = new Color(1, 1, 1, 1);
+                EditorManager.Instance.towerPresets = b;
+                EditorOptions.Instance.SelectedTowerPreset(b);
+
+            }
+            else
+            {
+                b.selecotr.color = new Color(1, 1, 1, 0);
+            }
+        }
+        else
+        {
+            Debug.Log("nevalja::" + dirName + "/" + path);
+        }
 
     }
 
@@ -123,9 +144,9 @@ public class CreateTowerButtons : MonoBehaviour
 
     void CheckTowerFolder()
     {
-        if (!System.IO.Directory.Exists("Assets/StreamingAssets/TowerPresets"))
+        if (!System.IO.Directory.Exists(Application.dataPath + "/StreamingAssets/TowerPresets"))
         {
-            System.IO.Directory.CreateDirectory("Assets/StreamingAssets/TowerPresets");
+            System.IO.Directory.CreateDirectory(Application.dataPath + "/StreamingAssets/TowerPresets");
 
 
         }

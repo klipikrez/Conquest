@@ -20,7 +20,7 @@ public class CreateTextureButtons : MonoBehaviour
         }*/
 
         CheckTextureFolder();
-        string folderPath = "Assets\\StreamingAssets\\Textures";
+        string folderPath = Application.dataPath + "/StreamingAssets/Textures";
 
         string[] Files = Directory.GetFiles(folderPath); //Getting Text files
         List<TerrainLayer> layers = new List<TerrainLayer>();
@@ -33,7 +33,7 @@ public class CreateTextureButtons : MonoBehaviour
                 Byte[] pngBytes = System.IO.File.ReadAllBytes(file);
                 Texture2D tt = new Texture2D(52, 52);
                 tt.LoadImage(pngBytes);//moguce je ede da dovo treba da se sacuva negde na disky
-                tt.alphaIsTransparency = true;
+                //tt.alphaIsTransparency = true;
                 tt.name = Path.GetFileName(file);
                 TextureButton b = Instantiate(brushButtonPrefab, transform).GetComponent<TextureButton>();
                 b.SetTexture(tt);
@@ -69,9 +69,9 @@ public class CreateTextureButtons : MonoBehaviour
 
     void CheckTextureFolder()
     {
-        if (!System.IO.Directory.Exists("Assets/StreamingAssets/Textures"))
+        if (!System.IO.Directory.Exists(Application.dataPath + "/StreamingAssets/Textures"))
         {
-            System.IO.Directory.CreateDirectory("Assets/StreamingAssets/Textures");
+            System.IO.Directory.CreateDirectory(Application.dataPath + "/StreamingAssets/Textures");
 
 
         }
