@@ -41,6 +41,11 @@ public class MainMenuUI : MonoBehaviour
         SetObjectsActive(2);
     }
 
+    public void Levels()
+    {
+        SetObjectsActive(3);
+    }
+
     public void SetObjectsActive(int i)
     {
         foreach (GameObject obj in GameObjectUIPanels)

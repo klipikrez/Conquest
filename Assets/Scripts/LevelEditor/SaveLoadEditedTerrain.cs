@@ -34,7 +34,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
     {
 
         //SaveTerrain("bababoj", terrain1.terrainData);
-        LoadLevelEditor("brki");
+        //LoadLevelEditor("brki");
     }
 
     // Update is called once per frame
