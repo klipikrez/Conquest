@@ -13,7 +13,7 @@ public class TowerPresetData
     public int maxUnits = 10;//increment by 10?//
     public float vulnerability = 0.81f; //
     public string[] enabledUpgrades; //
-    public string[] meshPath; // not implemented yet
+    public string[] meshPath; // meshes
 
 
 }
@@ -96,7 +96,6 @@ public class EditorTower : MonoBehaviour
 
     public void SetPreset(TowerPresetData preset, string presetName, meshAndName mesh = null)
     {
-        Debug.Log(mesh);
         this.preset = preset;
         this.presetName = presetName;
         mesh = mesh == null ? EditorManager.Instance.towerPresets.GetRandomMesh() : mesh;

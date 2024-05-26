@@ -23,14 +23,20 @@ public class LevelInfoManage : MonoBehaviour
 
     public void Play()
     {
-        if (levelName == "") return;
+        if (levelName == "") return; Debug.Log("Play: " + levelName);
         ScenesManager.Instance.Load(level);
 
     }
 
     public void Edit()
     {
-        if (levelName == "") return;
+        if (levelName == "") return; Debug.Log("edit: " + levelName);
         ScenesManager.Instance.LoadEditor(editor, levelName);
+    }
+
+    public void EditNew()
+    {
+        Debug.Log("CreateNewLwvwl");
+        ScenesManager.Instance.LoadEditor(editor, "");
     }
 }

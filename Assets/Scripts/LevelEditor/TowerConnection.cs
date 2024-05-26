@@ -16,6 +16,11 @@ public class TowerConnection : MonoBehaviour
         EditorManager.Instance.editorconnections.Add(this);
     }
 
+    private void FixedUpdate()
+    {
+        SetMesh();
+    }
+
     private void OnDestroy()
     {
         EditorManager.Instance.editorconnections.Remove(this);

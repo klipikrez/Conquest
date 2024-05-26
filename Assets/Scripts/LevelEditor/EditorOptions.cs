@@ -244,9 +244,10 @@ public class EditorOptions : MonoBehaviour
             return;
         }
         float[] ovverrides = new float[5];
+        string presetName = "";
 
         int i = 0;
-
+        //thiis is to setup sliders based on what towers are selected
         foreach (KeyValuePair<int, GameObject> obj in EditorManager.Instance.editorSelection.selectedDictionary.selected)
         {
             TowerPresetData preset = obj.Value.gameObject.GetComponent<EditorTower>().preset;
@@ -258,7 +259,7 @@ public class EditorOptions : MonoBehaviour
                 ovverrides[2] = towerOverrides.ContainsKey("Unit production") ? (float)towerOverrides["Unit production"] : preset.productProduction;
                 ovverrides[3] = towerOverrides.ContainsKey("Cost as an upgrade") ? (float)towerOverrides["Cost as an upgrade"] : preset.cost;
                 ovverrides[4] = towerOverrides.ContainsKey("Vulnerability") ? (float)towerOverrides["Vulnerability"] : preset.vulnerability;
-
+                presetName = obj.Value.gameObject.GetComponent<EditorTower>().presetName;
             }
             else
             {
@@ -267,10 +268,13 @@ public class EditorOptions : MonoBehaviour
                 if (ovverrides[2] != (towerOverrides.ContainsKey("Unit production") ? (float)towerOverrides["Unit production"] : preset.productProduction)) ovverrides[2] = float.NaN;
                 if (ovverrides[3] != (towerOverrides.ContainsKey("Cost as an upgrade") ? (float)towerOverrides["Cost as an upgrade"] : preset.cost)) ovverrides[3] = float.NaN;
                 if (ovverrides[4] != (towerOverrides.ContainsKey("Vulnerability") ? (float)towerOverrides["Vulnerability"] : preset.vulnerability)) ovverrides[4] = float.NaN;
+                if (presetName != obj.Value.gameObject.GetComponent<EditorTower>().presetName) presetName = null;
             }
 
         }
-        Debug.Log(ovverrides[1]);
+
+        if (presetName != null) CreateTowerButtons.Instance.Select(presetName);
+
         i = 0;
         foreach (slider slider in sliders)
         {

@@ -68,7 +68,7 @@ public class slider : MonoBehaviour
     {
         akoOvoRadi.anchoredPosition = -new Vector3(436.22f - 436.22f * (value / (sliderElement.maxValue - sliderElement.minValue)), 0, 0);
         NemaSanse.anchoredPosition = new Vector3(436.22f - 436.22f * (value / (sliderElement.maxValue - sliderElement.minValue)), 0, 0);
-        percent.text = (value).ToString("0.0");
+        percent.text = (value).ToString("0");
     }
 
     public void SetText(string text)

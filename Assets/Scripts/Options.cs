@@ -32,10 +32,6 @@ public class Options : MonoBehaviour
         public int fps = 60;
         public float[] volumes = { 1, 1, 1, 1 };
         public bool vsync = false;
-        /*public float volume0 = 1;
-        public float volume1 = 1;
-        public float volume2 = 1;
-        public float volume3 = 1;*/
 
     }
     Settings settings;
@@ -120,10 +116,11 @@ public class Options : MonoBehaviour
     void UpdateSettings(int fullScreen = -1, int hz = -1)
     {
         Application.targetFrameRate = hz != -1 ? (hz) : Application.targetFrameRate;
+        Vector2Int resolution = (fullScreen != -1 ? (fullScreen == 1 ? true : false) : Screen.fullScreen) ? new Vector2Int(Screen.currentResolution.width, Screen.currentResolution.height) : new Vector2Int(Screen.width, Screen.height);
 
         Screen.SetResolution(
-            Screen.width,
-             Screen.height,
+            resolution.x,
+             resolution.y,
               fullScreen != -1 ? (fullScreen == 1 ? true : false) : Screen.fullScreen,
                hz != -1 ? (hz) : Application.targetFrameRate);
 

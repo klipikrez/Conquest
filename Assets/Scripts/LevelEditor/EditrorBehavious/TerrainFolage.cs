@@ -53,15 +53,15 @@ public class TerrainFolage : EditorBehaviour
     {
         int layNum = 0;
 
-
-
-        int[,] dat = DrawBrush(pos.x, pos.y, editor.folage, terrain.terrainData.detailWidth, EditorOptions.Instance.brushSize, EditorOptions.Instance.brushStrenth);
+        int[,] dat = DrawBrush(pos.x, pos.y, editor.folage, terrain.terrainData.detailWidth, EditorOptions.Instance.brushSize
+        , Input.GetKey(KeyCode.LeftShift) ? EditorOptions.Instance.brushStrenthSlider.maxValue : EditorOptions.Instance.brushStrenth
+        , Input.GetKey(KeyCode.LeftShift) ? 0 : EditorOptions.Instance.folageDensity);
 
 
         terrain.terrainData.SetDetailLayer(0, 0, layNum, dat);
     }
 
-    private int[,] DrawBrush(float x, float y, float[,] pixels, int resolution, float radious, float multiplyer)
+    private int[,] DrawBrush(float x, float y, float[,] pixels, int resolution, float radious, float multiplyer, float desiredDensity)
     {
         //Debug.Log(/*"x=" + (int)x + "  y=" + (int)y + */"x1=" + (int)(x - (radious / 2)) + "  y1=" + (int)(y - (radious / 2)) + "\nx2=" + (int)(x + (radious / 2)) + "  y=" + (int)(y + (radious / 2)));
         // string a = "";

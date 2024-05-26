@@ -1,0 +1,1325 @@
+{
+    "towers": [
+        {
+            "id": 0,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [
+                {
+                    "overrideName": "Max units"
+                },
+                {
+                    "overrideName": "Unit production"
+                },
+                {
+                    "overrideName": "Cost as an upgrade"
+                }
+            ],
+            "connections": [
+                2,
+                12
+            ],
+            "position": {
+                "x": -13.308853149414063,
+                "y": 0.387237548828125,
+                "z": 4.2802734375
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 1,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [
+                {
+                    "overrideName": "Max units"
+                },
+                {
+                    "overrideName": "Unit production"
+                },
+                {
+                    "overrideName": "Cost as an upgrade"
+                }
+            ],
+            "connections": [
+                0,
+                22
+            ],
+            "position": {
+                "x": -5.959693908691406,
+                "y": 6.784637451171875,
+                "z": 16.971755981445314
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 2,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [
+                {
+                    "overrideName": "Max units"
+                },
+                {
+                    "overrideName": "Unit production"
+                },
+                {
+                    "overrideName": "Cost as an upgrade"
+                }
+            ],
+            "connections": [
+                1,
+                0,
+                12,
+                22,
+                24,
+                23
+            ],
+            "position": {
+                "x": -4.413139343261719,
+                "y": 0.8323974609375,
+                "z": 3.9690093994140627
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 3,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.0,
+                "maxUnits": 200,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "ruinedBuilding1.glb",
+                    "ruinedBuilding2.glb"
+                ]
+            },
+            "modelPath": "ruinedBuilding1.glb",
+            "presetName": "defaultRuin",
+            "towerOverrides": [
+                {
+                    "overrideName": "Cost as an upgrade"
+                },
+                {
+                    "overrideName": "Max units"
+                },
+                {
+                    "overrideName": "Unit production"
+                }
+            ],
+            "connections": [],
+            "position": {
+                "x": 9.021453857421875,
+                "y": 1.36102294921875,
+                "z": 4.210845947265625
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 4,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.0,
+                "maxUnits": 200,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "ruinedBuilding1.glb",
+                    "ruinedBuilding2.glb"
+                ]
+            },
+            "modelPath": "ruinedBuilding2.glb",
+            "presetName": "defaultRuin",
+            "towerOverrides": [
+                {
+                    "overrideName": "Cost as an upgrade"
+                }
+            ],
+            "connections": [],
+            "position": {
+                "x": 13.016647338867188,
+                "y": 1.1384735107421876,
+                "z": 1.964569091796875
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 5,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.0,
+                "maxUnits": 200,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "ruinedBuilding1.glb",
+                    "ruinedBuilding2.glb"
+                ]
+            },
+            "modelPath": "ruinedBuilding1.glb",
+            "presetName": "defaultRuin",
+            "towerOverrides": [
+                {
+                    "overrideName": "Cost as an upgrade"
+                }
+            ],
+            "connections": [],
+            "position": {
+                "x": 9.697998046875,
+                "y": 1.3484344482421876,
+                "z": -0.5714797973632813
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 6,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.0,
+                "maxUnits": 200,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "ruinedBuilding1.glb",
+                    "ruinedBuilding2.glb"
+                ]
+            },
+            "modelPath": "ruinedBuilding1.glb",
+            "presetName": "defaultRuin",
+            "towerOverrides": [
+                {
+                    "overrideName": "Cost as an upgrade"
+                }
+            ],
+            "connections": [],
+            "position": {
+                "x": 8.4278564453125,
+                "y": -0.264404296875,
+                "z": -24.023101806640626
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 9,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.0,
+                "maxUnits": 200,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "ruinedBuilding1.glb",
+                    "ruinedBuilding2.glb"
+                ]
+            },
+            "modelPath": "ruinedBuilding2.glb",
+            "presetName": "defaultRuin",
+            "towerOverrides": [
+                {
+                    "overrideName": "Cost as an upgrade"
+                }
+            ],
+            "connections": [],
+            "position": {
+                "x": 30.703582763671876,
+                "y": 12.84600830078125,
+                "z": 25.910018920898439
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 10,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.0,
+                "maxUnits": 200,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "ruinedBuilding1.glb",
+                    "ruinedBuilding2.glb"
+                ]
+            },
+            "modelPath": "ruinedBuilding1.glb",
+            "presetName": "defaultRuin",
+            "towerOverrides": [
+                {
+                    "overrideName": "Cost as an upgrade"
+                }
+            ],
+            "connections": [],
+            "position": {
+                "x": 24.603225708007814,
+                "y": 2.347015380859375,
+                "z": 17.779403686523439
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 11,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [
+                {
+                    "overrideName": "Max units"
+                },
+                {
+                    "overrideName": "Unit production"
+                },
+                {
+                    "overrideName": "Cost as an upgrade"
+                }
+            ],
+            "connections": [],
+            "position": {
+                "x": 33.54042053222656,
+                "y": 10.7518310546875,
+                "z": 22.705978393554689
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 7,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.0,
+                "maxUnits": 200,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "ruinedBuilding1.glb",
+                    "ruinedBuilding2.glb"
+                ]
+            },
+            "modelPath": "ruinedBuilding1.glb",
+            "presetName": "defaultRuin",
+            "towerOverrides": [],
+            "connections": [],
+            "position": {
+                "x": 11.0986328125,
+                "y": -0.242706298828125,
+                "z": -23.62738037109375
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 8,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.0,
+                "maxUnits": 200,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "ruinedBuilding1.glb",
+                    "ruinedBuilding2.glb"
+                ]
+            },
+            "modelPath": "ruinedBuilding1.glb",
+            "presetName": "defaultRuin",
+            "towerOverrides": [],
+            "connections": [],
+            "position": {
+                "x": 9.117584228515625,
+                "y": -0.09027099609375,
+                "z": -20.485206604003908
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 42,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [],
+            "position": {
+                "x": 20.333099365234376,
+                "y": 1.3593902587890626,
+                "z": -26.589866638183595
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 12,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                2,
+                23,
+                26,
+                18,
+                0
+            ],
+            "position": {
+                "x": -5.575584411621094,
+                "y": -0.6683807373046875,
+                "z": -6.419464111328125
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 13,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                18,
+                16,
+                20,
+                21
+            ],
+            "position": {
+                "x": -55.96784973144531,
+                "y": -0.412017822265625,
+                "z": -59.3353271484375
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 14,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                20,
+                19,
+                15,
+                31
+            ],
+            "position": {
+                "x": -46.73481750488281,
+                "y": -0.412017822265625,
+                "z": -68.10440063476563
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 15,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                20,
+                18,
+                14
+            ],
+            "position": {
+                "x": -39.408851623535159,
+                "y": -0.412017822265625,
+                "z": -60.254005432128909
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 16,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                13,
+                21,
+                17,
+                19,
+                32,
+                33
+            ],
+            "position": {
+                "x": -64.31881713867188,
+                "y": -0.412017822265625,
+                "z": -62.3268928527832
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 17,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                16,
+                21,
+                18,
+                30,
+                33
+            ],
+            "position": {
+                "x": -63.61112594604492,
+                "y": -0.412017822265625,
+                "z": -48.177757263183597
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 18,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                20,
+                13,
+                21,
+                17,
+                15,
+                12,
+                30
+            ],
+            "position": {
+                "x": -48.77672576904297,
+                "y": -0.412017822265625,
+                "z": -51.538360595703128
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 19,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                20,
+                14,
+                16,
+                31,
+                32
+            ],
+            "position": {
+                "x": -53.096946716308597,
+                "y": -0.412017822265625,
+                "z": -66.80236053466797
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 20,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                14,
+                15,
+                19,
+                18,
+                13
+            ],
+            "position": {
+                "x": -47.420982360839847,
+                "y": -0.412017822265625,
+                "z": -59.76630401611328
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 21,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                18,
+                16,
+                17,
+                13
+            ],
+            "position": {
+                "x": -57.84894561767578,
+                "y": -0.412017822265625,
+                "z": -52.96642303466797
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 22,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                2,
+                27,
+                24,
+                1
+            ],
+            "position": {
+                "x": 5.8397216796875,
+                "y": 1.524871826171875,
+                "z": 12.824447631835938
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 23,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                2,
+                12,
+                26,
+                25,
+                27
+            ],
+            "position": {
+                "x": 1.7547454833984376,
+                "y": 0.276641845703125,
+                "z": -2.5089035034179689
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 24,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                2,
+                27,
+                22
+            ],
+            "position": {
+                "x": 5.9160919189453129,
+                "y": 1.35400390625,
+                "z": 7.76800537109375
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 25,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                23,
+                28,
+                26,
+                27
+            ],
+            "position": {
+                "x": 12.962722778320313,
+                "y": 1.025726318359375,
+                "z": -4.77545166015625
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 26,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                12,
+                23,
+                29,
+                25
+            ],
+            "position": {
+                "x": 2.83624267578125,
+                "y": 0.181610107421875,
+                "z": -11.510475158691407
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 27,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                23,
+                24,
+                22,
+                25,
+                28
+            ],
+            "position": {
+                "x": 14.739593505859375,
+                "y": 0.93450927734375,
+                "z": 8.689605712890625
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 28,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                25,
+                29,
+                27
+            ],
+            "position": {
+                "x": 17.866729736328126,
+                "y": 0.569732666015625,
+                "z": -6.073455810546875
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 29,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                26,
+                28
+            ],
+            "position": {
+                "x": 7.3515777587890629,
+                "y": 0.947509765625,
+                "z": -11.665679931640625
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 30,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                18,
+                17
+            ],
+            "position": {
+                "x": -56.25263977050781,
+                "y": -0.412017822265625,
+                "z": -45.806541442871097
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 31,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                14,
+                19,
+                32
+            ],
+            "position": {
+                "x": -51.513755798339847,
+                "y": -0.412017822265625,
+                "z": -71.51447296142578
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 32,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                19,
+                31,
+                16
+            ],
+            "position": {
+                "x": -59.500953674316409,
+                "y": -0.412017822265625,
+                "z": -69.92282104492188
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        },
+        {
+            "id": 33,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                16,
+                17
+            ],
+            "position": {
+                "x": -66.436767578125,
+                "y": -0.412017822265625,
+                "z": -54.0985107421875
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 0.0
+        }
+    ]
+}

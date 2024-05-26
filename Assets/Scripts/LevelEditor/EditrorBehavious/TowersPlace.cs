@@ -111,7 +111,7 @@ public class TowersPlace : EditorBehaviour
             }
             else
             {
-                if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.tag == "uiDontTest") { Debug.Log(EventSystem.current.currentSelectedGameObject.name); return; }
+                if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.tag == "uiDontTest") { return; }
 
                 editor.editorSelection.selectedDictionary.RemoveAllEditor();
                 EditorOptions.Instance.SelectedEditorTowers();

@@ -9,16 +9,17 @@ using GLTFast.Addons;
 
 public class CreateTowerButtons : MonoBehaviour
 {
-    public List<TowerButton> towerButtons = new List<TowerButton>();
+    public Dictionary<string, TowerButton> towerButtons = new Dictionary<string, TowerButton>();
     public GameObject towerButtonPrefab;
     public slider startingUnitsSlider;
 
-
+    public static CreateTowerButtons Instance;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        Instance = this;
         /*foreach (var brushButton in brushButtons)
         {
             Destroy(brushButton.gameObject);
@@ -52,7 +53,6 @@ public class CreateTowerButtons : MonoBehaviour
                     b.SetTexture(tt);
                     b.presetData = presetData;
                     b.SetName(Path.GetFileName(dirName));
-                    Debug.Log(b.GetName());
 
 
                     b.master = this;
@@ -61,7 +61,7 @@ public class CreateTowerButtons : MonoBehaviour
 
                     b.textName.text = Path.GetFileName(dirName);
 
-                    towerButtons.Add(b);
+                    towerButtons.Add(b.GetName(), b);
 
                     // Load the GLTF file
                     if (presetData.meshPath != null && presetData.meshPath.Length > 0 && presetData.meshPath[0] != "")
@@ -136,10 +136,27 @@ public class CreateTowerButtons : MonoBehaviour
     }
     public void DeselectAll()
     {
-        foreach (TowerButton but in towerButtons)
+        foreach (KeyValuePair<string, TowerButton> but in towerButtons)
         {
-            but.Deselelect();
+            but.Value.Deselelect();
         }
+    }
+
+    public void Select(string name)
+    {
+
+
+        LoadTowerPresets(towerButtons[name]);
+        towerButtons[name].selecotr.color = new Color(1, 1, 1, 1);
+        EditorManager.Instance.towerPresets = towerButtons[name];
+    }
+
+    public void LoadTowerPresets(TowerButton btn)
+    {
+        //twer placing stuff
+        DeselectAll();
+
+        EditorOptions.Instance.SelectedTowerPreset(btn);
     }
 
     void CheckTowerFolder()
@@ -147,8 +164,6 @@ public class CreateTowerButtons : MonoBehaviour
         if (!System.IO.Directory.Exists(Application.dataPath + "/StreamingAssets/TowerPresets"))
         {
             System.IO.Directory.CreateDirectory(Application.dataPath + "/StreamingAssets/TowerPresets");
-
-
         }
     }
 

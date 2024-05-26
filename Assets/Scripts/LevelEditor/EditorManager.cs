@@ -34,7 +34,7 @@ public class EditorManager : MonoBehaviour
 
     public void ChangeBehaviour(int val)
     {
-        Debug.Log("Editor: " + val);
+
 
         if (editorSelection != null)
             editorSelection.enableSelection = false;
@@ -69,9 +69,11 @@ public class EditorManager : MonoBehaviour
                 selectedBehaivour = new SetPalyerSpawn();
                 break;
             default:
+                Debug.Log("Editor ERROR: " + val);
                 selectedBehaivour = null;
                 return;
         }
+        Debug.Log("Editor: " + val + " -- " + selectedBehaivour);
         selectedBehaivour.ChangedEditorMode(this);
     }
 

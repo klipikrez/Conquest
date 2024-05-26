@@ -54,7 +54,8 @@ public class TerrainTrees : EditorBehaviour
         {
             if (treeInstances.Count != 0)
             {
-                Vector3 point = new Vector3(pos.x, 0.5f, pos.y);
+                float height = terrain.SampleHeight(pos);
+                Vector3 point = new Vector3(pos.x, height, pos.y);
                 treeInstances.RemoveWithinRadius(point, (float)EditorOptions.Instance.brushSize / ((terrain.terrainData.size.x * terrain.terrainData.size.x)));
 
             }/*while (true)
