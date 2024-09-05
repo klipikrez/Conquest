@@ -12,11 +12,11 @@ public class Team : MonoBehaviour
     public MeshRenderer markerRend;
     public MeshFilter meshFilter;
     public Animator ObjectAnimatior;
-    Production prod;
-    [System.NonSerialized]
-    public UnitController controller;
+
     public float vulnerability = 0.81f;
 
+    [System.NonSerialized]
+    public BuildingMain building;
 
     void Start()
     {
@@ -24,8 +24,6 @@ public class Team : MonoBehaviour
         if (GetComponent<BuildingUI>() != null)//isnt Player
         {
             isBuilding = true;
-            prod = GetComponent<Production>();
-            controller = GetComponent<UnitController>();
             //StartCoroutine(BuildingStart());
             UpdatColor();
 
@@ -54,7 +52,7 @@ public class Team : MonoBehaviour
         //Debug.Log(controller/*.UnitBuildingSpawnBehavior.buildingBehaviors[teamid].color*/);
         //meshRenderer.material.SetColor("Color_", controller.UnitBuildingSpawnBehavior.buildingBehaviors[teamid].color);
 
-        prod.numberRefrence.color = controller.UnitBuildingSpawnBehavior.buildingBehaviors[teamid].color;//get color from building spawn behaviour
+        building.production.numberRefrence.color = building.unitController.UnitBuildingSpawnBehavior.buildingBehaviors[teamid].color;//get color from building spawn behaviour
 
         if (meshRenderer != null)
         {
@@ -81,18 +79,18 @@ public class Team : MonoBehaviour
 
         if (isBuilding)
         {
-            prod.SubtractProduct(vulnerability);
-            if (prod.product < 0)
+            building.production.SubtractProduct(vulnerability);
+            if (building.production.product < 0)
             {
-                controller.StopAttackUnits();
-                prod.SetProduct(1);
+                building.unitController.StopAttackUnits();
+                building.production.SetProduct(1);
                 if (SoundManager.Instance != null && teamid == 1)
                 {
                     SoundManager.Instance.PlayAudioClip(5);
                 }
                 if (AIManager.Instance != null)
                 {
-                    AIManager.Instance.UpdateTeamTowers(controller, teamid, attacker.selfTeam);
+                    AIManager.Instance.UpdateTeamTowers(building, teamid, attacker.selfTeam);
                 }
                 ChangeTeam(attacker.selfTeam);
                 if (WinConditions.Instance != null)
@@ -113,7 +111,7 @@ public class Team : MonoBehaviour
     {
         if (isBuilding)
         {
-            prod.AddProduct(1f);
+            building.production.AddProduct(1f);
         }
     }
 

@@ -7,27 +7,33 @@ public class NavManager : MonoBehaviour
 {
 
     GameObject[] buildings;
-    public IDictionary<GameObject, UnitController> buildingControllers { get; private set; } = new Dictionary<GameObject, UnitController>();
+    public IDictionary<GameObject, BuildingMain> buildingMains { get; private set; } = new Dictionary<GameObject, BuildingMain>();
 
     public static NavManager Instance { get; private set; }
+    public bool autoInicialize = false;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    // Start is called before the first frame update    building
-    void Start()
+    private void Start()
     {
-        buildings = GameObject.FindGameObjectsWithTag("building");
+        if (autoInicialize) Inicialize(GameObject.FindGameObjectsWithTag("building"));
+    }
+
+    // Start is called before the first frame update    building
+    public void Inicialize(GameObject[] inBuildings)
+    {
+        buildings = inBuildings;
         foreach (GameObject building in buildings)
         {
-            UnitController controller = building.GetComponent<UnitController>();
-            buildingControllers.Add(building, controller);
+            BuildingMain controller = building.GetComponent<BuildingMain>();
+            buildingMains.Add(building, controller);
 
-            SetBuildingNeighbours(controller);
+            //SetBuildingNeighbours(controller);
         }
-    }
+    }/*
 
     void SetBuildingNeighbours(UnitController building)
     {
@@ -44,7 +50,7 @@ public class NavManager : MonoBehaviour
             }
         }
 
-    }
+    }*/
 
     public void SetPauseBuildings(bool val)
     {/*
@@ -65,20 +71,11 @@ public class NavManager : MonoBehaviour
         }*/
 
 
-        foreach (var building in buildingControllers)
+        foreach (var building in buildingMains)
         {
-            building.Value.Paused = val;
-            if (building.Value.production == null)
-            {
-                building.Value.GetComponent<Production>().Paused = val;
+            building.Value.unitController.Paused = val;
 
-            }
-            else
-            {
-
-                building.Value.production.Paused = val;
-
-            }
+            building.Value.production.Paused = val;
         }
     }
 
@@ -101,7 +98,7 @@ public class NavManager : MonoBehaviour
         HashSet<Transform> unexplored = new HashSet<Transform>();
 
         //shortest path from start to current building
-        IDictionary<UnitController, float> distances = new Dictionary<UnitController, float>();
+        IDictionary<BuildingMain, float> distances = new Dictionary<BuildingMain, float>();
 
         //parent paths
         IDictionary<Transform, Transform> parents = new Dictionary<Transform, Transform>();
@@ -109,19 +106,19 @@ public class NavManager : MonoBehaviour
         //initialize
         foreach (GameObject building in buildings)
         {
-            distances.Add(new KeyValuePair<UnitController, float>(buildingControllers[building], float.MaxValue));
+            distances.Add(new KeyValuePair<BuildingMain, float>(buildingMains[building], float.MaxValue));
             parents.Add(new KeyValuePair<Transform, Transform>(building.transform, null));
             unexplored.Add(building.transform);
         }
 
-        UnitController startController = start.GetComponent<UnitController>();
+        BuildingMain startBuilding = start.GetComponent<BuildingMain>();
 
         //start distance = 0
-        distances[startController] = 0;
+        distances[startBuilding] = 0;
 
         while (unexplored.Count > 0)
         {
-            UnitController check = distances//check this
+            BuildingMain check = distances//check this
                 .Where(x => unexplored.Contains(x.Key.transform))//is in unexplored
                 .OrderBy(x => x.Value).First().Key;//order by smallest number first
 
@@ -150,17 +147,17 @@ public class NavManager : MonoBehaviour
 
             unexplored.Remove(check.transform);
 
-            IList<UnitController> neighbours = check.neighbours;
+            IList<BuildingMain> neighbours = check.neighbours;
 
-            foreach (UnitController neighbour in neighbours)
+            foreach (BuildingMain neighbour in neighbours)
             {
                 //distance cost
                 float dist = distances[check]
                     + Vector3.Distance(check.transform.position, neighbour.transform.position)  //distance
-                    * check.unitMaxSPeed                                                        //max speed
-                    * ((check.team.teamid != startController.team.teamid) ? 100 : 1);           //if not same team X100 distance
-                                                                                                //burn fire hot
-                                                                                                //update parent if better total distance is found
+                    * check.unitController.unitMaxSPeed                                                        //max speed
+                    * ((check.team.teamid != startBuilding.team.teamid) ? 100 : 1);           //if not same team X100 distance
+                                                                                              //burn fire hot
+                                                                                              //update parent if better total distance is found
                 if (dist < distances[neighbour])
                 {
                     distances[neighbour] = dist;

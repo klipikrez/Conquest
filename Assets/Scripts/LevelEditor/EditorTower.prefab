@@ -323,12 +323,15 @@ MonoBehaviour:
     enabledUpgrades: []
     meshPath: []
   meshFilter: {fileID: 7959154390440350863}
+  meshName: 
   selected: 0
   connections: []
   connectionPrefab: {fileID: 3257907160793984000, guid: c59dab7499851514c863cdfee399ec26, type: 3}
   Ui: {fileID: 3559793028579178783}
   rect: {fileID: 5080266739639644070}
   selfID: 0
+  team: 0
+  meshRenderer: {fileID: 7959154390440350862}
 --- !u!65 &7959154391435268682
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -340,8 +343,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.13, y: 6.93, z: 2.13}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.13, y: 3.465, z: 2.13}
+  m_Center: {x: 0, y: 1.7325, z: 0}
 --- !u!54 &40786655281904371
 Rigidbody:
   m_ObjectHideFlags: 0

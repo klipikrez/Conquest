@@ -94,8 +94,8 @@ public class TowersPlace : EditorBehaviour
             foreach (KeyValuePair<int, GameObject> tower in editor.editorSelection.selectedDictionary.selected)
             {
                 editor.editorTowers.Remove(tower.Value.GetComponent<EditorTower>());
-                tower.Value.GetComponent<EditorTower>().RemoveID();
-                Object.Destroy(tower.Value);
+                tower.Value.GetComponent<EditorTower>().DeleteTower();
+
 
             }
             editor.editorSelection.selectedDictionary.RemoveAllEditor();

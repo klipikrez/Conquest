@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using UnityEngine;
 
 public class EditorManager : MonoBehaviour
@@ -19,7 +20,7 @@ public class EditorManager : MonoBehaviour
     public GameObject editorConnection;
     public towerEditorToggle[] toggles;
     public TowerButton towerPresets;
-
+    public GameObject tutorialCards;
 
     public List<EditorTower> editorTowers = new List<EditorTower>();
 
@@ -31,6 +32,16 @@ public class EditorManager : MonoBehaviour
         Instance = this;
     }
 
+
+    private void Start()
+    {
+        tutorialCards.SetActive(false);
+        Settings settings = JsonUtility.FromJson<Settings>(File.ReadAllText(Application.dataPath + "/StreamingAssets/klipik.rez"));
+        if (settings.showEditorTutorial)
+        {
+            tutorialCards.SetActive(true);
+        }
+    }
 
     public void ChangeBehaviour(int val)
     {
@@ -67,6 +78,9 @@ public class EditorManager : MonoBehaviour
                 break;
             case 8:
                 selectedBehaivour = new SetPalyerSpawn();
+                break;
+            case 9:
+                selectedBehaivour = new SetTowerTeams();
                 break;
             default:
                 Debug.Log("Editor ERROR: " + val);
@@ -137,12 +151,6 @@ public class EditorManager : MonoBehaviour
         {
             tower.gameObject.SetActive(true);
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
     }
 
     // Update is called once per frame

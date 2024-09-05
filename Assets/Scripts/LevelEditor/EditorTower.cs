@@ -1,4 +1,4 @@
-using System.Collections;
+
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -37,6 +37,8 @@ public class EditorTower : MonoBehaviour
     Vector3 UiOffset = Vector3.up;
     public static Dictionary<int, EditorTower> TowerIDs = new Dictionary<int, EditorTower>();
     public int selfID;
+    public int team;
+    public MeshRenderer meshRenderer;
     public void SetId(int givenId = -1)
     {
         if (givenId == -1)
@@ -51,6 +53,16 @@ public class EditorTower : MonoBehaviour
     public void RemoveID()
     {
         if (TowerIDs.ContainsKey(selfID)) { TowerIDs.Remove(selfID); }
+    }
+
+    public void DeleteTower()
+    {
+        while (connections.Count > 0)
+        {
+            connections[0].Delete();
+        }
+        RemoveID();
+        Object.Destroy(gameObject);
     }
 
     private void Update()
@@ -200,6 +212,8 @@ public class EditorTower : MonoBehaviour
         }
     }
 
+
+
     public void MoveTo(Vector3 pos)
     {
         transform.position = pos;
@@ -210,6 +224,21 @@ public class EditorTower : MonoBehaviour
 
         foreach (TowerConnection conn in connections)
             conn.UpdatePosition();
+    }
+
+    public void UpdatColor()
+    {
+        //Debug.Log(controller/*.UnitBuildingSpawnBehavior.buildingBehaviors[teamid].color*/);
+        //meshRenderer.material.SetColor("Color_", controller.UnitBuildingSpawnBehavior.buildingBehaviors[teamid].color);
+
+
+
+        if (meshRenderer != null)
+        {
+            float materalTeamTextureOffset = 1f / meshRenderer.material.mainTexture.height;
+            meshRenderer.material.mainTextureOffset = new Vector2(0, -materalTeamTextureOffset * team);
+        }
+
     }
 
 }

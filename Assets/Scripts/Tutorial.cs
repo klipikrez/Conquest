@@ -7,6 +7,7 @@ public class Tutorial : MonoBehaviour
 
     public int phaze = 1;
     BuildingUI building;
+    BuildingMain buildingMain;
     BuildingUI buildingEmemy;
     public BuildingMainTutorial tutorialBuilding;
     public BuildingMainTutorial tutorialBuildingEnemy;
@@ -20,6 +21,7 @@ public class Tutorial : MonoBehaviour
         buildingEmemy = tutorialBuildingEnemy.gameObject.GetComponent<BuildingUI>();
         tutorialBuildingEnemy.rect.SetActive(false);
 
+        buildingMain = building.gameObject.GetComponent<BuildingMain>();
 
         tutorialBuilding.rect.SetActive(true);
         tutorialBuilding.mainCanvas.SetActive(true);
@@ -58,7 +60,7 @@ public class Tutorial : MonoBehaviour
                 }
                 break;
             case 2:
-                if (building.team.controller.agents.Count > 0)
+                if (buildingMain.unitController.agents.Count > 0)
                 {
                     phaze = 3;
                     tutorialBuildingEnemy.rect.SetActive(false);

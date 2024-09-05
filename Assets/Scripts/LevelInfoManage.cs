@@ -24,7 +24,7 @@ public class LevelInfoManage : MonoBehaviour
     public void Play()
     {
         if (levelName == "") return; Debug.Log("Play: " + levelName);
-        ScenesManager.Instance.Load(level);
+        ScenesManager.Instance.LoadLevel(level, levelName);
 
     }
 

@@ -28,6 +28,8 @@ public class EditorOptions : MonoBehaviour
     public GameObject modeTabs;
     public GameObject setPlayerSpawnButton;
     public GameObject[] towerOverrideInputs;
+    public GameObject teamBrushes;
+    public GameObject towerEditModes;
     public float brushHeight = 0.51f;
     public float folageDensity = 1;
     public int selectedTexture = 0;
@@ -38,6 +40,7 @@ public class EditorOptions : MonoBehaviour
     public slider[] sliders;
     public static EditorOptions Instance;
     TowerButton selectedTowerButton;
+    public int team = 0;
 
     private void Awake()
     {
@@ -98,6 +101,8 @@ public class EditorOptions : MonoBehaviour
         BrushView.SetActive(false);
         TextureView.SetActive(false);
         setPlayerSpawnButton.SetActive(false);
+        teamBrushes.SetActive(false);
+        towerEditModes.SetActive(false);
         switch (val)
         {
             case 0:
@@ -132,6 +137,7 @@ public class EditorOptions : MonoBehaviour
                 }
             case 4:
                 {
+                    towerEditModes.SetActive(true);
                     foreach (GameObject obj in towerOverrideInputs)
                         obj.SetActive(true);
                     break;
@@ -147,6 +153,13 @@ public class EditorOptions : MonoBehaviour
                 {
                     cancelSetPlayerPosButtons.SetActive(true);
                     modeTabs.SetActive(false);
+                    break;
+                }
+            case 7:
+                {
+                    teamBrushes.SetActive(true);
+                    towerEditModes.SetActive(true);
+                    brushSizeSlider.gameObject.SetActive(true);
                     break;
                 }
             default:
@@ -292,6 +305,10 @@ public class EditorOptions : MonoBehaviour
         {
             slider.SetText("(X_X)");
         }
+    }
+    public void SetTeam(int i)
+    {
+        team = i;
     }
 
 }

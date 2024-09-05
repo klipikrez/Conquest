@@ -79,12 +79,12 @@ public class WinConditions : MonoBehaviour
         foreach (AIPlayer ai in AIManager.Instance.AIPlayers)
         {
 
-            if (ai.Towers.Count > 0)
+            if (ai.buildings.Count > 0)
             {
                 value = false;
             }
         }
-        noMorePlayerTowersLeft = AIManager.Instance.Player.Towers.Count == 0 ? true : false;
+        noMorePlayerTowersLeft = AIManager.Instance.Player.buildings.Count == 0 ? true : false;
         noMoreEnwmyTowersLeft = value;
 
     }

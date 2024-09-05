@@ -9,8 +9,12 @@ public class InfoCard : MonoBehaviour
 
     public void ShowInfoCard()
     {
-        Debug.Log("aaa");
+
         anim.Play("infoClick");
         ErrorManager.Instance.SendSucsess(infoText);
+    }
+    public void ShowInfoCardNoText()
+    {
+        anim.Play("infoClick");
     }
 }

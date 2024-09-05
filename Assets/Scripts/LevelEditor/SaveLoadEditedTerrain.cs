@@ -72,7 +72,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         LoadTerrainHeight(levelName, terrain.terrainData);
         LoadTerrainAlpha(levelName, terrain.terrainData);
         LoadTerrainTrees(levelName, terrain.terrainData);
-        LoadTerrainDetails(levelName, terrain.terrainData);
+        LoadTerrainDetails(levelName, terrain.terrainData, true);
         LoadTerrainTowersEditor(levelName);
         LoadLevelOptionsEditor(levelName);
 
@@ -87,7 +87,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         LoadTerrainHeight(levelName, terrain.terrainData);
         LoadTerrainAlpha(levelName, terrain.terrainData);
         LoadTerrainTrees(levelName, terrain.terrainData);
-        LoadTerrainDetails(levelName, terrain.terrainData);
+        LoadTerrainDetails(levelName, terrain.terrainData, false);
         LoadTerrainTowers(levelName);
         LoadLevelOptions(levelName);
     }
@@ -261,10 +261,18 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         public string overrideName;
         public object value;
     }
+
+    [System.Serializable]
+    struct BuildingAndItsConnections
+    {
+        public BuildingMain main;
+        public int[] connections;
+    }
     [System.Serializable]
     public class TowerStorage
     {
         public int id;
+        public int team = 0;
         public TowerPresetData preset;
         public string modelPath;
         public string presetName;
@@ -346,6 +354,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
                     tower.gameObject.transform.position = t.position;
                     tower.gameObject.transform.rotation = t.rotation;
                     tower.SetId(t.id);
+                    tower.team = t.team;
                     tempTowers.Add(t.id, tower);
                     EditorManager.Instance.editorTowers.Add(tower);
 
@@ -368,21 +377,32 @@ public class SaveLoadEditedTerrain : MonoBehaviour
             }
             else
             {
+
+
+
+                Dictionary<int, BuildingAndItsConnections> spawnedBuildings = new Dictionary<int, BuildingAndItsConnections>(); // building as key, the first value is the id of rhe building itself, the rest connections
                 foreach (TowerStorage t in towers)
                 {
-                    UnitController tower = Instantiate(towerDefaultPrefab, t.position, t.rotation).GetComponent<UnitController>();
+                    BuildingMain tower = Instantiate(towerDefaultPrefab, t.position, t.rotation).GetComponent<BuildingMain>();
+                    tower.Inicialize();
+                    BuildingAndItsConnections buildingAndItsConnections = new BuildingAndItsConnections();
+                    buildingAndItsConnections.main = tower;
+                    buildingAndItsConnections.connections = t.connections;
+                    spawnedBuildings.Add(t.id, buildingAndItsConnections);
+
                     Dictionary<string, object> map = new Dictionary<string, object>();
                     foreach (TwerOverrideStorage tOverride in t.towerOverrides)
                     {
                         map.Add(tOverride.overrideName, tOverride.value);
                     }
                     TowerPresetData preset = GetBuildingPresetByName(t.presetName);
-                    tower.GetProduction().SetProduct(map.ContainsKey("Starting units") ? (float)map["Starting units"] : preset.product);
-                    tower.GetProduction().maxUnits = (int)(map.ContainsKey("Max units") ? (float)map["Max units"] : preset.maxUnits);
-                    tower.GetProduction().productProduction = (map.ContainsKey("Unit production") ? (float)map["Unit production"] : preset.productProduction);
+                    tower.production.SetProduct(map.ContainsKey("Starting units") ? (float)map["Starting units"] : preset.product);
+                    tower.production.maxUnits = (int)(map.ContainsKey("Max units") ? (float)map["Max units"] : preset.maxUnits);
+                    tower.production.productProduction = (map.ContainsKey("Unit production") ? (float)map["Unit production"] : preset.productProduction);
                     //tower.GetProduction().SetProduct(t.towerOverrides.ContainsKey("Cost as an upgrade") ? (float)t.towerOverrides["Cost as an upgrade"] : preset.cost);
-                    tower.GetTeam().vulnerability = (map.ContainsKey("Vulnerability") ? (float)map["Vulnerability"] : preset.vulnerability);
-
+                    tower.team.vulnerability = (map.ContainsKey("Vulnerability") ? (float)map["Vulnerability"] : preset.vulnerability);
+                    tower.id = t.id;
+                    tower.team.teamid = t.team;
 
                     string file = Application.dataPath + "/StreamingAssets/TowerPresets/" + t.presetName + "/" + t.modelPath;
 
@@ -397,7 +417,26 @@ public class SaveLoadEditedTerrain : MonoBehaviour
                     {
                         Debug.LogError("it no exist :::: " + file);
                     }
+
+
                 }
+
+                //setup connections
+                foreach (KeyValuePair<int, BuildingAndItsConnections> building in spawnedBuildings)
+                {
+
+
+                    foreach (int connectionId in building.Value.connections)
+                    {
+                        if (connectionId != building.Key)
+                        {
+                            building.Value.main.neighbours.Add(spawnedBuildings[connectionId].main);
+                        }
+                    }
+
+
+                }
+
             }
         }
 
@@ -425,7 +464,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
         }
 
-        private async void AsyncSetTower(string file, UnitController tower, TowerStorage t)
+        private async void AsyncSetTower(string file, BuildingMain tower, TowerStorage t)
         {
 
 
@@ -440,7 +479,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
             if (success)
             {
-                tower.GetTeam().SetMesh(gltf.GetMeshes()[0]);
+                tower.team.SetMesh(gltf.GetMeshes()[0]);
             }
             else
             {
@@ -607,7 +646,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         GameObject player = GameObject.FindWithTag("Player");
         if (player == null) Debug.Log("No player found on loading level");
 
-        player.transform.position = options.playerPos + Vector3.up * 22;
+        player.transform.position = options.playerPos + Vector3.up * 2;
     }
 
     void SaveTerrainDetails(string levelName, TerrainData terrain)
@@ -673,7 +712,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
     }
 
-    void LoadTerrainDetails(string levelName, TerrainData terrain)
+    void LoadTerrainDetails(string levelName, TerrainData terrain, bool inEditor)
     {
 
         string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
@@ -723,7 +762,8 @@ public class SaveLoadEditedTerrain : MonoBehaviour
             }
             br.Close();
 
-            EditorManager.Instance.RefreshDetailTerrain(dat);
+            if (inEditor)
+                EditorManager.Instance.RefreshDetailTerrain(dat);
 
 
             //terrain.SetDetailLayer(0, 0, layNum++, dat);

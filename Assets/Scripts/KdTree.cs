@@ -214,7 +214,9 @@ public class KdTree
         if (_just2D)
             return (a.x - b.x) * (a.x - b.x) + (a.z - b.z) * (a.z - b.z);
         else
+        {
             return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z);
+        }
     }
     protected float _getSplitValue(int level, Vector3 position)
     {

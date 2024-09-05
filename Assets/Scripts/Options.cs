@@ -6,6 +6,16 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 
+public class Settings
+{
+    public bool fullScreen = true;
+    public int fps = 60;
+    public float[] volumes = { 1, 1, 1, 1 };
+    public bool vsync = true;
+    public bool showEditorTutorial = true;
+
+}
+
 public class Options : MonoBehaviour
 {
     /**podsetnik*/
@@ -26,14 +36,7 @@ public class Options : MonoBehaviour
     public Slider[] VolumeSliders = new Slider[4];
     public AudioMixer audioMixer;
 
-    public class Settings
-    {
-        public bool fullScreen = true;
-        public int fps = 60;
-        public float[] volumes = { 1, 1, 1, 1 };
-        public bool vsync = false;
 
-    }
     Settings settings;
     public static Options Instance { get; private set; }
 

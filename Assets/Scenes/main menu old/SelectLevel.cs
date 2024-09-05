@@ -8,12 +8,12 @@ using Tymski;
 public class SelectLevel : MonoBehaviour
 {
     public SceneReference scene;
-
+    public string levelName;
 
     public void Play()
     {
 
-        ScenesManager.Instance.Load(scene);
+        ScenesManager.Instance.LoadLevel(scene, levelName);
 
     }
 

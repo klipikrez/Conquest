@@ -63,8 +63,7 @@ public class TerrainFolage : EditorBehaviour
 
     private int[,] DrawBrush(float x, float y, float[,] pixels, int resolution, float radious, float multiplyer, float desiredDensity)
     {
-        //Debug.Log(/*"x=" + (int)x + "  y=" + (int)y + */"x1=" + (int)(x - (radious / 2)) + "  y1=" + (int)(y - (radious / 2)) + "\nx2=" + (int)(x + (radious / 2)) + "  y=" + (int)(y + (radious / 2)));
-        // string a = "";
+        Debug.Log(multiplyer + " -- " + desiredDensity);
 
         for (int i = (int)(x - (radious / 2)); i < (int)(x + (radious / 2)); i++)
         {
@@ -79,15 +78,15 @@ public class TerrainFolage : EditorBehaviour
 
                     float val = (float)Math.Pow(multiplyer / EditorOptions.Instance.brushStrenthSlider.maxValue, 2f) * brushSample * noiseSample;
 
-                    if (pixels[j, i] > EditorOptions.Instance.folageDensity && pixels[j, i] + val > EditorOptions.Instance.folageDensity)
+                    if (pixels[j, i] > desiredDensity && pixels[j, i] + val > desiredDensity)
                         pixels[j, i] -= val;
-                    else if (pixels[j, i] > EditorOptions.Instance.folageDensity && pixels[j, i] + val < EditorOptions.Instance.folageDensity)
-                        pixels[j, i] = EditorOptions.Instance.folageDensity;
+                    else if (pixels[j, i] > desiredDensity && pixels[j, i] + val < desiredDensity)
+                        pixels[j, i] = desiredDensity;
 
-                    if (pixels[j, i] < EditorOptions.Instance.folageDensity && pixels[j, i] + val < EditorOptions.Instance.folageDensity)
+                    if (pixels[j, i] < desiredDensity && pixels[j, i] + val < desiredDensity)
                         pixels[j, i] += val;
-                    else if (pixels[j, i] < EditorOptions.Instance.folageDensity && pixels[j, i] + val > EditorOptions.Instance.folageDensity)
-                        pixels[j, i] = EditorOptions.Instance.folageDensity;
+                    else if (pixels[j, i] < desiredDensity && pixels[j, i] + val > desiredDensity)
+                        pixels[j, i] = desiredDensity;
 
                     outPixels[j, i] = (
                       (int)(pixels[j, i] * 16));

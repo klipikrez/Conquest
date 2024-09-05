@@ -9,14 +9,16 @@ public class TerrainTrees : EditorBehaviour
     bool editing = false;
     float time = 1f / 20f; // bice 20 puta u sekundi
     float timer = 0;
-    KdTree treeInstances = new KdTree();
+    KdTree treeInstances = new KdTree(true);
     public override void ChangedEditorMode(EditorManager editor)
     {
         editing = false;
         treeInstances.Clear();
         foreach (TreeInstance tree in editor.terrain.terrainData.treeInstances)
         {
-            treeInstances.Add(tree);
+            TreeInstance tre = tree;
+            tre.position = new Vector3(tree.position.x, 0.5f, tree.position.z);
+            treeInstances.Add(tre);
         }
     }
 
@@ -54,8 +56,8 @@ public class TerrainTrees : EditorBehaviour
         {
             if (treeInstances.Count != 0)
             {
-                float height = terrain.SampleHeight(pos);
-                Vector3 point = new Vector3(pos.x, height, pos.y);
+
+                Vector3 point = new Vector3(pos.x, 0.5f, pos.y);
                 treeInstances.RemoveWithinRadius(point, (float)EditorOptions.Instance.brushSize / ((terrain.terrainData.size.x * terrain.terrainData.size.x)));
 
             }/*while (true)
@@ -95,7 +97,7 @@ public class TerrainTrees : EditorBehaviour
                 tree.widthScale = tree.heightScale;
 
 
-                treePosition.y = terrain.terrainData.GetHeight((int)treePosition.x, (int)treePosition.z) / terrain.terrainData.size.y;
+                //  treePosition.y = terrain.terrainData.GetHeight((int)treePosition.x, (int)treePosition.z) / terrain.terrainData.size.y;
                 tree.position = treePosition;
                 treeInstances.Add(tree);
             }
@@ -116,7 +118,7 @@ public class TerrainTrees : EditorBehaviour
                     tree.widthScale = tree.heightScale;
 
 
-                    treePosition.y = terrain.terrainData.GetHeight((int)treePosition.x, (int)treePosition.z) / terrain.terrainData.size.y;
+                    //treePosition.y = terrain.terrainData.GetHeight((int)treePosition.x, (int)treePosition.z) / terrain.terrainData.size.y;
                     tree.position = treePosition;
                     treeInstances.Add(tree);
                 }

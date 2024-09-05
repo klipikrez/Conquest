@@ -24,8 +24,8 @@ public class MenuTowersGizmo : MonoBehaviour
 
         foreach (UnitController obo in mainTowers)
         {
-            obo.production.SetProduct(Random.Range(5, 50));
-            obo.team.ChangeTeam(Random.Range(0, 3));
+            obo.GetComponent<Production>().SetProduct(Random.Range(5, 50));
+            obo.GetComponent<Team>().ChangeTeam(Random.Range(0, 3));
         }
 
 
