@@ -25,7 +25,6 @@ public class AmountBar : MonoBehaviour
 
     public void SetLeft(RectTransform rt, float left)
     {
-        Debug.Log(left);
         rt.offsetMin = new Vector2(left, rt.offsetMin.y);
     }
 

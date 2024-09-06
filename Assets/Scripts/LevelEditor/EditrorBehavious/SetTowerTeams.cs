@@ -19,7 +19,6 @@ public class SetTowerTeams : EditorBehaviour
         if (Input.GetMouseButtonUp(0)) { editor.terrain.drawTreesAndFoliage = true; editing = false; }
         if (Input.GetMouseButton(0) && editing)
         {
-            Debug.Log("aaaaaaa");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("terrain")) && !EventSystem.current.IsPointerOverGameObject())

@@ -259,7 +259,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
     public struct TwerOverrideStorage
     {
         public string overrideName;
-        public object value;
+        public float value;
     }
 
     [System.Serializable]
@@ -281,9 +281,10 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         public Vector3 position;
         public quaternion rotation;
         public float scale = 1;
-        public TowerStorage(int id, TowerPresetData preset, Dictionary<string, object> towerOverrides, int[] connections, Vector3 pos, quaternion rotation, string modelPath, string presetName)
+        public TowerStorage(int id, int team, TowerPresetData preset, Dictionary<string, float> towerOverrides, int[] connections, Vector3 pos, quaternion rotation, string modelPath, string presetName)
         {
             this.id = id;
+            this.team = team;
             this.preset = preset;
             this.towerOverrides = new TwerOverrideStorage[towerOverrides.Count];
             this.connections = connections;
@@ -293,7 +294,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
             this.presetName = presetName;
 
             int i = 0;
-            foreach (KeyValuePair<string, object> kvp in towerOverrides)
+            foreach (KeyValuePair<string, float> kvp in towerOverrides)
             {
                 this.towerOverrides[i].overrideName = kvp.Key;
                 this.towerOverrides[i++].value = kvp.Value;
@@ -333,7 +334,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
                     j++;
 
                 }
-                towers[i] = new TowerStorage(editorTowers[i].selfID, editorTowers[i].preset, editorTowers[i].towerOverrides, conn, editorTowers[i].transform.position, editorTowers[i].transform.rotation, editorTowers[i].meshName, editorTowers[i].presetName);
+                towers[i] = new TowerStorage(editorTowers[i].selfID, editorTowers[i].team, editorTowers[i].preset, editorTowers[i].towerOverrides, conn, editorTowers[i].transform.position, editorTowers[i].transform.rotation, editorTowers[i].meshName, editorTowers[i].presetName);
 
             }
         }
@@ -346,10 +347,6 @@ public class SaveLoadEditedTerrain : MonoBehaviour
                 foreach (TowerStorage t in towers)
                 {
                     EditorTower tower = Instantiate(towerDefaultPrefab, t.position, t.rotation).GetComponent<EditorTower>();
-                    foreach (TwerOverrideStorage tOverride in t.towerOverrides)
-                    {
-                        tower.towerOverrides.Add(tOverride.overrideName, tOverride.value);
-                    }
 
                     tower.gameObject.transform.position = t.position;
                     tower.gameObject.transform.rotation = t.rotation;
@@ -357,6 +354,8 @@ public class SaveLoadEditedTerrain : MonoBehaviour
                     tower.team = t.team;
                     tempTowers.Add(t.id, tower);
                     EditorManager.Instance.editorTowers.Add(tower);
+
+
 
                     string file = Application.dataPath + "/StreamingAssets/TowerPresets/" + t.presetName + "/" + t.modelPath;
 
@@ -396,6 +395,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
                         map.Add(tOverride.overrideName, tOverride.value);
                     }
                     TowerPresetData preset = GetBuildingPresetByName(t.presetName);
+                    Debug.Log(tower + "  " + map.ContainsKey("Starting units"));
                     tower.production.SetProduct(map.ContainsKey("Starting units") ? (float)map["Starting units"] : preset.product);
                     tower.production.maxUnits = (int)(map.ContainsKey("Max units") ? (float)map["Max units"] : preset.maxUnits);
                     tower.production.productProduction = (map.ContainsKey("Unit production") ? (float)map["Unit production"] : preset.productProduction);
@@ -456,6 +456,11 @@ public class SaveLoadEditedTerrain : MonoBehaviour
             {
 
                 tower.SetPreset(GetBuildingPresetByName(t.presetName), t.presetName, new meshAndName { mesh = gltf.GetMeshes()[0], name = t.modelPath });
+                foreach (TwerOverrideStorage tOverride in t.towerOverrides)
+                {
+                    Debug.Log(t.id + " -- " + tOverride.overrideName + " -- " + tOverride.value);
+                    tower.towerOverrides.Add(tOverride.overrideName, tOverride.value);
+                }
             }
             else
             {

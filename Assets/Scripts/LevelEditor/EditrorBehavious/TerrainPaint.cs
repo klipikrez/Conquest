@@ -90,7 +90,6 @@ public class TerrainPaint : EditorBehaviour
 
         for (int textureLayer = 0; textureLayer < EditorManager.Instance.terrain.terrainData.terrainLayers.Length; textureLayer++)
         {
-            Debug.Log(textureIndex + "  --  " + textureLayer);
             for (int i = (int)(x - (radious / 2)); i < (int)(x + (radious / 2)); i++)
             {
                 for (int j = (int)(y - (radious / 2)); j < (int)(y + (radious / 2)); j++)

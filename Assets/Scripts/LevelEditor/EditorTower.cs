@@ -1,6 +1,6 @@
 
 using System.Collections.Generic;
-
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
 
@@ -25,7 +25,8 @@ public class EditorTower : MonoBehaviour
     // public BuildingPreset preset; old
     public string presetName;
     public TowerPresetData preset;
-    public Dictionary<string, object> towerOverrides = new Dictionary<string, object>();
+    [SerializedDictionary("NAME", "VALAUEEUE")]
+    public SerializedDictionary<string, float> towerOverrides = new SerializedDictionary<string, float>();
     public MeshFilter meshFilter;
     public string meshName;
     public bool selected = false;
@@ -129,7 +130,7 @@ public class EditorTower : MonoBehaviour
         }
     }
 
-    public void AddOverride(string name, object value)
+    public void AddOverride(string name, float value)
     {
         if (towerOverrides.ContainsKey(name))
         {

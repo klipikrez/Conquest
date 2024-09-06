@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,7 +13,7 @@ public class EditorManager : MonoBehaviour
     public Terrain terrain;
     public Texture2D grassNoiseTexture;
     public static EditorManager Instance;
-    public float[,] folage;
+    public float[,] folage = new float[512, 512];
     public GameObject playerSpawnPrefab;
     public Vector3 playerSpawn = Vector3.negativeInfinity;
     public EditorSelection editorSelection;
@@ -25,6 +26,7 @@ public class EditorManager : MonoBehaviour
     public List<EditorTower> editorTowers = new List<EditorTower>();
 
     public List<TowerConnection> editorconnections = new List<TowerConnection>();
+
 
 
     private void Awake()
@@ -156,7 +158,6 @@ public class EditorManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (Input.GetAxis("Mouse ScrollWheel") > 0) // forward
         {
             EditorOptions.Instance.UpdateBrushSize(++EditorOptions.Instance.brushSize);

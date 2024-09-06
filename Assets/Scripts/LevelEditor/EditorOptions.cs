@@ -219,7 +219,7 @@ public class EditorOptions : MonoBehaviour
                     val = btn.presetData.vulnerability;
                     break;
             };
-            SetupSliders(slider, val);
+            SetupSliders(slider, val, val);// the same valuse 
         }
         foreach (KeyValuePair<int, GameObject> tower in EditorManager.Instance.editorSelection.selectedDictionary.selected)
         {
@@ -256,6 +256,7 @@ public class EditorOptions : MonoBehaviour
             SelectedTowerPreset(selectedTowerButton);
             return;
         }
+        float[] def = new float[5];
         float[] ovverrides = new float[5];
         string presetName = "";
 
@@ -264,7 +265,14 @@ public class EditorOptions : MonoBehaviour
         foreach (KeyValuePair<int, GameObject> obj in EditorManager.Instance.editorSelection.selectedDictionary.selected)
         {
             TowerPresetData preset = obj.Value.gameObject.GetComponent<EditorTower>().preset;
-            Dictionary<string, object> towerOverrides = obj.Value.gameObject.GetComponent<EditorTower>().towerOverrides;
+            Dictionary<string, float> towerOverrides = obj.Value.gameObject.GetComponent<EditorTower>().towerOverrides;
+
+            def[0] = preset.product;
+            def[1] = preset.maxUnits;
+            def[2] = preset.productProduction;
+            def[3] = preset.cost;
+            def[4] = preset.vulnerability;
+
             if (i++ == 0)
             {
                 ovverrides[0] = towerOverrides.ContainsKey("Starting units") ? (float)towerOverrides["Starting units"] : preset.product;
@@ -291,16 +299,17 @@ public class EditorOptions : MonoBehaviour
         i = 0;
         foreach (slider slider in sliders)
         {
-            float val = ovverrides[i++];
-            SetupSliders(slider, val);
+            float val = ovverrides[i];
+            SetupSliders(slider, val, def[i++]);
         }
     }
 
-    void SetupSliders(slider slider, float val)
+    void SetupSliders(slider slider, float val, float def)
     {
-        slider.specialValue[0] = !float.IsNaN(val) ? val : -1;
-        slider.specialValue[1] = !float.IsNaN(val) ? val : -1;
+        slider.specialValue[0] = !float.IsNaN(def) ? def : -1;
+        slider.specialValue[1] = !float.IsNaN(def) ? def : -1;
         slider.sliderElement.value = !float.IsNaN(val) ? val : slider.sliderElement.maxValue;
+
         if (float.IsNaN(val))
         {
             slider.SetText("(X_X)");
@@ -310,5 +319,7 @@ public class EditorOptions : MonoBehaviour
     {
         team = i;
     }
+
+
 
 }

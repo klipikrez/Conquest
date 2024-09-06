@@ -39,26 +39,15 @@ public class TowersPlace : EditorBehaviour
         if (Input.GetMouseButtonUp(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            RaycastHit hit = new RaycastHit();
+
             //delete/edit connection
-            if (startingConnection == null && Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("connection")) && !EventSystem.current.IsPointerOverGameObject())
-            {
-                Debug.Log("aaa");
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    TowerConnection conn = hit.collider.transform.parent.gameObject.GetComponent<TowerConnection>();
-                    if (conn != null)
-                    {
-                        conn.Delete();
-                    }
-                }
-                else
-                {
-                    hit.collider.transform.parent.gameObject.GetComponent<TowerConnection>().CycleConnectionType();
-                }
-            }
+            bool editedOrDeletedConnection = DeleteEditConnection(ray, hit);
+
+            if (editedOrDeletedConnection) { startingConnection = null; playerSelectionDictionary.Instance.RemoveAllEditor(); }
+
             //finish connecting towers
-            if (startingConnection != null)
+            if (startingConnection != null && !editedOrDeletedConnection)
             {
                 if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("building")) && !EventSystem.current.IsPointerOverGameObject())
                 {
@@ -108,6 +97,7 @@ public class TowersPlace : EditorBehaviour
             if (!EventSystem.current.IsPointerOverGameObject())
             {
                 CheckIfClickedOnBuilding(editor);//if click on building select it/ if on terrain place new building
+
             }
             else
             {
@@ -133,6 +123,7 @@ public class TowersPlace : EditorBehaviour
 
                 GameObject obj = Object.Instantiate(editor.editorTowerPrefab, hit.point, Quaternion.identity);
                 EditorTower tower = obj.GetComponent<EditorTower>();
+
                 //apply default preset and overrides if there are any
                 tower.SetPreset(editor.towerPresets.presetData, editor.towerPresets.GetName());
                 foreach (towerEditorToggle toggle in editor.toggles)
@@ -148,6 +139,7 @@ public class TowersPlace : EditorBehaviour
                 {
                     editor.editorSelection.selectedDictionary.RemoveAllEditor();
                 }
+
                 editor.editorSelection.selectedDictionary.AddSelectedEditor(obj);
                 EditorOptions.Instance.SelectedEditorTowers();
 
@@ -210,6 +202,29 @@ public class TowersPlace : EditorBehaviour
                 previousPosition = hit.point;
             }
         }
+    }
+
+
+    bool DeleteEditConnection(Ray ray, RaycastHit hit)
+    {
+        if (startingConnection == null && Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("connection")) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                TowerConnection conn = hit.collider.transform.parent.gameObject.GetComponent<TowerConnection>();
+                if (conn != null)
+                {
+                    conn.Delete();
+                    return true;
+                }
+            }
+            else
+            {
+                hit.collider.transform.parent.gameObject.GetComponent<TowerConnection>().CycleConnectionType();
+                return true;
+            }
+        }
+        return false;
     }
 
     void CheckIfClickedOnBuilding(EditorManager editor)

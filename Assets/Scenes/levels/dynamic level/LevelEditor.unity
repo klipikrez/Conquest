@@ -7067,6 +7067,10 @@ PrefabInstance:
       value: uiDontTest
       objectReference: {fileID: 0}
     - target: {fileID: 1869613457175661619, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
+      propertyPath: toggle
+      value: 
+      objectReference: {fileID: 947750918}
+    - target: {fileID: 1869613457175661619, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
       propertyPath: textString
       value: Max units
       objectReference: {fileID: 0}
@@ -10162,7 +10166,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1728935752}
   m_HandleRect: {fileID: 1728935751}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -10334,6 +10338,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: uiDontTest
       objectReference: {fileID: 0}
+    - target: {fileID: 1869613457175661619, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
+      propertyPath: toggle
+      value: 
+      objectReference: {fileID: 1046757280}
     - target: {fileID: 1869613457175661619, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
       propertyPath: textString
       value: Unit production
@@ -12124,7 +12132,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2032087005}
   m_HandleRect: {fileID: 2032087004}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -12252,7 +12260,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 818104048}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.31395173
+  m_Size: 0.32449457
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14140,7 +14148,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 627549169}
   m_Direction: 2
   m_Value: 0.9999992
-  m_Size: 0.79875
+  m_Size: 0.7987499
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14311,6 +14319,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: uiDontTest
       objectReference: {fileID: 0}
+    - target: {fileID: 1869613457175661619, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
+      propertyPath: toggle
+      value: 
+      objectReference: {fileID: 930609954}
     - target: {fileID: 1869613457175661619, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
       propertyPath: textString
       value: Cost as an upgrade
@@ -23503,6 +23515,10 @@ PrefabInstance:
       value: uiDontTest
       objectReference: {fileID: 0}
     - target: {fileID: 1869613457175661619, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
+      propertyPath: toggle
+      value: 
+      objectReference: {fileID: 1976472184}
+    - target: {fileID: 1869613457175661619, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
       propertyPath: textString
       value: Vulnerability
       objectReference: {fileID: 0}
@@ -25394,6 +25410,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: uiDontTest
       objectReference: {fileID: 0}
+    - target: {fileID: 1869613457175661619, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
+      propertyPath: toggle
+      value: 
+      objectReference: {fileID: 1684717955}
     - target: {fileID: 1869613457175661619, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
       propertyPath: textString
       value: Starting units

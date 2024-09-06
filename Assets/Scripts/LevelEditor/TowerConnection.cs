@@ -13,7 +13,7 @@ public class TowerConnection : MonoBehaviour
     private void Start()
     {
         transform.position = new Vector3(0, 0, 0);
-        EditorManager.Instance.editorconnections.Add(this);
+        //EditorManager.Instance.editorconnections.Add(this);
     }
 
     private void FixedUpdate()
@@ -114,24 +114,28 @@ public class TowerConnection : MonoBehaviour
 
     public void CycleConnectionType()
     {
+        tower1.RemoveConnection(this);
+        tower2.RemoveConnection(this);
+
         if (line1.enabled && line2.enabled)
         {
-            Debug.Log("1");
+            Debug.Log("cycle tower connection mode - 1");
             line1.enabled = false; line2.enabled = true;
-            tower1.RemoveConnection(this);
+            //tower1.RemoveConnection(this);
             tower2.AddConnection(tower1);
             return;
         }
 
         if (!line1.enabled && line2.enabled)
         {
-            Debug.Log("2");
+            Debug.Log("cycle tower connection mode - 2");
             line1.enabled = true; line2.enabled = false;
             tower1.AddConnection(tower2);
-            tower2.RemoveConnection(this);
+            //tower2.RemoveConnection(this);
             return;
         }
-        Debug.Log("3");
+
+        Debug.Log("cycle tower connection mode - 3");
         line1.enabled = true; line2.enabled = true;
         tower1.AddConnection(tower2);
         tower2.AddConnection(tower1);

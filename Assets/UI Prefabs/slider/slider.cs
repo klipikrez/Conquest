@@ -57,6 +57,8 @@ public class slider : MonoBehaviour
         {
             sliderElement = gameObject.GetComponent<Slider>();
         }
+
+
         //ovo je najgluplja stvar koju sam napisao u poslednje vreme, al radi :D
         //nije vredno dokumentarisati
         FUNKCIJA(value);
