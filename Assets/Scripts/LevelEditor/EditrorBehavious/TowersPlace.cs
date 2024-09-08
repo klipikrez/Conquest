@@ -36,6 +36,7 @@ public class TowersPlace : EditorBehaviour
                     editorConnection.gameObject.SetActive(true);
             }
         }
+
         if (Input.GetMouseButtonUp(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

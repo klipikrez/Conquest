@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
 public class NavManager : MonoBehaviour
 {
 
     GameObject[] buildings;
-    public IDictionary<GameObject, BuildingMain> buildingMains { get; private set; } = new Dictionary<GameObject, BuildingMain>();
+    [SerializedDictionary("obj", "main")]
+    public SerializedDictionary<GameObject, BuildingMain> buildingMains = new SerializedDictionary<GameObject, BuildingMain>();
 
     public static NavManager Instance { get; private set; }
     public bool autoInicialize = false;
@@ -29,7 +31,7 @@ public class NavManager : MonoBehaviour
         foreach (GameObject building in buildings)
         {
             BuildingMain controller = building.GetComponent<BuildingMain>();
-            buildingMains.Add(building, controller);
+            if (controller != null) buildingMains.Add(building, controller);
 
             //SetBuildingNeighbours(controller);
         }

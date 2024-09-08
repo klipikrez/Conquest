@@ -227,6 +227,12 @@ public class EditorTower : MonoBehaviour
             conn.UpdatePosition();
     }
 
+    public void UpdateTeam(int team)
+    {
+        this.team = team;
+        UpdatColor();
+    }
+
     public void UpdatColor()
     {
         //Debug.Log(controller/*.UnitBuildingSpawnBehavior.buildingBehaviors[teamid].color*/);

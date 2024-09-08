@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CreateTeamButtons : MonoBehaviour
 {
-    public List<TextureButton> teamButtons = new List<TextureButton>();
+    public List<TeamButton> teamButtons = new List<TeamButton>();
 
 
 
@@ -22,9 +22,17 @@ public class CreateTeamButtons : MonoBehaviour
     }
     public void DeselectAll()
     {
-        foreach (TextureButton but in teamButtons)
+        foreach (TeamButton but in teamButtons)
         {
             but.Deselelect();
+        }
+    }
+
+    public void SelectNoUpdate(int team)
+    {
+        foreach (TeamButton but in teamButtons)
+        {
+            if (but.team == team) but.SelectNoUpdate();
         }
     }
 

@@ -109,7 +109,9 @@ public class ScenesManager : MonoBehaviour
 
             yield return null;
         }
-        GameObject.Find("LoadLevel").GetComponent<SaveLoadEditedTerrain>().LoadLevel(levelName);
+
+
+        yield return GameObject.Find("LoadLevel").GetComponent<SaveLoadEditedTerrain>().LoadLevelAsync(levelName);
         GameObject.Find("navManager").GetComponent<NavManager>().Inicialize(GameObject.FindGameObjectsWithTag("building"));
         GameObject.Find("TowerAIManager").GetComponent<AIManager>().Inicialize();
     }

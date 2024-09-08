@@ -179,7 +179,6 @@ public class AIManager : MonoBehaviour
                 else
                 {
                     Player.buildings.Add(main);
-                    Debug.Log(Player.buildings[0].production.product);
                 }
             }
         }

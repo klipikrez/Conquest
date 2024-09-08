@@ -39,12 +39,16 @@ public class AIBehaviorDefend : AIBehavior
 
         if (sendTo != null && sendFrom != null)
         {
+            Debug.Log("AI " + player.team + " defending(support units): " + sendTo.id + " from: ");
             foreach (BuildingMain from in sendFrom)
             {
                 from.unitController.Attack(expandAmount, sendTo.transform, false);
+                Debug.Log("  -from: " + from.id);
             }
+
             return true;
         }
+        Debug.Log("AI " + player.team + " Nowhere to attack");
         return false;
 
     }

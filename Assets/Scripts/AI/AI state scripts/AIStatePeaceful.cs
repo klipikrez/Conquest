@@ -8,9 +8,8 @@ public class AIStatePeaceful : AIState
 
     public override void CalculateMove(AIManager manager, AIPlayer player)
     {
-
+        Debug.Log("peace");
         int action = GetAction();
-        Debug.Log(action);
         chanceBehaviorsTable[action].behavior.ExecuteMove(manager, player);
         /*
         //za sd samo jedna sttvar

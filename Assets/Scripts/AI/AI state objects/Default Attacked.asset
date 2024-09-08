@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac22c7799f2fab4bbedf7b225375532, type: 3}
   m_Name: Default Attacked
   m_EditorClassIdentifier: 
-  chanceBehaviorsTable: []
+  chanceBehaviorsTable:
+  - chance: 30
+    behavior: {fileID: 11400000, guid: 131281444a73a7b498488048c2be4dda, type: 2}
+  - chance: 60
+    behavior: {fileID: 11400000, guid: 671a1612adc9f7e4bab43e9fe589939d, type: 2}
+  - chance: 10
+    behavior: {fileID: 11400000, guid: 7ca7c3c52159e5a418bcddda9fe098f3, type: 2}

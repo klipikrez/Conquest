@@ -16,7 +16,7 @@ public class AIBehaviorAttack : AIBehavior
         {
             foreach (BuildingMain neighbor in tower.neighbours)//pass trough all neighbours of current tower
             {
-                float attackValue = tower.production.product * minUnitDifferenceSendPercent - neighbor.production.product;
+                float attackValue = tower.production.product * minUnitDifferenceSendPercent - neighbor.production.product;//how valiable is this tower vs. how dificult it's to capture
                 if (neighbor.team.teamid != player.team && neighbor.team.teamid == player.currentEnemyTeam && attackValue > units)// if calc better update new target
                 {
                     units = attackValue;
@@ -29,8 +29,10 @@ public class AIBehaviorAttack : AIBehavior
         if (sendTo != null && sendFrom != null)
         {
             sendFrom.unitController.Attack(expandAmount, sendTo.transform, false);
+            Debug.Log("AI " + player.team + " attack: " + sendTo.id + " from: " + sendFrom.id);
             return true;
         }
+        Debug.Log("AI " + player.team + " Nowhere to attack");
         return false;
 
     }

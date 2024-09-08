@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using GLTFast;
 using GLTFast.Addons;
 using Unity.Mathematics;
@@ -36,6 +37,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
         //SaveTerrain("bababoj", terrain1.terrainData);
         //LoadLevelEditor("brki");
+        //ScenesManager.Instance.LoadLevel("trkdsada");
     }
 
     // Update is called once per frame
@@ -81,7 +83,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
     }
 
-    public void LoadLevel(string levelName)
+    public IEnumerator LoadLevelAsync(string levelName)
     {
         CheckLevelFolder(levelName);
         LoadTerrainHeight(levelName, terrain.terrainData);
@@ -90,6 +92,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         LoadTerrainDetails(levelName, terrain.terrainData, false);
         LoadTerrainTowers(levelName);
         LoadLevelOptions(levelName);
+        yield return null;
     }
 
     [System.Serializable]
@@ -395,7 +398,6 @@ public class SaveLoadEditedTerrain : MonoBehaviour
                         map.Add(tOverride.overrideName, tOverride.value);
                     }
                     TowerPresetData preset = GetBuildingPresetByName(t.presetName);
-                    Debug.Log(tower + "  " + map.ContainsKey("Starting units"));
                     tower.production.SetProduct(map.ContainsKey("Starting units") ? (float)map["Starting units"] : preset.product);
                     tower.production.maxUnits = (int)(map.ContainsKey("Max units") ? (float)map["Max units"] : preset.maxUnits);
                     tower.production.productProduction = (map.ContainsKey("Unit production") ? (float)map["Unit production"] : preset.productProduction);

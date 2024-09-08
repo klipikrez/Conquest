@@ -18,8 +18,9 @@
             "presetName": "defaultbuilding",
             "towerOverrides": [],
             "connections": [
+                3,
                 2,
-                3
+                1
             ],
             "position": {
                 "x": -13.308853149414063,
@@ -38,7 +39,7 @@
         },
         {
             "id": 1,
-            "team": 0,
+            "team": 2,
             "preset": {
                 "product": 10.0,
                 "cost": 10.0,
@@ -54,10 +55,16 @@
             "presetName": "defaultbuilding",
             "towerOverrides": [
                 {
-                    "overrideName": "Starting units"
+                    "overrideName": "Starting units",
+                    "value": 246.0
                 },
                 {
-                    "overrideName": "Unit production"
+                    "overrideName": "Unit production",
+                    "value": 7.662397384643555
+                },
+                {
+                    "overrideName": "Max units",
+                    "value": 200.0
                 }
             ],
             "connections": [
@@ -80,12 +87,12 @@
         },
         {
             "id": 2,
-            "team": 0,
+            "team": 3,
             "preset": {
                 "product": 10.0,
                 "cost": 10.0,
-                "productProduction": 0.6000000238418579,
-                "maxUnits": 20,
+                "productProduction": 4.6000000238418579,
+                "maxUnits": 220,
                 "vulnerability": 0.8100000023841858,
                 "enabledUpgrades": [],
                 "meshPath": [
@@ -96,9 +103,9 @@
             "presetName": "defaultbuilding",
             "towerOverrides": [],
             "connections": [
-                1,
+                3,
                 0,
-                3
+                4
             ],
             "position": {
                 "x": -4.413139343261719,
@@ -121,8 +128,8 @@
             "preset": {
                 "product": 10.0,
                 "cost": 10.0,
-                "productProduction": 0.6000000238418579,
-                "maxUnits": 20,
+                "productProduction": 3.6000000238418579,
+                "maxUnits": 220,
                 "vulnerability": 0.8100000023841858,
                 "enabledUpgrades": [],
                 "meshPath": [
@@ -133,14 +140,15 @@
             "presetName": "defaultbuilding",
             "towerOverrides": [],
             "connections": [
-                2,
                 0,
+                5,
+                2,
                 4
             ],
             "position": {
-                "x": -9.044723510742188,
+                "x": -11.5123291015625,
                 "y": 0.0,
-                "z": -1.6115188598632813
+                "z": -1.104400634765625
             },
             "rotation": {
                 "value": {
@@ -168,21 +176,102 @@
             },
             "modelPath": "defaultHouse.glb",
             "presetName": "defaultbuilding",
-            "towerOverrides": [
-                {
-                    "overrideName": "Starting units"
-                },
-                {
-                    "overrideName": "Unit production"
-                }
-            ],
+            "towerOverrides": [],
             "connections": [
+                5,
+                0,
+                2,
                 3
             ],
             "position": {
-                "x": -8.280204772949219,
+                "x": -7.0692291259765629,
                 "y": 0.0,
-                "z": -8.21905517578125
+                "z": -4.055580139160156
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 5,
+            "team": 0,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                6,
+                4,
+                3
+            ],
+            "position": {
+                "x": -10.480484008789063,
+                "y": 0.0,
+                "z": -8.382606506347657
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 6,
+            "team": 1,
+            "preset": {
+                "product": 10.0,
+                "cost": 10.0,
+                "productProduction": 0.6000000238418579,
+                "maxUnits": 20,
+                "vulnerability": 0.8100000023841858,
+                "enabledUpgrades": [],
+                "meshPath": [
+                    "defaultHouse.glb"
+                ]
+            },
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [
+                {
+                    "overrideName": "Starting units",
+                    "value": 104.0
+                },
+                {
+                    "overrideName": "Max units",
+                    "value": 200.0
+                },
+                {
+                    "overrideName": "Unit production",
+                    "value": 15.922103881835938
+                }
+            ],
+            "connections": [
+                5
+            ],
+            "position": {
+                "x": -10.052139282226563,
+                "y": 0.0,
+                "z": -13.296409606933594
             },
             "rotation": {
                 "value": {

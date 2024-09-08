@@ -23,7 +23,8 @@ public class LevelInfoManage : MonoBehaviour
 
     public void Play()
     {
-        if (levelName == "") return; Debug.Log("Play: " + levelName);
+        if (levelName == "" || levelName == "Editor") { SoundManager.Instance.PlayDeniedSound(); return; }
+        Debug.Log("Play: " + levelName);
         ScenesManager.Instance.LoadLevel(level, levelName);
 
     }
@@ -37,6 +38,6 @@ public class LevelInfoManage : MonoBehaviour
     public void EditNew()
     {
         Debug.Log("CreateNewLwvwl");
-        ScenesManager.Instance.LoadEditor(editor, "");
+        ScenesManager.Instance.LoadEditor(editor, "Editor");
     }
 }

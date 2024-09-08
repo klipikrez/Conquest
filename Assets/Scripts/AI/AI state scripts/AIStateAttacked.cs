@@ -6,6 +6,7 @@ public class AIStateAttacked : AIState
 {
     public override void CalculateMove(AIManager manager, AIPlayer player)
     {
+        Debug.Log("attacked");
         int action = GetAction();
         chanceBehaviorsTable[action].behavior.ExecuteMove(manager, player);
         /*

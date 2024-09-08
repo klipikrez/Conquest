@@ -81,9 +81,6 @@ public class EditorManager : MonoBehaviour
             case 8:
                 selectedBehaivour = new SetPalyerSpawn();
                 break;
-            case 9:
-                selectedBehaivour = new SetTowerTeams();
-                break;
             default:
                 Debug.Log("Editor ERROR: " + val);
                 selectedBehaivour = null;

@@ -28,8 +28,7 @@ public class EditorOptions : MonoBehaviour
     public GameObject modeTabs;
     public GameObject setPlayerSpawnButton;
     public GameObject[] towerOverrideInputs;
-    public GameObject teamBrushes;
-    public GameObject towerEditModes;
+
     public float brushHeight = 0.51f;
     public float folageDensity = 1;
     public int selectedTexture = 0;
@@ -41,7 +40,7 @@ public class EditorOptions : MonoBehaviour
     public static EditorOptions Instance;
     TowerButton selectedTowerButton;
     public int team = 0;
-
+    public CreateTeamButtons teamMaster;
     private void Awake()
     {
         Instance = this;
@@ -101,8 +100,6 @@ public class EditorOptions : MonoBehaviour
         BrushView.SetActive(false);
         TextureView.SetActive(false);
         setPlayerSpawnButton.SetActive(false);
-        teamBrushes.SetActive(false);
-        towerEditModes.SetActive(false);
         switch (val)
         {
             case 0:
@@ -137,7 +134,6 @@ public class EditorOptions : MonoBehaviour
                 }
             case 4:
                 {
-                    towerEditModes.SetActive(true);
                     foreach (GameObject obj in towerOverrideInputs)
                         obj.SetActive(true);
                     break;
@@ -153,13 +149,6 @@ public class EditorOptions : MonoBehaviour
                 {
                     cancelSetPlayerPosButtons.SetActive(true);
                     modeTabs.SetActive(false);
-                    break;
-                }
-            case 7:
-                {
-                    teamBrushes.SetActive(true);
-                    towerEditModes.SetActive(true);
-                    brushSizeSlider.gameObject.SetActive(true);
                     break;
                 }
             default:
@@ -258,14 +247,16 @@ public class EditorOptions : MonoBehaviour
         }
         float[] def = new float[5];
         float[] ovverrides = new float[5];
+        int team = -52;
         string presetName = "";
 
         int i = 0;
         //thiis is to setup sliders based on what towers are selected
         foreach (KeyValuePair<int, GameObject> obj in EditorManager.Instance.editorSelection.selectedDictionary.selected)
         {
-            TowerPresetData preset = obj.Value.gameObject.GetComponent<EditorTower>().preset;
-            Dictionary<string, float> towerOverrides = obj.Value.gameObject.GetComponent<EditorTower>().towerOverrides;
+            EditorTower tower = obj.Value.gameObject.GetComponent<EditorTower>();
+            TowerPresetData preset = tower.preset;
+            Dictionary<string, float> towerOverrides = tower.towerOverrides;
 
             def[0] = preset.product;
             def[1] = preset.maxUnits;
@@ -281,6 +272,7 @@ public class EditorOptions : MonoBehaviour
                 ovverrides[3] = towerOverrides.ContainsKey("Cost as an upgrade") ? (float)towerOverrides["Cost as an upgrade"] : preset.cost;
                 ovverrides[4] = towerOverrides.ContainsKey("Vulnerability") ? (float)towerOverrides["Vulnerability"] : preset.vulnerability;
                 presetName = obj.Value.gameObject.GetComponent<EditorTower>().presetName;
+                team = tower.team;
             }
             else
             {
@@ -290,6 +282,7 @@ public class EditorOptions : MonoBehaviour
                 if (ovverrides[3] != (towerOverrides.ContainsKey("Cost as an upgrade") ? (float)towerOverrides["Cost as an upgrade"] : preset.cost)) ovverrides[3] = float.NaN;
                 if (ovverrides[4] != (towerOverrides.ContainsKey("Vulnerability") ? (float)towerOverrides["Vulnerability"] : preset.vulnerability)) ovverrides[4] = float.NaN;
                 if (presetName != obj.Value.gameObject.GetComponent<EditorTower>().presetName) presetName = null;
+                if (team != tower.team) team = -52;
             }
 
         }
@@ -302,6 +295,16 @@ public class EditorOptions : MonoBehaviour
             float val = ovverrides[i];
             SetupSliders(slider, val, def[i++]);
         }
+        if (team != -52)
+        {
+            teamMaster.SelectNoUpdate(team);
+        }
+        else
+        {
+            teamMaster.DeselectAll();
+        }
+
+
     }
 
     void SetupSliders(slider slider, float val, float def)

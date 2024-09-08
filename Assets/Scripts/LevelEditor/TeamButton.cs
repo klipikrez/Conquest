@@ -26,6 +26,21 @@ public class TeamButton : MonoBehaviour
     {
         //Background.color = new Color(0, 0, 0, 1);
 
+        foreach (KeyValuePair<int, GameObject> tower in playerSelectionDictionary.Instance.selected)
+        {
+            tower.Value.GetComponent<EditorTower>().UpdateTeam(team);
+        }
+
+        master.DeselectAll();
+        selecotr.color = new Color(1, 1, 1, 1);
+        EditorOptions.Instance.team = team;
+    }
+
+    public void SelectNoUpdate()
+    {
+        //Background.color = new Color(0, 0, 0, 1);
+
+
         master.DeselectAll();
         selecotr.color = new Color(1, 1, 1, 1);
         EditorOptions.Instance.team = team;

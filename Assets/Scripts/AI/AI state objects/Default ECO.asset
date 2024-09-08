@@ -13,13 +13,5 @@ MonoBehaviour:
   m_Name: Default ECO
   m_EditorClassIdentifier: 
   chanceBehaviorsTable:
-  - chance: 50
-    behavior: {fileID: 11400000, guid: b91cfc14def5aca48a1365ed6956b768, type: 2}
-  - chance: 0
+  - chance: 100
     behavior: {fileID: 11400000, guid: 7ca7c3c52159e5a418bcddda9fe098f3, type: 2}
-  - chance: 0
-    behavior: {fileID: 0}
-  - chance: 0
-    behavior: {fileID: 0}
-  checkUpgrade: 0
-  autoUpgradeIfPossible: {fileID: 0}

@@ -8,10 +8,8 @@ using UnityEngine.UI;
 public class Production : MonoBehaviour
 {
     public float productStartAmountAdd = 0;
-    [System.NonSerialized]
     public float product = 0f;
     public float productProduction = 0.5f;
-    [System.NonSerialized]
     public int maxUnits = 100;
     public TextMeshProUGUI numberRefrence;
 

@@ -5,27 +5,28 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newAIState", menuName = "AI/States/ECO")]
 public class AIStateECO : AIState
 {
-    public int checkUpgrade = 0;
+
 
     public override void CalculateMove(AIManager manager, AIPlayer player)
     {
-        /*  bool weDintDoIt = true;
-          foreach (BuildingMain ctrl in player.Towers)//before everything we see if we can upgrade the default towers
-          {
-              if (ctrl.buildingOptions.currentUpgrade == checkUpgrade)
-              {
-                  if (autoUpgradeIfPossible.cost < ctrl.production.product)
-                  {
-                      ctrl.buildingOptions.UpgradePreset(autoUpgradeIfPossible);
-                      weDintDoIt = false;
-                  }
-              }
-          }
-          if (weDintDoIt)
-          {
-              int action = GetAction();
-              chanceBehaviorsTable[action].behavior.ExecuteMove(manager, player);
-          }    */
+        Debug.Log("eco");
+        /* bool weDintDoIt = true;
+         foreach (BuildingMain ctrl in player.Towers)//before everything we see if we can upgrade the default towers
+         {
+             if (ctrl.buildingOptions.currentUpgrade == checkUpgrade)
+             {
+                 if (autoUpgradeIfPossible.cost < ctrl.production.product)
+                 {
+                     ctrl.buildingOptions.UpgradePreset(autoUpgradeIfPossible);
+                     weDintDoIt = false;
+                 }
+             }
+         }
+         if (weDintDoIt)
+         {*/
+        int action = GetAction();
+        chanceBehaviorsTable[action].behavior.ExecuteMove(manager, player);
+        //}    
 
 
         /*

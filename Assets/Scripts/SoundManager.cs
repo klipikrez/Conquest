@@ -48,6 +48,11 @@ public class SoundManager : MonoBehaviour
         StartCoroutine(PlayDDD(tower[Random.Range(0, tower.Length - 1)], position));
     }
 
+    public void PlayDeniedSound()
+    {
+        PlayAudioClip(Random.Range(8, 10));
+    }
+
     IEnumerator PlayDDD(AudioClip audio, Vector3 position)
     {
         GameObject gameobj = Instantiate(battleSoundPrefab, position, Quaternion.identity, gameObject.transform);
@@ -68,4 +73,5 @@ public class SoundManager : MonoBehaviour
         audioSource.Stop();
         Destroy(audioSource);
     }
+
 }

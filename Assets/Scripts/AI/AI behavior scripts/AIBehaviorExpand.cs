@@ -27,12 +27,14 @@ public class AIBehaviorExpand : AIBehavior
                 }
             }
         }
-        Debug.Log(sendFrom.name + " " + sendTo.name);
+
         if (sendTo != null && sendFrom != null)
         {
+            Debug.Log("AI " + player.team + " Expand from: " + sendFrom.id + " to " + sendTo.id);
             sendFrom.unitController.Attack(expandAmount, sendTo.transform, false);
             return true;
         }
+        Debug.Log("AI " + player.team + " Nowhere to expand");
         return false;
 
     }
