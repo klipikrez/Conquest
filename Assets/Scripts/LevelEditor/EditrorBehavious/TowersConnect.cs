@@ -13,4 +13,9 @@ public class TowersConnect : EditorBehaviour
     {
         throw new System.NotImplementedException();
     }
+
+    public override void ExitEditorMode(EditorManager editor)
+    {
+        throw new System.NotImplementedException();
+    }
 }

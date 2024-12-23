@@ -12,6 +12,7 @@ public class TerrainPaint : EditorBehaviour
     Vector2 previousPointerPos = new Vector2(0, 0);
     public override void ChangedEditorMode(EditorManager editor)
     {
+        editor.ShowBrushVisual(true);
         editing = false;
 
     }
@@ -43,8 +44,14 @@ public class TerrainPaint : EditorBehaviour
         }
     }
 
+    public override void ExitEditorMode(EditorManager editor)
+    {
+        editor.ShowBrushVisual(false);
+    }
+
     void ChangeTerrainSplat(Vector2 pos, Terrain terrain, EditorManager editor)
     {
+        if (EditorOptions.Instance.selectedTexture < 0) { ErrorManager.Instance.SendError("Select a layer PLEASE!!"); editing = false; }
         float[,,] numArray = terrain.terrainData.GetAlphamaps(0, 0, terrain.terrainData.alphamapWidth, terrain.terrainData.alphamapHeight);
         //Debug.Log(numArray.GetLength(0) + " - " + numArray.GetLength(1) + " - " + numArray.GetLength(2));
         /* switch (editor.BrushImage.name)

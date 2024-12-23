@@ -54,4 +54,10 @@ public class SetPalyerSpawn : EditorBehaviour
             if (Input.GetMouseButtonUp(0)) { editor.terrain.drawTreesAndFoliage = true; editing = false; EditorOptions.Instance.SetMenuActive(5); editor.ChangeBehaviour(-1); }
         }
     }
+
+    public override void ExitEditorMode(EditorManager editor)
+    {
+        if (playerPointer != null)
+            Object.Destroy(playerPointer);
+    }
 }

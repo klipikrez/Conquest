@@ -15,6 +15,7 @@ public class TerrainFolage : EditorBehaviour
     int[,] outPixels;
     public override void ChangedEditorMode(EditorManager editor)
     {
+        editor.ShowBrushVisual(true);
         editing = false;
         if (editor.folage == null)
             editor.folage = new float[editor.terrain.terrainData.detailWidth, editor.terrain.terrainData.detailHeight];
@@ -63,7 +64,7 @@ public class TerrainFolage : EditorBehaviour
 
     private int[,] DrawBrush(float x, float y, float[,] pixels, int resolution, float radious, float multiplyer, float desiredDensity)
     {
-        Debug.Log(multiplyer + " -- " + desiredDensity);
+
 
         for (int i = (int)(x - (radious / 2)); i < (int)(x + (radious / 2)); i++)
         {
@@ -118,5 +119,8 @@ public class TerrainFolage : EditorBehaviour
         editor.terrain.terrainData.SetDetailLayer(0, 0, layNum, outPixels);
     }
 
-
+    public override void ExitEditorMode(EditorManager editor)
+    {
+        editor.ShowBrushVisual(false);
+    }
 }

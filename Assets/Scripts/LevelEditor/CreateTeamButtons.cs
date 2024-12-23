@@ -36,15 +36,6 @@ public class CreateTeamButtons : MonoBehaviour
         }
     }
 
-    void CheckTextureFolder()
-    {
-        if (!System.IO.Directory.Exists(Application.dataPath + "/StreamingAssets/Textures"))
-        {
-            System.IO.Directory.CreateDirectory(Application.dataPath + "/StreamingAssets/Textures");
-
-
-        }
-    }
 
 
 }

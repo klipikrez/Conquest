@@ -53,7 +53,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         if (levelName == "" || levelName == null) { ErrorManager.Instance.SendError("Name your level, bruh..."); return; }
         if (!levelName.All(char.IsLetterOrDigit)) { ErrorManager.Instance.SendError("Only letters and numbers are allowed in level name >:V"); return; }
         if (char.IsDigit(levelName[0])) { ErrorManager.Instance.SendError("The first character in the save name can't be a number :("); return; }
-        if (EditorManager.Instance.playerSpawn.x < float.MinValue) { ErrorManager.Instance.SendError("Player spawn location not set :P"); return; }
+        if (math.abs(EditorManager.Instance.playerSpawn.x) > 200) { ErrorManager.Instance.SendError("Player spawn location not set :P"); return; }
         if (levelName.ToLower() == "bob" || levelName.ToLower() == "sajba" || levelName.ToLower() == "kingco" || levelName.ToLower().Contains("teki")) { ErrorManager.Instance.SendError("Nuh Uh ;) change your level name."); return; }
 
         Debug.Log("Valid level name");
@@ -256,7 +256,87 @@ public class SaveLoadEditedTerrain : MonoBehaviour
             return detailPrototype;
         }
     }
+    [System.Serializable]
+    public class LayerStorage
+    {
+        public string textureName;
+        public float scale = 2;
+        public string LayerName;
+        public LayerStorage(string tex, float scale, string name)
+        {
+            this.textureName = tex;
+            this.scale = scale;
+            this.LayerName = name;
+        }
+    }
+    [System.Serializable]
+    public class LayersCompiled
+    {
+        public LayersCompiled(TerrainLayer[] instances)
+        {
 
+            List<LayerStorage> bob = new List<LayerStorage>();
+
+            foreach (TerrainLayer instance in instances)
+            {
+                Debug.Log("--" + instance.diffuseTexture.name);
+                bob.Add(new LayerStorage(instance.diffuseTexture.name, instance.tileSize.x, instance.name));
+            }
+
+            layers = bob.ToArray();
+            Debug.Log(layers.Length);
+        }
+        public LayerStorage[] layers;
+        public Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+
+        void LoadTextures()
+        {
+            if (textures == null) textures = new Dictionary<string, Texture2D>();
+            if (textures.Count != 0) { return; }
+
+            string folderPath = Application.dataPath + "/StreamingAssets/TerrainTextures";
+
+            string[] Files = Directory.GetFiles(folderPath); //Getting Text files
+
+            int i = 0;
+
+            foreach (string file in Files)
+            {
+                if (IsImage(file))
+                {
+
+                    Byte[] pngBytes = System.IO.File.ReadAllBytes(file);
+                    Texture2D tt = new Texture2D(52, 52);
+                    tt.LoadImage(pngBytes);//moguce je ede da dovo treba da se sacuva negde na disky
+                                           //tt.alphaIsTransparency = true;
+                    tt.name = Path.GetFileName(file);
+
+                    textures.Add(tt.name, tt);
+                    Debug.Log(tt.name);
+                    i++;
+                }
+
+            }
+
+        }
+
+        bool IsImage(string fileName)
+        {
+            string extension = Path.GetExtension(fileName).ToLower();
+            return extension == ".png" || extension == ".jpg" || extension == ".jpeg" || extension == ".bmp";
+        }
+
+        public void Load()
+        {
+            LoadTextures();
+            foreach (LayerStorage layer in layers)
+            {
+                if (!textures.ContainsKey(layer.textureName)) continue;
+                Debug.Log(layer.LayerName);
+                TerrainLayers.Instance.AddNewLayer(textures[layer.textureName], layer.scale, layer.LayerName);
+            }
+        }
+    }
 
     [System.Serializable]
     public struct TwerOverrideStorage
@@ -614,7 +694,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         };
         string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, "Options.rez");
-        File.WriteAllText(filePath, JsonUtility.ToJson(options));//update setings json
+        File.WriteAllText(filePath, JsonUtility.ToJson(options, true));//update setings json
     }
 
     void LoadLevelOptionsEditor(string levelName)
@@ -694,7 +774,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
         string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, "Details.rez");
-        File.WriteAllText(filePath, JsonUtility.ToJson(details));//update setings json
+        File.WriteAllText(filePath, JsonUtility.ToJson(details, true));//update setings json
 
 
         int numDetailLayers = terrain.detailPrototypes.Length;
@@ -702,7 +782,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         {
             filePath = Path.Combine(folderPath, "DetailMap" + layNum + ".rez");
             float[,] thisDetailLayer = EditorManager.Instance.folage;
-            Debug.Log(filePath);
+
             FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
             BinaryWriter bw = new BinaryWriter(fs);
             for (int i = 0; i < terrain.detailHeight; i++)
@@ -817,7 +897,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
         string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, "Details.rez");
-        File.WriteAllText(filePath, JsonUtility.ToJson(details));//update setings json
+        File.WriteAllText(filePath, JsonUtility.ToJson(details, true));//update setings json
 
 
         int numDetailLayers = terrain.detailPrototypes.Length;
@@ -939,7 +1019,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
         string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, "Trees.rez");
-        File.WriteAllText(filePath, JsonUtility.ToJson(trees));//update setings json
+        File.WriteAllText(filePath, JsonUtility.ToJson(trees, true));//update setings json
 
     }
 
@@ -1019,13 +1099,33 @@ public class SaveLoadEditedTerrain : MonoBehaviour
             }
         }
         writer.Close();
+
+
+        folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
+        filePath = Path.Combine(folderPath, "SplatLayers.txt");
+
+        LayersCompiled layersCompiled = new LayersCompiled(EditorManager.Instance.terrain.terrainData.terrainLayers.ToArray());
+
+        File.WriteAllText(filePath, JsonUtility.ToJson(layersCompiled, true));//update setings json
+
+        writer.Close();
     }
 
     void LoadTerrainAlpha(string levelName, TerrainData terrain)
     {
 
+        EditorManager.Instance.terrain.terrainData.terrainLayers = new TerrainLayer[0];
+
         string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
-        string filePath = Path.Combine(folderPath, "Splat.txt");
+        string filePath = Path.Combine(folderPath, "SplatLayers.txt");
+
+        LayersCompiled layersCompiled = JsonUtility.FromJson<LayersCompiled>(File.ReadAllText(filePath));//update setings json
+        layersCompiled.Load();
+
+
+
+        folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
+        filePath = Path.Combine(folderPath, "Splat.txt");
 
         if (!File.Exists(filePath))
         {
@@ -1052,7 +1152,8 @@ public class SaveLoadEditedTerrain : MonoBehaviour
                 int index = 0;
                 while (true)
                 {
-                    if (index >= numArray.GetLength(2))
+
+                    if (index >= layersCompiled.layers.Length)
                     {
                         num2++;
                         break;
@@ -1066,6 +1167,8 @@ public class SaveLoadEditedTerrain : MonoBehaviour
 
         terrain.SetAlphamaps(0, 0, numArray);
         reader.Close();
+
+
     }
 
     void SaveTerrainHeight(string levelName, TerrainData terrain)
@@ -1145,5 +1248,7 @@ public class SaveLoadEditedTerrain : MonoBehaviour
             success = await gltf.InstantiateMainSceneAsync(transform);
         }
     }
+
+
 
 }

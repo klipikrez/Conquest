@@ -71,7 +71,7 @@ MonoBehaviour:
     passTag: RenderObjects
     Event: 300
     filterSettings:
-      RenderQueueType: 0
+      RenderQueueType: 1
       LayerMask:
         serializedVersion: 2
         m_Bits: 8
@@ -91,5 +91,5 @@ MonoBehaviour:
     cameraSettings:
       overrideCamera: 0
       restoreCamera: 1
-      offset: {x: 0, y: 0, z: 0, w: 0}
-      cameraFieldOfView: 60
+      offset: {x: 69.5, y: 0, z: 0, w: 1}
+      cameraFieldOfView: 37

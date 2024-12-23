@@ -41,7 +41,10 @@ public class TextureButton : MonoBehaviour
 
     public void SetEditorTexture()
     {
+
+        master.Selected(tex);
         EditorOptions.Instance.SelectDrawingTexture(tex);
         master.DeselectAll();
+        master.Close();
     }
 }

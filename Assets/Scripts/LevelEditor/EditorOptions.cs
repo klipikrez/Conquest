@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class LevelOptions
 {
     public Vector3 playerPos;
+    public Vector2[] boundsPoints;
 }
 
 public class EditorOptions : MonoBehaviour
@@ -22,16 +24,21 @@ public class EditorOptions : MonoBehaviour
     public float brushStrenth = 15;
     public GameObject editorMenu;
     public Texture2D BrushImage;
+    public Texture2D treesBrushImage;
     public TMP_InputField terrainNameInput;
     public GameObject saveTerrainButton;
     public GameObject cancelSetPlayerPosButtons;
     public GameObject modeTabs;
     public GameObject setPlayerSpawnButton;
+    public GameObject setBoundsButton;
     public GameObject[] towerOverrideInputs;
+    public GameObject terrainLayers;
+    public Material brushGraphic;
+    public DecalProjector decalProjectorBrush;
 
     public float brushHeight = 0.51f;
     public float folageDensity = 1;
-    public int selectedTexture = 0;
+    public int selectedTexture = -1;
     public float minScale = 1;
     public float maxScale = 1;
     public int selectedTree = 0;
@@ -48,11 +55,18 @@ public class EditorOptions : MonoBehaviour
 
     public void SetBrushImage(Texture2D texture)
     {
+        brushGraphic.SetTexture("_Texture", texture);
         BrushImage = texture;
 
     }
+
+    public void SetBrushImageNoUpdate(Texture2D texture)
+    {
+        brushGraphic.SetTexture("_Texture", texture);
+    }
     public void UpdateBrushSize(float val)
     {
+        decalProjectorBrush.size = new Vector3(val, val, decalProjectorBrush.size.z);
         brushSizeSlider.value = val;
         brushSize = (int)val;
     }
@@ -100,6 +114,8 @@ public class EditorOptions : MonoBehaviour
         BrushView.SetActive(false);
         TextureView.SetActive(false);
         setPlayerSpawnButton.SetActive(false);
+        terrainLayers.SetActive(false);
+        setBoundsButton.SetActive(false);
         switch (val)
         {
             case 0:
@@ -116,6 +132,7 @@ public class EditorOptions : MonoBehaviour
                     brushStrenthSlider.gameObject.SetActive(true);
                     BrushView.SetActive(true);
                     TextureView.SetActive(true);
+                    terrainLayers.SetActive(true);
                     break;
                 }
             case 2:
@@ -143,6 +160,7 @@ public class EditorOptions : MonoBehaviour
                     terrainNameInput.gameObject.SetActive(true);
                     saveTerrainButton.SetActive(true);
                     setPlayerSpawnButton.SetActive(true);
+                    setBoundsButton.SetActive(true);
                     break;
                 }
             case 6:
@@ -166,8 +184,14 @@ public class EditorOptions : MonoBehaviour
           }
           if (val != -1) editorMenus[val].SetActive(true);*/
     }
+
+    public void ClearDrawingTexture()
+    {
+        selectedTexture = -1;
+    }
     public void SelectDrawingTexture(Texture2D texture)
     {
+        if (texture == null) return;
         TerrainLayer[] terrainLayers = EditorManager.Instance.terrain.terrainData.terrainLayers;
 
         for (int i = 0; i < terrainLayers.Length; i++)
@@ -175,9 +199,11 @@ public class EditorOptions : MonoBehaviour
             if (terrainLayers[i].diffuseTexture == texture)
             {
                 selectedTexture = i;
+                return;
                 //                Debug.Log("" + selectedTexture);
             }
         }
+        selectedTexture = -1;
     }
 
     public void SelectedTowerPreset(TowerButton btn)

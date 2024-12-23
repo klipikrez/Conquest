@@ -6,6 +6,7 @@ public abstract class EditorBehaviour
 {
     public abstract void ChangedEditorMode(EditorManager editor);
     public abstract void EditorUpdate(EditorManager editor);
+    public abstract void ExitEditorMode(EditorManager editor);
 
 
 }

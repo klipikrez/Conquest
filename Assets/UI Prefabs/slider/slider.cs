@@ -4,9 +4,11 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using System.Linq.Expressions;
 
 public class slider : MonoBehaviour
 {
+    public bool showDecimal = false;
     public string textString;
     public float[] specialValue = { 0, 1 };
     public string specilaText;
@@ -14,6 +16,7 @@ public class slider : MonoBehaviour
     public TMP_Text percent;
     public TMP_Text text;
     public TMP_Text text2;
+    public TMP_InputField inputField;
     public RectTransform akoOvoRadi;
     public RectTransform NemaSanse;
 
@@ -29,6 +32,14 @@ public class slider : MonoBehaviour
             sliderElement = gameObject.GetComponent<Slider>();
         }
         UpdateValue(sliderElement.value);
+    }
+    public void UpdateValue(string value)
+    {
+        if (!float.TryParse(value, out var val)) return;
+        if (val > sliderElement.maxValue) val = sliderElement.maxValue;
+        if (val < sliderElement.minValue) val = sliderElement.minValue;
+        sliderElement.value = val;
+        //UpdateValue(val);
     }
     public void UpdateValue(float value)
     {
@@ -68,9 +79,9 @@ public class slider : MonoBehaviour
     }
     public void FUNKCIJA(float value)
     {
-        akoOvoRadi.anchoredPosition = -new Vector3(436.22f - 436.22f * (value / (sliderElement.maxValue - sliderElement.minValue)), 0, 0);
-        NemaSanse.anchoredPosition = new Vector3(436.22f - 436.22f * (value / (sliderElement.maxValue - sliderElement.minValue)), 0, 0);
-        percent.text = (value).ToString("0");
+        akoOvoRadi.anchoredPosition = -new Vector3(akoOvoRadi.rect.width - akoOvoRadi.rect.width * ((value - sliderElement.minValue) / (sliderElement.maxValue - sliderElement.minValue)), 0, 0);
+        NemaSanse.anchoredPosition = new Vector3(akoOvoRadi.rect.width - akoOvoRadi.rect.width * ((value - sliderElement.minValue) / (sliderElement.maxValue - sliderElement.minValue)), 0, 0);
+        inputField.text = (value).ToString(showDecimal ? "0.0" : "0");
     }
 
     public void SetText(string text)

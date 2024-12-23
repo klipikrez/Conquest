@@ -12,6 +12,7 @@ public class TerrainTrees : EditorBehaviour
     KdTree treeInstances = new KdTree(true);
     public override void ChangedEditorMode(EditorManager editor)
     {
+        editor.ShowBrushVisual(true, EditorOptions.Instance.treesBrushImage);
         editing = false;
         treeInstances.Clear();
         foreach (TreeInstance tree in editor.terrain.terrainData.treeInstances)
@@ -48,6 +49,11 @@ public class TerrainTrees : EditorBehaviour
             }
 
         }
+    }
+
+    public override void ExitEditorMode(EditorManager editor)
+    {
+        editor.ShowBrushVisual(false, EditorOptions.Instance.BrushImage);
     }
 
     void ChangeTerrainTrees(Vector2 pos, Terrain terrain, EditorManager editor)
@@ -121,6 +127,7 @@ public class TerrainTrees : EditorBehaviour
                     //treePosition.y = terrain.terrainData.GetHeight((int)treePosition.x, (int)treePosition.z) / terrain.terrainData.size.y;
                     tree.position = treePosition;
                     treeInstances.Add(tree);
+
                 }
             }
         }

@@ -35,6 +35,11 @@ public class SetTowerTeams : EditorBehaviour
         }
     }
 
+    public override void ExitEditorMode(EditorManager editor)
+    {
+
+    }
+
     void OnDrawGizmos()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

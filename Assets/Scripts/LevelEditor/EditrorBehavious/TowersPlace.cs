@@ -251,4 +251,9 @@ public class TowersPlace : EditorBehaviour
             editor.editorSelection.enableSelection = true;
         }
     }
+
+    public override void ExitEditorMode(EditorManager editor)
+    {
+
+    }
 }

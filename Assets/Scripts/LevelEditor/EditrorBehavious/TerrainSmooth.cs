@@ -12,6 +12,7 @@ public class TerrainSmooth : EditorBehaviour
     float timer = 0;
     public override void ChangedEditorMode(EditorManager editor)
     {
+        editor.ShowBrushVisual(true);
         editing = false;
 
     }
@@ -131,5 +132,10 @@ public class TerrainSmooth : EditorBehaviour
         }
         // Debug.Log(average / 9);
         return average / 9f;
+    }
+
+    public override void ExitEditorMode(EditorManager editor)
+    {
+        editor.ShowBrushVisual(false);
     }
 }

@@ -8,7 +8,10 @@ public class CreateTextureButtons : MonoBehaviour
 {
     public List<TextureButton> textureButtons = new List<TextureButton>();
     public GameObject brushButtonPrefab;
-
+    public GameObject buttonSpawnLocation;
+    public GameObject buttonContainer;
+    public GameObject info;
+    public TerrainEditorLayer layer;
 
 
     // Start is called before the first frame update
@@ -20,10 +23,10 @@ public class CreateTextureButtons : MonoBehaviour
         }*/
 
         CheckTextureFolder();
-        string folderPath = Application.dataPath + "/StreamingAssets/Textures";
+        string folderPath = Application.dataPath + "/StreamingAssets/TerrainTextures";
 
         string[] Files = Directory.GetFiles(folderPath); //Getting Text files
-        List<TerrainLayer> layers = new List<TerrainLayer>();
+        //List<TerrainLayer> layers = new List<TerrainLayer>();
 
         int i = 0;
         foreach (string file in Files)
@@ -35,12 +38,12 @@ public class CreateTextureButtons : MonoBehaviour
                 tt.LoadImage(pngBytes);//moguce je ede da dovo treba da se sacuva negde na disky
                 //tt.alphaIsTransparency = true;
                 tt.name = Path.GetFileName(file);
-                TextureButton b = Instantiate(brushButtonPrefab, transform).GetComponent<TextureButton>();
+                TextureButton b = Instantiate(brushButtonPrefab, buttonSpawnLocation.transform).GetComponent<TextureButton>();
                 b.SetTexture(tt);
                 b.master = this;
                 TerrainLayer layer = new TerrainLayer();
                 layer.diffuseTexture = tt;
-                layers.Add(layer);
+                //layers.Add(layer);
                 if (i == 0)
                 {
                     b.selecotr.color = new Color(1, 1, 1, 1);
@@ -50,8 +53,9 @@ public class CreateTextureButtons : MonoBehaviour
             }
 
         }
-        EditorManager.Instance.SetTerrainTextures(layers.ToArray());
+        //EditorManager.Instance.SetTerrainTextures(layers.ToArray());
         //DeselectAll();
+        Close();
 
     }
     private bool IsImage(string fileName)
@@ -69,13 +73,32 @@ public class CreateTextureButtons : MonoBehaviour
 
     void CheckTextureFolder()
     {
-        if (!System.IO.Directory.Exists(Application.dataPath + "/StreamingAssets/Textures"))
+        if (!System.IO.Directory.Exists(Application.dataPath + "/StreamingAssets/TerrainTextures"))
         {
-            System.IO.Directory.CreateDirectory(Application.dataPath + "/StreamingAssets/Textures");
+            System.IO.Directory.CreateDirectory(Application.dataPath + "/StreamingAssets/TerrainTextures");
 
 
         }
     }
 
+
+    public void Open(TerrainEditorLayer layer)
+    {
+        this.layer = layer;
+        buttonContainer.SetActive(true);
+        info.SetActive(true);
+    }
+
+    public void Close()
+    {
+        this.layer = null;
+        buttonContainer.SetActive(false);
+        info.SetActive(false);
+    }
+
+    public void Selected(Texture2D btn)
+    {
+        layer.SetTexture(btn);
+    }
 
 }

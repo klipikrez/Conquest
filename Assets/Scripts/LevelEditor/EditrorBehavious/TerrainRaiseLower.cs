@@ -11,6 +11,7 @@ public class TerrainRaiseLower : EditorBehaviour
     float timer = 0;
     public override void ChangedEditorMode(EditorManager editor)
     {
+        editor.ShowBrushVisual(true);
         editing = false;
 
     }
@@ -39,6 +40,11 @@ public class TerrainRaiseLower : EditorBehaviour
                 }
             }
         }
+    }
+
+    public override void ExitEditorMode(EditorManager editor)
+    {
+        editor.ShowBrushVisual(false);
     }
 
     void ChangeTerrainHeight(Vector2 pos, Terrain terrain, EditorManager editor)

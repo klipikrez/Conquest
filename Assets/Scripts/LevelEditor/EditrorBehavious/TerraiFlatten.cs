@@ -13,7 +13,7 @@ public class TerraiFlatten : EditorBehaviour
     public override void ChangedEditorMode(EditorManager editor)
     {
         editing = false;
-
+        editor.ShowBrushVisual(true);
     }
 
     public override void EditorUpdate(EditorManager editor)
@@ -171,5 +171,10 @@ public class TerraiFlatten : EditorBehaviour
              }
          }*/
         return pixels;
+    }
+
+    public override void ExitEditorMode(EditorManager editor)
+    {
+        editor.ShowBrushVisual(false);
     }
 }
