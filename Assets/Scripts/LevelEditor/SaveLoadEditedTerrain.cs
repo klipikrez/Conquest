@@ -54,6 +54,8 @@ public class SaveLoadEditedTerrain : MonoBehaviour
         if (!levelName.All(char.IsLetterOrDigit)) { ErrorManager.Instance.SendError("Only letters and numbers are allowed in level name >:V"); return; }
         if (char.IsDigit(levelName[0])) { ErrorManager.Instance.SendError("The first character in the save name can't be a number :("); return; }
         if (math.abs(EditorManager.Instance.playerSpawn.x) > 200) { ErrorManager.Instance.SendError("Player spawn location not set :P"); return; }
+        if (EditorManager.Instance.bounds == null || EditorManager.Instance.bounds.Count <= 2) { ErrorManager.Instance.SendError("Playspace bounds not set >:L"); return; }
+
         if (levelName.ToLower() == "bob" || levelName.ToLower() == "sajba" || levelName.ToLower() == "kingco" || levelName.ToLower().Contains("teki")) { ErrorManager.Instance.SendError("Nuh Uh ;) change your level name."); return; }
 
         Debug.Log("Valid level name");
@@ -690,7 +692,8 @@ public class SaveLoadEditedTerrain : MonoBehaviour
     {
         LevelOptions options = new LevelOptions
         {
-            playerPos = levelName != "" ? EditorManager.Instance.playerSpawn : Vector3.negativeInfinity
+            playerPos = levelName != "" ? EditorManager.Instance.playerSpawn : Vector3.negativeInfinity,
+            boundsPoints = EditorManager.Instance.bounds.ToArray()
         };
         string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, "Options.rez");
@@ -715,6 +718,8 @@ public class SaveLoadEditedTerrain : MonoBehaviour
             options = JsonUtility.FromJson<LevelOptions>(File.ReadAllText(filePath));//update setings json
         }
         EditorManager.Instance.playerSpawn = options.playerPos;
+        if (options.boundsPoints != null)
+            EditorManager.Instance.bounds.AddRange(options.boundsPoints);
     }
 
     void LoadLevelOptions(string levelName)

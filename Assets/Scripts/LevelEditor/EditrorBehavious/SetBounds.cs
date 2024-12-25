@@ -13,12 +13,10 @@ public class SetBounds : EditorBehaviour
     public class ConnectionWithPoints
     {
         public BoundConnection connection;
-        public Transform bound1, bound2;
         public ConnectionWithPoints(Transform bound1, Transform bound2)
         {
             connection = Object.Instantiate(EditorManager.Instance.boundsConnectionObject, Vector2.zero, quaternion.identity).GetComponent<BoundConnection>();
-            this.bound1 = bound1;
-            this.bound2 = bound2;
+
             connection.SetConnection(bound1, bound2);
         }
     }
@@ -28,6 +26,7 @@ public class SetBounds : EditorBehaviour
     public List<ConnectionWithPoints> boundConnections;
     Transform selected;
     bool editing = false;
+    bool placed = false;
     public override void ChangedEditorMode(EditorManager editor)
     {
         editor.dynamicMeshGenerator.SetMeshVisibility(true);
@@ -59,14 +58,15 @@ public class SetBounds : EditorBehaviour
 
             prevBound = bound;
         }
-        boundConnections.Add(new ConnectionWithPoints(prevBound, boundConnections[0].bound1));
+        boundConnections.Add(new ConnectionWithPoints(prevBound, boundConnections[0].connection.bound1));
         boundConnections[boundConnections.Count - 1].connection.gameObject.name = "connection" + (boundConnections.Count - 1);
+
         RefreshConnections();
     }
 
     public override void EditorUpdate(EditorManager editor)
     {
-
+        //left click
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             editor.terrain.drawTreesAndFoliage = false;
@@ -85,7 +85,7 @@ public class SetBounds : EditorBehaviour
 
 
 
-
+        //left click drag
         if (Input.GetMouseButton(0) && editing && selected != null)
         {
 
@@ -99,6 +99,12 @@ public class SetBounds : EditorBehaviour
 
             }
         }
+
+        if (Input.GetMouseButton(0) && editing && selected != null)
+        {
+
+        }
+
         List<Vector3> points = new List<Vector3>();
         foreach (Transform bound in boundPoints)
         {
@@ -106,29 +112,73 @@ public class SetBounds : EditorBehaviour
         }
         editor.dynamicMeshGenerator.UpdateMeshEditor(points);
 
-
-        if (Input.GetMouseButtonUp(1) && !EventSystem.current.IsPointerOverGameObject())
+        //right click up
+        if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("bounds", "terrain")) && !EventSystem.current.IsPointerOverGameObject())
+            if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("bounds", "connection")) && !EventSystem.current.IsPointerOverGameObject())
             {
                 Debug.Log(hit.collider.gameObject.layer + " -- " + LayerMask.NameToLayer("bounds"));
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("bounds"))
                 {
                     if (boundPoints.Count <= 3) { ErrorManager.Instance.SendError("You can not have less than 3 bound points!"); return; }
 
+                    ConnectionWithPoints connection1 = boundConnections.Find(x => x.connection.bound1 == hit.collider.transform);
+                    ConnectionWithPoints connection2 = boundConnections.Find(x => x.connection.bound2 == hit.collider.transform);
+
+                    //                    Debug.Log(connection2.bound2 + " ---- " + connection1.bound2);
+                    connection2.connection.SetConnection(connection2.connection.bound1, connection1.connection.bound2);
+
+                    boundConnections.Remove(connection1);
+                    GameObject.Destroy(connection1.connection.gameObject);
+
                     boundPoints.Remove(hit.collider.transform);
                     GameObject.Destroy(hit.collider.gameObject);
+
+
+
+                    RefreshConnections();
                 }
                 else
                 {
                     Transform bound = CreateBoundPoint(editor, new Vector2(hit.point.x, hit.point.z));
                     if (bound != null)
-                        boundPoints.Add(bound);
+                    {
+                        int index = boundConnections.FindIndex(x => x.connection.transform == hit.collider.gameObject.transform.parent);
+                        Debug.Log(hit.collider.gameObject.transform.parent);
+                        boundPoints.Insert(++index, bound);
+                        RecalculateConnections(editor);
+                        RefreshConnections();
+                        placed = true;
+                        selected = bound;
+                    }
                 }
             }
         }
+
+        if (Input.GetMouseButton(1) && placed == true && selected != null)
+        {
+            Debug.Log("aaaa");
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("terrain")) && !EventSystem.current.IsPointerOverGameObject())
+            {
+                RefreshConnections();
+                selected.position = hit.point;
+                Ground(selected);
+
+            }
+        }
+
+        if (Input.GetMouseButtonUp(1) && placed == true)
+        {
+            Debug.Log("bbb");
+            placed = false;
+            selected = null;
+            editor.terrain.drawTreesAndFoliage = true; editor.ShowObjects(); editor.RecalculateObjectsHeight();
+        }
+
     }
 
     Transform CreateBoundPoint(EditorManager editor, Vector2 point)
@@ -138,19 +188,46 @@ public class SetBounds : EditorBehaviour
         bound = GameObject.Instantiate(editor.boundPrefab).transform;
         bound.transform.position = new Vector3(point.x, 0, point.y);
         bound.gameObject.name = "bound" + boundPoints.Count.ToString();
-        Ground(bound);
-        return bound;
-
+        if (Ground(bound))
+            return bound;
+        return null;
 
     }
 
-    void Ground(Transform obj)
+    bool Ground(Transform obj)
     {
 
         RaycastHit hit;
         if (!Physics.Raycast(obj.transform.position + Vector3.up * 520, Vector3.down, out hit, 1040, LayerMask.GetMask("terrain")))
-        { Debug.Log("erro"); return; }
+        { Debug.Log("erro"); return false; }
         obj.transform.position = new Vector3(obj.transform.position.x, hit.point.y, obj.transform.position.z);
+        return true;
+    }
+
+    void RecalculateConnections(EditorManager editor)
+    {
+
+        foreach (ConnectionWithPoints bound in boundConnections)
+        {
+            GameObject.Destroy(bound.connection.gameObject);
+        }
+        boundConnections.Clear();
+        Transform prevBound = null;
+
+        foreach (Transform point in boundPoints)
+        {
+
+
+            if (prevBound != null)
+            {
+                boundConnections.Add(new ConnectionWithPoints(prevBound, point));
+                boundConnections[boundConnections.Count - 1].connection.gameObject.name = "connection" + (boundConnections.Count - 1);
+            }
+
+            prevBound = point;
+        }
+        boundConnections.Add(new ConnectionWithPoints(prevBound, boundConnections[0].connection.bound1));
+        boundConnections[boundConnections.Count - 1].connection.gameObject.name = "connection" + (boundConnections.Count - 1);
 
     }
 
