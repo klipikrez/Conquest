@@ -16,12 +16,12 @@ public class BuildingOptions : MonoBehaviour
 
     public void FullAttack(int percent)
     {
-        playerSelectionDictionary.Instance.Attack(playerSelectionDictionary.Instance.optionsActive.transform, percent);
+        // playerSelectionDictionary.Instance.Attack(playerSelectionDictionary.Instance.optionsActive.transform, percent);
     }
 
     public void ContinuousAttack()
     {
-        playerSelectionDictionary.Instance.ContinuousAttack();
+        //playerSelectionDictionary.Instance.ContinuousAttack();
     }
 
     public void Upgrade(int index)
@@ -77,7 +77,7 @@ public class BuildingOptions : MonoBehaviour
 
     public void Gift(int percent)
     {
-        playerSelectionDictionary.Instance.Gift(percent);
+        //playerSelectionDictionary.Instance.Gift(percent);
     }
 
 }

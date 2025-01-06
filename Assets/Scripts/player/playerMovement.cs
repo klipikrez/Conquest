@@ -60,18 +60,19 @@ public class playerMovement : MonoBehaviour
             }*/
 
             Move();
-            Zoom(zoomSpeed * Time.deltaTime);
-
-            /*if (viewProjection)
-            {
-                SpaceAction();
-            }
-            else
-            {
-                Move();
-                Zoom(zoomSpeed * Time.deltaTime);
-            }*/
         }
+        Zoom(zoomSpeed * Time.deltaTime);
+
+        /*if (viewProjection)
+        {
+            SpaceAction();
+        }
+        else
+        {
+            Move();
+            Zoom(zoomSpeed * Time.deltaTime);
+        }*/
+
     }
 
     void Move()
@@ -115,7 +116,7 @@ public class playerMovement : MonoBehaviour
             //ovo nikad ne treba da se desi!
         }
 
-        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        if (Input.GetAxis("Mouse ScrollWheel") != 0 && !Paused)
         {
             UpdateZoomLevel();
         }

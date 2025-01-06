@@ -37,7 +37,7 @@ public class TowersPlace : EditorBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(1) && !EventSystem.current.IsPointerOverGameObject())
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit = new RaycastHit();
@@ -93,7 +93,7 @@ public class TowersPlace : EditorBehaviour
         }
 
         //check what we are clicking on
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             if (!EventSystem.current.IsPointerOverGameObject())
             {
@@ -112,7 +112,7 @@ public class TowersPlace : EditorBehaviour
         }
 
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject())
         {
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -254,6 +254,10 @@ public class TowersPlace : EditorBehaviour
 
     public override void ExitEditorMode(EditorManager editor)
     {
-
+        GameObject[] towers = GameObject.FindGameObjectsWithTag("building");
+        foreach (GameObject tower in towers)
+        {
+            tower.GetComponent<EditorTower>().Deselected();
+        }
     }
 }

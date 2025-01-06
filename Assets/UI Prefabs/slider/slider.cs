@@ -39,6 +39,7 @@ public class slider : MonoBehaviour
         if (val > sliderElement.maxValue) val = sliderElement.maxValue;
         if (val < sliderElement.minValue) val = sliderElement.minValue;
         sliderElement.value = val;
+
         //UpdateValue(val);
     }
     public void UpdateValue(float value)

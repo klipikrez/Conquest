@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class playerSelectionDictionary : MonoBehaviour
 {
     public Dictionary<int, GameObject> selected = new Dictionary<int, GameObject>();
-    public BuildingUI optionsActive;
-
+    Coroutine stroeCoroutine = null;
     public static playerSelectionDictionary Instance { get; private set; }
 
     private void Awake()
@@ -46,10 +46,6 @@ public class playerSelectionDictionary : MonoBehaviour
 
     public void RemoveAll()
     {
-        if (optionsActive != null)
-        {
-            removeOprionsSelected();
-        }
 
         foreach (KeyValuePair<int, GameObject> pair in selected)
         {
@@ -58,8 +54,12 @@ public class playerSelectionDictionary : MonoBehaviour
                 selected[pair.Key].GetComponent<BuildingUI>().Deselected();
             }
         }
+
         selected.Clear();
+
     }
+
+
 
     public void RemoveAllEditor()
     {
@@ -80,19 +80,7 @@ public class playerSelectionDictionary : MonoBehaviour
         selected.Remove(removeKey);
     }
 
-    public void addOprionsSelected(BuildingUI building)
-    {
-        optionsActive = building;
-    }
 
-    public void removeOprionsSelected()
-    {
-        if (optionsActive != null)
-        {
-            optionsActive.Deselected();
-            optionsActive = null;
-        }
-    }
 
     public void Attack(Transform attack, int percent)
     {
@@ -110,46 +98,43 @@ public class playerSelectionDictionary : MonoBehaviour
                 }
             }
         }
-        if (SoundManager.Instance != null)
-        {
-            SoundManager.Instance.PlaySendSound();
-        }
+
     }
 
-    public void ContinuousAttack()
+    public void ContinuousAttack(Transform attack)
     {
+
+
         foreach (KeyValuePair<int, GameObject> pair in selected)
         {
             if (pair.Value != null)
             {
-                if (selected[pair.Key] != optionsActive.gameObject)
-                {
-                    selected[pair.Key].GetComponent<UnitController>().ContinuousAttack(optionsActive.transform);
-                }
+
+                selected[pair.Key].GetComponent<UnitController>().ContinuousAttack(attack);
+
             }
         }
-        if (SoundManager.Instance != null)
-        {
-            SoundManager.Instance.PlaySendSound();
-        }
+
+        //selected.Clear();
+
     }
 
-    public void Gift(int percent)
-    {
-        foreach (KeyValuePair<int, GameObject> pair in selected)
-        {
-            if (pair.Value != null)
-            {
-                if (selected[pair.Key] != optionsActive.gameObject)
-                {
-                    selected[pair.Key].GetComponent<UnitController>().Gift(percent, optionsActive.transform);
-                }
-            }
-        }
-        if (SoundManager.Instance != null)
-        {
-            SoundManager.Instance.PlayAudioClip(7);
-        }
-    }
+    /*public void Gift(int percent)
+     {
+         foreach (KeyValuePair<int, GameObject> pair in selected)
+         {
+             if (pair.Value != null)
+             {
+                 if (selected[pair.Key] != optionsActive.gameObject)
+                 {
+                     selected[pair.Key].GetComponent<UnitController>().Gift(percent, optionsActive.transform);
+                 }
+             }
+         }
+         if (SoundManager.Instance != null)
+         {
+             SoundManager.Instance.PlayAudioClip(7);
+         }
+     }*/
 
 }

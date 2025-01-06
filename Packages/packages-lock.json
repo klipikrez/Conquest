@@ -20,11 +20,11 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.jsonserialize": "1.0.0",
-        "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.mathematics": "1.3.1",
         "com.unity.burst": "1.8.4",
-        "com.unity.collections": "1.5.1"
+        "com.unity.collections": "1.5.1",
+        "com.unity.mathematics": "1.3.1",
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -43,8 +43,8 @@
       "source": "registry",
       "dependencies": {
         "com.unity.burst": "1.6.6",
-        "com.unity.nuget.mono-cecil": "1.11.4",
-        "com.unity.test-framework": "1.1.31"
+        "com.unity.test-framework": "1.1.31",
+        "com.unity.nuget.mono-cecil": "1.11.4"
       },
       "url": "https://packages.unity.com"
     },
@@ -143,9 +143,9 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.modules.androidjni": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.0.2",
-        "com.unity.modules.androidjni": "1.0.0"
+        "com.unity.modules.unitywebrequest": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -183,9 +183,9 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
+        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
       "url": "https://packages.unity.com"
@@ -207,6 +207,13 @@
         "com.unity.shadergraph": "13.1.8",
         "com.unity.render-pipelines.core": "13.1.8"
       }
+    },
+    "dev.yarnspinner.unity": {
+      "version": "https://github.com/YarnSpinnerTool/YarnSpinner-Unity.git#current",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "42f84a924e627e19a1d3e97c181b04f2f56e2d05"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

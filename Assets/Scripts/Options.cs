@@ -113,6 +113,7 @@ public class Options : MonoBehaviour
             value /= 100;
             settings.volumes[index] = value;
             audioMixer.SetFloat(index.ToString(), (Mathf.Log10(value) * 20) != float.NegativeInfinity ? Mathf.Log10(value) * 20 : -52);
+            UpdateSettings();
         }
     }
 

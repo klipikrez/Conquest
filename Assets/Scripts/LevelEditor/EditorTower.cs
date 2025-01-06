@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
+using TMPro;
 using UnityEngine;
 
 
@@ -16,6 +17,8 @@ public class TowerPresetData
     public string[] meshPath; // meshes
 
 
+
+
 }
 
 
@@ -27,6 +30,7 @@ public class EditorTower : MonoBehaviour
     public TowerPresetData preset;
     [SerializedDictionary("NAME", "VALAUEEUE")]
     public SerializedDictionary<string, float> towerOverrides = new SerializedDictionary<string, float>();
+    public SerializedDictionary<string, TextMeshProUGUI> tmpGUI = new SerializedDictionary<string, TextMeshProUGUI>();
     public MeshFilter meshFilter;
     public string meshName;
     public bool selected = false;
@@ -35,6 +39,7 @@ public class EditorTower : MonoBehaviour
     float screenEdgeBuffer = 13;
     public GameObject Ui;
     public GameObject rect;
+    public GameObject infoGUI;
     Vector3 UiOffset = Vector3.up;
     public static Dictionary<int, EditorTower> TowerIDs = new Dictionary<int, EditorTower>();
     public int selfID;
@@ -42,13 +47,21 @@ public class EditorTower : MonoBehaviour
     public MeshRenderer meshRenderer;
     public void SetId(int givenId = -1)
     {
+        Debug.Log(givenId);
         if (givenId == -1)
             for (int i = 0; true; i++)
             {
                 if (!TowerIDs.ContainsKey(i)) { TowerIDs.Add(i, this); selfID = i; break; }
 
             }
-        else { if (!TowerIDs.ContainsKey(givenId)) { TowerIDs.Add(givenId, this); selfID = givenId; } }
+        else
+        {
+            if (!TowerIDs.ContainsKey(givenId))
+            {
+                TowerIDs.Add(givenId, this);
+                selfID = givenId;
+            }
+        }
     }
 
     public void RemoveID()
@@ -102,7 +115,7 @@ public class EditorTower : MonoBehaviour
 
 
         rect.transform.position = pos;
-
+        infoGUI.transform.position = pos + Vector3.up * 50;
 
     }
 
@@ -120,14 +133,19 @@ public class EditorTower : MonoBehaviour
     public void ClearOverrides()
     {
         towerOverrides.Clear();
+        UpdateGUI();
+
     }
 
     public void ClearOverride(string name)
     {
+
         if (towerOverrides.ContainsKey(name))
         {
             towerOverrides.Remove(name);
         }
+
+        UpdateGUI();
     }
 
     public void AddOverride(string name, float value)
@@ -140,6 +158,8 @@ public class EditorTower : MonoBehaviour
         {
             towerOverrides.Add(name, value);
         }
+
+        UpdateGUI();
     }
     public void Selected()
     {
@@ -152,6 +172,46 @@ public class EditorTower : MonoBehaviour
     {
         Ui.SetActive(false);
         selected = false;
+    }
+
+    public void UpdateGUI()
+    {
+        tmpGUI["ID"].text = "ID:" + selfID.ToString();
+        tmpGUI["Starting units"].text = preset.product.ToString();
+        tmpGUI["Max units"].text = preset.maxUnits.ToString();
+        tmpGUI["Unit production"].text = preset.productProduction.ToString();
+        tmpGUI["Vulnerability"].text = preset.vulnerability.ToString();
+        foreach (var ovr in towerOverrides)
+        {
+            switch (ovr.Key)
+            {
+                case "ID":
+                    {
+                        tmpGUI["ID"].text = ovr.Value.ToString();
+                        return;
+                    }
+                case "Starting units":
+                    {
+                        tmpGUI["Starting units"].text = ovr.Value.ToString();
+                        return;
+                    }
+                case "Max units":
+                    {
+                        tmpGUI["Max units"].text = ovr.Value.ToString();
+                        return;
+                    }
+                case "Unit production":
+                    {
+                        tmpGUI["Unit production"].text = ovr.Value.ToString();
+                        return;
+                    }
+                case "Vulnerability":
+                    {
+                        tmpGUI["Vulnerability"].text = ovr.Value.ToString();
+                        return;
+                    }
+            }
+        }
     }
 
     public void AddConnection(EditorTower connection, int direction = 0)

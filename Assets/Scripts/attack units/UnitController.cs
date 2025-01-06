@@ -159,6 +159,7 @@ public class UnitController : MonoBehaviour
 
     public void ContinuousAttack(Transform attack)
     {
+        if (attack == this.transform) return;
         StopAttackUnits();
         Transform[] path = CalculatePath(transform, attack);
         if (path != null) attackCoroutine = StartCoroutine(SpawnContinuousAttackUnits(path, building.team.teamid));
@@ -273,6 +274,7 @@ public class UnitController : MonoBehaviour
 
         while (true)
         {
+
             //if (production.product - 1f >= maxDispatchRate)
             while (building.production.product > maxDispatchRate)
             {
@@ -292,7 +294,6 @@ public class UnitController : MonoBehaviour
             {
                 for (int i = 0; i < building.production.product; i++)
                 {
-
                     building.production.SubtractProduct(1);
 
                     UnitAgent newAgent = UnitPool.Instance.Get();
@@ -325,7 +326,7 @@ public class UnitController : MonoBehaviour
     {
         while (true)
         {
-
+            Debug.Log("GIFT" + amount);
             for (int i = 0; i < maxDispatchRate; i++)
             {
                 if (building.production.product - 1 <= 0 || amount < 0)

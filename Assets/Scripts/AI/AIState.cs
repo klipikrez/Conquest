@@ -21,7 +21,7 @@ public abstract class AIState : ScriptableObject
         //calculate ranom number based on chance table
         System.Random r = new System.Random();
         int randz = r.Next(101); /*Random.Range(101);*/
-        Debug.Log("" + randz);
+        //        Debug.Log("" + randz);
 
         int chanceSum = chanceBehaviorsTable[0].chance;
         for (int i = 0; i < chanceBehaviorsTable.Length; i++)

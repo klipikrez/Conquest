@@ -111,9 +111,10 @@ public class ScenesManager : MonoBehaviour
         }
 
 
-        yield return GameObject.Find("LoadLevel").GetComponent<SaveLoadEditedTerrain>().LoadLevelAsync(levelName);
-        GameObject.Find("navManager").GetComponent<NavManager>().Inicialize(GameObject.FindGameObjectsWithTag("building"));
-        GameObject.Find("TowerAIManager").GetComponent<AIManager>().Inicialize();
+        yield return GameObject.Find("LoadLevel").GetComponent<SaveLoadLevel>().LoadLevelAsync(levelName);
+
+
+
     }
 
     IEnumerator LoadAsyncSceneEditor(SceneReference sceneRef, string levelName)
@@ -131,7 +132,7 @@ public class ScenesManager : MonoBehaviour
             yield return null;
         }
 
-        GameObject.Find("Canvas").GetComponent<SaveLoadEditedTerrain>().LoadLevelEditor(levelName);
+        GameObject.Find("Canvas").GetComponent<SaveLoadLevel>().LoadLevelEditor(levelName);
     }
 
     IEnumerator LoadAsyncScene(int cseneIndex)

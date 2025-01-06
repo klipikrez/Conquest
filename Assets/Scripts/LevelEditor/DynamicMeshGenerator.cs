@@ -39,7 +39,7 @@ public class DynamicMeshGenerator : MonoBehaviour
 
 
 
-            Vector3[] convxPoints = GetConvexHull(bounds).ToArray();
+            Vector3[] convxPoints = bounds.ToArray(); ///GetConvexHull(bounds).ToArray();
             Mesh dynamicMesh = GenerateMesh(convxPoints);
             if (col != null) col.sharedMesh = dynamicMesh;
             filter.mesh = dynamicMesh;/**/
@@ -72,6 +72,33 @@ public class DynamicMeshGenerator : MonoBehaviour
             col.sharedMesh = dynamicMesh;
             filter.mesh = dynamicMesh;
         }*/
+    }
+
+    public void SetMeshOnPlay(Vector2[] bounds)
+    {
+        if (bounds.Length >= 3)
+        {
+
+            Vector3[] convxPoints = new Vector3[bounds.Length];
+
+            for (int i = 0; i < bounds.Length; i++)
+            {
+                convxPoints[i] = new Vector3(bounds[i].x, 0, bounds[i].y);
+            }
+
+            Mesh dynamicMesh = GenerateMesh(convxPoints);
+            if (col != null) col.sharedMesh = dynamicMesh;
+            filter.mesh = dynamicMesh;/**/
+        }
+        else
+        {
+            Debug.Log("Bounds in save file have less than 3 points...");
+            if (filter.mesh != new Mesh() || col.sharedMesh != new Mesh())
+            {
+                filter.mesh = new Mesh();
+                if (col != null) col.sharedMesh = new Mesh();
+            }
+        }
     }
 
     public void OnTriggerEnter(Collider other)

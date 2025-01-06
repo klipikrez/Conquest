@@ -14,7 +14,8 @@ public class LevelMenu : MonoBehaviour
     public GameObject WinUI;
     public GameObject LoseUI;
 
-    public bool paused = false;
+    public static bool paused = false;
+    private static bool blocked = false;
     public static float timeSinceStart = 0f;
 
     private void Start()
@@ -39,11 +40,11 @@ public class LevelMenu : MonoBehaviour
 
     private void Update()
     {
-        if (!paused)
+        if (!paused && !blocked)
         {
             timeSinceStart += Time.deltaTime;
         }
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape) && !blocked)
         {
             if (UI.activeSelf)
             {
@@ -63,6 +64,28 @@ public class LevelMenu : MonoBehaviour
         //Time.timeScale = 0.0f;
         if (NavManager.Instance != null) NavManager.Instance.SetPauseBuildings(true);
         Main.SetObjectsActive(0);
+        if (movementScripts.Count != 0)
+            foreach (playerMovement pm in movementScripts)
+            {
+                pm.Paused = true;
+            }
+        else
+        {
+            editorMovement.Paused = true;
+        }
+        foreach (playerSelection pm in selectionScripts)
+        {
+            pm.Paused = true;
+        }
+    }
+
+    public void Block()
+    {
+        paused = true;
+        blocked = true;
+
+        if (NavManager.Instance != null) NavManager.Instance.SetPauseBuildings(true);
+
         if (movementScripts.Count != 0)
             foreach (playerMovement pm in movementScripts)
             {

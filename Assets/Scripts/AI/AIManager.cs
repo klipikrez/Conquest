@@ -84,6 +84,7 @@ public class AIManager : MonoBehaviour
 
     private bool inicialized = false;
 
+
     private void Awake()
     {
         Instance = this;
@@ -98,7 +99,7 @@ public class AIManager : MonoBehaviour
 
     void Update()
     {
-        if (!inicialized) return;
+        if (!inicialized || LevelMenu.paused) return;
         //ovo je samo za playereaza
         Player.numberOfUnits = 0;
         foreach (BuildingMain building in Player.buildings)
@@ -213,7 +214,12 @@ public class AIManager : MonoBehaviour
         yield return new WaitForSeconds(AITypeByTeam[ai.team].clockCycleTime);
         while (true)//  kor
         {
+
             yield return new WaitForSeconds(AITypeByTeam[ai.team].clockCycleTime);
+            while (LevelMenu.paused)
+            {
+                yield return null;
+            }
             //Debug.Log(AITypeByTeam[ai.team].clockCycleTime);
             AITypeByTeam[ai.team].CalculateMove(this, ai);
         }

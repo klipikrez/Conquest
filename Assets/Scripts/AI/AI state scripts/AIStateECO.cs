@@ -10,6 +10,7 @@ public class AIStateECO : AIState
     public override void CalculateMove(AIManager manager, AIPlayer player)
     {
         Debug.Log("eco");
+
         /* bool weDintDoIt = true;
          foreach (BuildingMain ctrl in player.Towers)//before everything we see if we can upgrade the default towers
          {

@@ -76,8 +76,6 @@ public class CreateTextureButtons : MonoBehaviour
         if (!System.IO.Directory.Exists(Application.dataPath + "/StreamingAssets/TerrainTextures"))
         {
             System.IO.Directory.CreateDirectory(Application.dataPath + "/StreamingAssets/TerrainTextures");
-
-
         }
     }
 

@@ -149,7 +149,7 @@ public class Selection : MonoBehaviour
                         selectedDictionary.RemoveAllEditor();
                 }
 
-                Destroy(selectionBox, 1.2f);
+                Destroy(selectionBox, 0.2f);
 
 
                 /* { // OLD SELECION

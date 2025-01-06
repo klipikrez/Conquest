@@ -1,0 +1,210 @@
+{
+    "towers": [
+        {
+            "id": 0,
+            "team": 0,
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                3,
+                2,
+                1
+            ],
+            "position": {
+                "x": -13.308853149414063,
+                "y": 0.0,
+                "z": 4.2802734375
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 1,
+            "team": 2,
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [
+                {
+                    "overrideName": "Starting units",
+                    "value": 246.0
+                },
+                {
+                    "overrideName": "Unit production",
+                    "value": 7.662397384643555
+                },
+                {
+                    "overrideName": "Max units",
+                    "value": 200.0
+                }
+            ],
+            "connections": [
+                0
+            ],
+            "position": {
+                "x": -5.959693908691406,
+                "y": 7.23577880859375,
+                "z": 16.971755981445314
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 2,
+            "team": 3,
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                3,
+                0,
+                4
+            ],
+            "position": {
+                "x": -4.413139343261719,
+                "y": 0.0,
+                "z": 3.9690093994140627
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 3,
+            "team": 0,
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                0,
+                5,
+                2,
+                4
+            ],
+            "position": {
+                "x": -11.5123291015625,
+                "y": 0.0,
+                "z": -1.104400634765625
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 4,
+            "team": 0,
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                5,
+                0,
+                2,
+                3
+            ],
+            "position": {
+                "x": -7.0692291259765629,
+                "y": 0.0,
+                "z": -4.055580139160156
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 5,
+            "team": 0,
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [],
+            "connections": [
+                6,
+                4,
+                3
+            ],
+            "position": {
+                "x": -10.480484008789063,
+                "y": 0.0,
+                "z": -8.382606506347657
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 6,
+            "team": 1,
+            "modelPath": "defaultHouse.glb",
+            "presetName": "defaultbuilding",
+            "towerOverrides": [
+                {
+                    "overrideName": "Starting units",
+                    "value": 104.0
+                },
+                {
+                    "overrideName": "Max units",
+                    "value": 200.0
+                },
+                {
+                    "overrideName": "Unit production",
+                    "value": 15.922103881835938
+                }
+            ],
+            "connections": [
+                5
+            ],
+            "position": {
+                "x": -10.052139282226563,
+                "y": 0.0,
+                "z": -13.296409606933594
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        }
+    ]
+}

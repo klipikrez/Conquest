@@ -383,10 +383,11 @@ public class KdTree
         while (openCur < _open.Length && _open[openCur] != null)
         {
             var current = _open[openCur++];
-            var nodeDist = _distance(position, current.component.position);
+            var nodeDist = Vector3.Distance(position, current.component.position);
 
             if (nodeDist <= radius)
             {
+                // Debug.Log(nodeDist + "   --  " + );
                 withinRadius.Add(current);
             }
 
