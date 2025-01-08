@@ -1,0 +1,19 @@
+title: Start
+tags:
+position: NaN,NaN
+---
+<<Reset>>
+<<Scene #000000 0.85>>
+
+<<Act Edwardo_Peri lmzsk 0.75 0.3 #eb38af>>
+<<LookAt 0>>
+<<PlayMusic lmzskTheme>>
+Edwardo_Peri: [normalWave]DOBRO VECE!!![/normalWave]
+<<LookAt 6>>
+Edwardo_Peri: srećna nova godine <3
+<<LookAt 0>>
+<<StopAudioAll>>
+<<Reset>>
+<<stop>>
+
+===

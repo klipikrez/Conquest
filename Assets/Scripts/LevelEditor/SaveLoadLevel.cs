@@ -1,22 +1,18 @@
 using System;
+using Google.Protobuf;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
 using GLTFast;
-using GLTFast.Addons;
 using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 using Yarn;
 using Yarn.Compiler;
 using Yarn.Unity;
 using Yarn.Unity.Example;
-using System.Text;
-using System.Runtime.Serialization.Formatters.Binary;
+
 
 ///////////////////////////////////////////////////////////////////
 //                                                               //
@@ -33,15 +29,9 @@ public class SaveLoadLevel : MonoBehaviour
     public Terrain terrain;
     public GameObject towerDefaultPrefab;
     public GameObject editorTowerPrefab;
-    [SerializeField]
-    public TextAsset yarnProject;
+
     public DialogueManager dialogueManager;
     public DialogueRunner dialogueRunner;
-    public YarnProject project;
-
-
-
-    //public Terrain terrain2;
 
     // Start is called before the first frame update
     void Start()
@@ -111,50 +101,20 @@ public class SaveLoadLevel : MonoBehaviour
         LoadDialogue(levelName);
         yield return null;
     }
-    /*
-        void CompileDialogueHelper(string speaker, string[] lines)
-        {
-            // Generate unique node name
-            string nodeName = $"Dynamic_{System.Guid.NewGuid()}";
-
-            // Create Yarn script
-            string yarnScript = $"title: {nodeName}\n---\n";
-            foreach (string line in lines)
-            {
-                yarnScript += $"{speaker}: {line}\n";
-            }
-            yarnScript += "===";
-
-            // Compile the script
-            var compilationJob = CompilationJob.CreateFromString(nodeName, yarnScript, new Yarn.Library());
-            var result = Compiler.Compile(compilationJob);
-
-            // Load the compiled program
-            qDialogueRunner.Dialogue.AddProgram(result.Program);
-
-            UnityEngine.Debug.Log("yarnScript = " + yarnScript);
-            UnityEngine.Debug.Log("result.Program = " + result.Program);
-            UnityEngine.Debug.Log("result.Diagnostics = " + result.Diagnostics);
-            UnityEngine.Debug.Log("result.Diagnostics.ToList() = " + result.Diagnostics.ToList());
-            UnityEngine.Debug.Log("Join() for result.Diagnostics = " + string.Join(", ", result.Diagnostics.ToList()));
-            UnityEngine.Debug.Log("qDialogueRunner.NodeExists(\"TestScript\") = " + qDialogueRunner.NodeExists("TestScript"));
-            UnityEngine.Debug.Log("qDialogueRunner.NodeExists(nodeName) = " + qDialogueRunner.NodeExists(nodeName));
-
-            // Start the dialogue
-            qDialogueRunner.StartDialogue(nodeName);
-        }*/
 
     void LoadDialogue(string levelName)
     {
+
+
+        var project = ScriptableObject.CreateInstance<YarnProject>();
+        project.name = "IME";
 
         string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, "Dialogue.yarn");
 
         if (!File.Exists(filePath))
         {
-            Debug.Log("Failed to load dialaogue for: " + levelName);
-            File.WriteAllText(AssetDatabase.GetAssetPath(yarnProject), "52NEM52");
-            EditorUtility.SetDirty(yarnProject);
+            Debug.Log("Failed to load dialogue for: " + levelName);
             dialogueManager.DialogueComplete();
             return;
         }
@@ -163,105 +123,148 @@ public class SaveLoadLevel : MonoBehaviour
 
         if (text == null || text.text == "")
         {
-            Debug.Log("Failed to load dialogue for: " + levelName);
+            Debug.Log("Failed to read dialogue for: " + levelName);
+            dialogueManager.DialogueComplete();
             return;
         }
+
 
         dialogueManager.Initiate();
 
 
-        CompileYarnFile(filePath);
-
-
-        dialogueRunner.startNode = "Start";
-        Debug.Log(dialogueRunner.startNode);
-        Debug.Log(dialogueRunner.NodeExists(dialogueRunner.startNode));
-        //project.NodeNames.Add(dialogueRunner.startNode);
-        Debug.Log(project.NodeNames.Length);
-
-        foreach (var s in project.NodeNames)
-        {
-            Debug.Log(s);
-        }
-        //dialogueRunner.SetProject(project);
-        dialogueManager.StartDialogue("Start");
-        foreach (var v in dialogueRunner.Dialogue.NodeNames)
-        {
-            Debug.Log(v);
-        }
-    }
-
-
-    public void CompileYarnFile(string filePath)
-    {
-        /*try
-        {*/
-        // Read the Yarn file
-        string yarnSource = File.ReadAllText(filePath);
 
         // Create a CompilationJob
-        var compilationJob = CompilationJob.CreateFromString("Start", yarnSource);
+        var compilationJob = CompilationJob.CreateFromString("Start", text.text);
 
         // Compile the Yarn file
         var result = Compiler.Compile(compilationJob);
-        Debug.Log(result.StringTable);
 
-        foreach (var s in result.StringTable)
+
+        // Store the compiled program
+        byte[] compiledBytes;
+
+        using (var memoryStream = new MemoryStream())
+        using (var outputStream = new CodedOutputStream(memoryStream, 4096, false))
         {
-            Debug.Log(s.Key + " " + s.Value);
+            // Serialize the compiled program to memory
+            WriteTo(outputStream, result.Program);
+            //result.Program.WriteTo((Google.Protobuf.CodedOutputStream)outputStream);
+            outputStream.Flush();
+
+            compiledBytes = memoryStream.ToArray();
         }
 
 
+        project.compiledYarnProgram = compiledBytes;
 
-        dialogueRunner.Dialogue.SetProgram(result.Program);
+        Localization loc = ScriptableObject.CreateInstance<Localization>();
+
+        loc.AddLocalizedStrings(GetStringTable(result.StringTable));
+        loc.LocaleCode = "en-US";
+        project.baseLocalization = loc;
+        SetMetadataTable(result.StringTable, project);
+
+        string text2 = project.GetLocalization("en-US").GetLocalizedString(project.NodeNames.First());
+
+        dialogueRunner.SetProject(project);
+        dialogueManager.StartDialogue("Start");
+
+    }
 
 
-        foreach (var v in dialogueRunner.Dialogue.NodeNames)
+
+    void WriteTo(CodedOutputStream output, Program prog)
+    {
+        output.WriteRawMessage((IMessage)(object)prog);
+    }
+    public Dictionary<string, string> GetStringTable(IDictionary<string, StringInfo> dict)
+    {
+        Dictionary<string, string> strMap = new Dictionary<string, string>();
+
+        foreach (KeyValuePair<string, StringInfo> b in dict)
         {
-            Debug.Log(v);
+            strMap.Add(b.Key, b.Value.text);
         }
-        dialogueRunner.yarnProject.compiledYarnProgram = File.ReadAllBytes(filePath);
-        Debug.Log("TELL MEEEEE::::" + dialogueRunner.yarnProject.NodeNames.Length);
-
-
-
-
-        // Save the compiled bytecode (yarn program)
-        //SaveYarnProgram(result.Program);
-
-        // Save the string table
-        //SaveStringTable(result.StringTable);
-        /* }
-         catch (Exception e)
-         {
-             Debug.LogError($"Failed to compile Yarn file: {e.Message}");
-         }*/
+        return strMap;
     }
 
-    private void SaveYarnProgram(byte[] program)
+    public void SetMetadataTable(IDictionary<string, StringInfo> dict, YarnProject yarnProject)
     {
-        string programPath = Path.Combine(Application.persistentDataPath, "compiled.yarnc");
-        File.WriteAllBytes(programPath, program);
-        Debug.Log($"Yarn program saved at: {programPath}");
+
+        // Get the type of the internal struct
+        var assembly = Assembly.Load("YarnSpinner.Unity"); // Load the Yarn.Unity assembly
+        Type type = assembly.GetType("Yarn.Unity.LineMetadataTableEntry");
+
+        if (type != null)
+        {
+            // Create an instance of the internal struct using reflection
+
+
+            // Get the type of the internal struct
+            Type type2 = assembly.GetType("Yarn.Unity.LineMetadata");
+
+
+
+            var constructor = type2.GetConstructor(
+                BindingFlags.NonPublic | BindingFlags.Instance,
+                null,
+                new[] { typeof(IEnumerable<>).MakeGenericType(type) },
+                null
+            );
+
+
+
+            if (type2 != null)
+            {
+
+                var listType = typeof(List<>).MakeGenericType(type);
+                var lineMetadataEntries = Activator.CreateInstance(listType);
+
+                // var lineMetadataEntries = new List<object>();
+                foreach (KeyValuePair<string, StringInfo> b in dict)
+                {
+                    var instance = Activator.CreateInstance(type);
+                    //Debug.Log(type + "  --  " + instance == null);
+                    // Set fields via reflection
+                    var idField = type.GetField("ID");
+                    idField.SetValue(instance, b.Key); Debug.Log(idField.GetValue(instance));
+                    idField = type.GetField("File");
+                    idField.SetValue(instance, b.Value.fileName);
+                    idField = type.GetField("Node");
+                    idField.SetValue(instance, b.Value.nodeName);
+                    idField = type.GetField("LineNumber");
+                    idField.SetValue(instance, b.Value.lineNumber.ToString());
+                    idField = type.GetField("Metadata");
+                    idField.SetValue(instance, b.Value.metadata);
+
+                    // Get the field value
+                    Console.WriteLine($"ID: {idField.GetValue(instance)}");
+
+
+                    var methodAdd = listType.GetMethod("Add");
+
+                    methodAdd.Invoke(lineMetadataEntries, new[] { instance });
+                }
+
+
+                LineMetadata instance2 = (LineMetadata)constructor.Invoke(new object[] { lineMetadataEntries });
+
+                yarnProject.lineMetadata = (LineMetadata)instance2;
+            }
+            else
+            {
+                Console.WriteLine("LineMetadataTableEntry type not found.");
+            }
+
+
+
+        }
+        else
+        {
+            Console.WriteLine("LineMetadataTableEntry type not found.");
+        }
     }
 
-    private void SaveStringTable(Dictionary<string, StringInfo> stringTable)
-    {
-        string stringTablePath = Path.Combine(Application.persistentDataPath, "strings.json");
-
-        var stringTableJson = JsonUtility.ToJson(stringTable);
-        File.WriteAllText(stringTablePath, stringTableJson);
-
-        Debug.Log($"String table saved at: {stringTablePath}");
-    }
-
-
-    void SaveYarnScriptToFile(string fileName, string content)
-    {
-        string path = Path.Combine(Application.dataPath, fileName); // Save in the Assets folder
-        File.WriteAllText(path, content);
-        Debug.Log($"Yarn script saved to: {path}");
-    }
 
     void SaveTerrainTowers(string levelName)
     {

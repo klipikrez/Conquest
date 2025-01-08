@@ -103,6 +103,7 @@ public class LevelMenu : MonoBehaviour
     public void Resume()
     {
         paused = false;
+        blocked = false;
         Main.SetObjectsActive(0);
         //Time.timeScale = 1.0f;
         if (NavManager.Instance != null) NavManager.Instance.SetPauseBuildings(false);
