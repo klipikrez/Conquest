@@ -39,7 +39,7 @@ public class slider : MonoBehaviour
         if (val > sliderElement.maxValue) val = sliderElement.maxValue;
         if (val < sliderElement.minValue) val = sliderElement.minValue;
         sliderElement.value = val;
-
+        FUNKCIJA(val);
         //UpdateValue(val);
     }
     public void UpdateValue(float value)
@@ -83,6 +83,7 @@ public class slider : MonoBehaviour
         akoOvoRadi.anchoredPosition = -new Vector3(akoOvoRadi.rect.width - akoOvoRadi.rect.width * ((value - sliderElement.minValue) / (sliderElement.maxValue - sliderElement.minValue)), 0, 0);
         NemaSanse.anchoredPosition = new Vector3(akoOvoRadi.rect.width - akoOvoRadi.rect.width * ((value - sliderElement.minValue) / (sliderElement.maxValue - sliderElement.minValue)), 0, 0);
         inputField.text = (value).ToString(showDecimal ? "0.0" : "0");
+        //akoOvoRadi.offsetMin = new Vector2(0, akoOvoRadi.offsetMin.y);
     }
 
     public void SetText(string text)

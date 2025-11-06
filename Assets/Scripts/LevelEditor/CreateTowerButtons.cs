@@ -56,7 +56,7 @@ public class CreateTowerButtons : MonoBehaviour
 
 
                     b.master = this;
-
+                    Destroy(tt, 5f);
 
 
                     b.textName.text = Path.GetFileName(dirName);
@@ -85,6 +85,7 @@ public class CreateTowerButtons : MonoBehaviour
 
     private async void AsyncLoadMesh(string dirName, string path, TowerButton b, int i)
     {
+        if (path == "none") return;
         byte[] data = File.ReadAllBytes(dirName + "/" + path);
         var gltf = new GltfImport();
         bool success = await gltf.LoadGltfBinary(
@@ -145,7 +146,11 @@ public class CreateTowerButtons : MonoBehaviour
     public void Select(string name)
     {
 
-
+        Debug.Log(name);
+        foreach (KeyValuePair<string, TowerButton> b in towerButtons)
+        {
+            Debug.Log(b.Key);
+        }
         LoadTowerPresets(towerButtons[name]);
         towerButtons[name].selecotr.color = new Color(1, 1, 1, 1);
         EditorManager.Instance.towerPresets = towerButtons[name];

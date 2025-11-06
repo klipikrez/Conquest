@@ -1,0 +1,63 @@
+title: Start
+tags:
+position: NaN,NaN
+---
+<<Reset>>
+<<Scene #000000 0.985>>
+
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+
+Zoran: Ah, patience... 
+Zoran: A virtue so many lack...
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: Fortunately, I excel at it.
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: I trust some may rub off on you if you listen to me Your Majesty?
+
+<<LookAt 2 7>>
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>  
+<<Scene #000000 0.585>>  
+Zoran: Look upon your so-called mighty fortress.  
+Zoran: Every soldier within—willing to die for you.  
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>  
+Zoran: They fight, they fall, and more take their place...  
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>  
+Zoran: And yet, there are never enough.  
+
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: Do you see that number slowly ticking upward?
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: That’s the unit count.
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+Zoran: The crafty work of the local War Commissar's recrutment campaign, ha-ha.
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: The higher that number, the stronger your assault will be.
+
+<<LookAt 0 7>>
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: Of course, your enemies aren’t just sitting around picking their noses...
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+Zoran: Their towers are regenerating too. So… perhaps waiting too long isn’t ideal, either.
+
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+Zoran: Timing, your majesty, is everything. 
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: A decisive ruler knows when to strike.
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>> 
+<<LookAt 1 7>>
+Zoran: And a... less decisive one, well, let's not go there, shall we?
+
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: Watch those numbers, prepare your forces, and strike when the odds are in your favor.
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>> 
+Zoran: Even you can manage that, I’m sure.
+
+<<LookAt 1 10>>
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: Or shall I spell it out again for you? No?  
+
+<<StopAudioAll>>
+<<Reset>>
+<<stop>>
+
+===

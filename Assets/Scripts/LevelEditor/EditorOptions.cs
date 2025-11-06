@@ -233,7 +233,8 @@ public class EditorOptions : MonoBehaviour
                 case 4:
                     val = btn.presetData.vulnerability;
                     break;
-            };
+            }
+            ;
             SetupSliders(slider, val, val);// the same valuse 
         }
         foreach (KeyValuePair<int, GameObject> tower in EditorManager.Instance.editorSelection.selectedDictionary.selected)
@@ -313,7 +314,7 @@ public class EditorOptions : MonoBehaviour
 
         }
 
-        if (presetName != null) CreateTowerButtons.Instance.Select(presetName);
+        if (presetName != null && presetName != "") CreateTowerButtons.Instance.Select(presetName);
 
         i = 0;
         foreach (slider slider in sliders)
@@ -337,7 +338,7 @@ public class EditorOptions : MonoBehaviour
     {
         slider.specialValue[0] = !float.IsNaN(def) ? def : -1;
         slider.specialValue[1] = !float.IsNaN(def) ? def : -1;
-        slider.sliderElement.value = !float.IsNaN(val) ? val : slider.sliderElement.maxValue;
+        slider.UpdateValue(!float.IsNaN(val) ? val : slider.sliderElement.maxValue);
 
         if (float.IsNaN(val))
         {

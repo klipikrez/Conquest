@@ -40,16 +40,5 @@ public class SetTowerTeams : EditorBehaviour
 
     }
 
-    void OnDrawGizmos()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("terrain")) && !EventSystem.current.IsPointerOverGameObject())
-        {
-            // Draw a yellow sphere at the transform's position
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(Vector3.left, EditorOptions.Instance.brushSize);
-        }
-    }
 
 }

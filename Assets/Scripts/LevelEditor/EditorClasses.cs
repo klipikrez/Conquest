@@ -230,8 +230,9 @@ public class LayersCompiled
                 tt.name = Path.GetFileName(file);
 
                 textures.Add(tt.name, tt);
-                Debug.Log(tt.name);
+                //                Debug.Log(tt.name);
                 i++;
+                Destroy(tt, 5f);
             }
 
         }
@@ -253,7 +254,7 @@ public class LayersCompiled
             if (isEditor)
             {
                 if (!textures.ContainsKey(layer.textureName)) continue;
-                Debug.Log(layer.LayerName);
+                //                Debug.Log(layer.LayerName);
                 TerrainLayers.Instance.AddNewLayer(textures[layer.textureName], layer.scale, layer.LayerName);
             }
             else
@@ -303,13 +304,14 @@ public class TowerStorage
     public float scale = 1;
     public TowerStorage(int id, int team/*, TowerPresetData preset*/, Dictionary<string, float> towerOverrides, int[] connections, Vector3 pos, quaternion rotation, string modelPath, string presetName)
     {
+        Debug.Log(presetName);
         this.id = id;
         this.team = team;
         //this.preset = preset;
         this.towerOverrides = new TwerOverrideStorage[towerOverrides.Count];
         this.connections = connections;
         this.position = pos;
-        this.modelPath = modelPath;
+        this.modelPath = modelPath == "" ? "none" : modelPath;
         this.rotation = rotation;
         this.presetName = presetName;
 
@@ -353,12 +355,14 @@ public class TowerCompiled
         towers = new TowerStorage[editorTowers.Length];
         for (int i = 0; i < editorTowers.Length; i++)
         {
-            int[] conn = new int[editorTowers[i].connections.Count];
-            int j = 0;
+            List<int> conn = new List<int>();
+            // int[] conn = new int[editorTowers[i].connections.Count];
+
             foreach (TowerConnection twr in editorTowers[i].connections)
             {
-                if (editorTowers[i] == twr.tower1) conn[j] = twr.tower2.selfID;
-                if (editorTowers[i] == twr.tower2) conn[j] = twr.tower1.selfID;
+                if (editorTowers[i] == twr.tower1 && twr.line1.enabled) conn.Add(twr.tower2.selfID);
+                if (editorTowers[i] == twr.tower2 && twr.line2.enabled) conn.Add(twr.tower1.selfID);
+                //if (editorTowers[i] == twr.tower2) conn[j] = twr.tower1.selfID;
                 /*                    if (twr.line1.enabled && twr.line2.enabled)
                                     {
                                         if (editorTowers[i] == twr.tower1) conn[j] = twr.tower2.selfID;
@@ -372,10 +376,9 @@ public class TowerCompiled
                                     }
                                     else
                                         if (editorTowers[i] == twr.tower2) conn[j] = twr.tower1.selfID;*/
-                j++;
 
             }
-            towers[i] = new TowerStorage(editorTowers[i].selfID, editorTowers[i].team/*, editorTowers[i].preset*/, editorTowers[i].towerOverrides, conn, editorTowers[i].transform.position, editorTowers[i].transform.rotation, editorTowers[i].meshName, editorTowers[i].presetName);
+            towers[i] = new TowerStorage(editorTowers[i].selfID, editorTowers[i].team/*, editorTowers[i].preset*/, editorTowers[i].towerOverrides, conn.ToArray(), editorTowers[i].transform.position, editorTowers[i].transform.rotation, editorTowers[i].meshName, editorTowers[i].presetName);
 
         }
     }
@@ -453,9 +456,18 @@ public class TowerCompiled
                 //tower.GetProduction().SetProduct(t.towerOverrides.ContainsKey("Cost as an upgrade") ? (float)t.towerOverrides["Cost as an upgrade"] : preset.cost);
                 tower.team.vulnerability = (map.ContainsKey("Vulnerability") ? (float)map["Vulnerability"] : preset.vulnerability);
                 tower.id = t.id;
-                Debug.Log(tower.id);
                 tower.team.teamid = t.team;
 
+                if (t.presetName == "invisiblePoint")
+                {
+                    tower.unitDetector.Engage = false;
+                    tower.buildingUI.DisableUI();
+                    if (t.modelPath == "none")
+                    {
+                        tower.team.ClearMesh();
+                        continue;
+                    }
+                }
                 string file = Application.dataPath + "/StreamingAssets/TowerPresets/" + t.presetName + "/" + t.modelPath;
 
                 // Load the GLTF file
@@ -494,7 +506,16 @@ public class TowerCompiled
 
     private async void AsyncSetTowerEditor(string file, EditorTower tower, TowerStorage t)
     {
-
+        if (Path.GetFileName(file) == "none" || Path.GetFileName(file) == "")
+        {
+            tower.SetPreset(GetBuildingPresetByName(t.presetName), t.presetName, new meshAndName { mesh = new Mesh(), name = t.modelPath });
+            foreach (TwerOverrideStorage tOverride in t.towerOverrides)
+            {
+                //                Debug.Log(t.id + " -- " + tOverride.overrideName + " -- " + tOverride.value);
+                tower.towerOverrides.Add(tOverride.overrideName, tOverride.value);
+            }
+            return;
+        }
         // Load the GLTF file
         byte[] data = File.ReadAllBytes(file);
         var gltf = new GltfImport();
@@ -510,7 +531,7 @@ public class TowerCompiled
             tower.SetPreset(GetBuildingPresetByName(t.presetName), t.presetName, new meshAndName { mesh = gltf.GetMeshes()[0], name = t.modelPath });
             foreach (TwerOverrideStorage tOverride in t.towerOverrides)
             {
-                Debug.Log(t.id + " -- " + tOverride.overrideName + " -- " + tOverride.value);
+                //                Debug.Log(t.id + " -- " + tOverride.overrideName + " -- " + tOverride.value);
                 tower.towerOverrides.Add(tOverride.overrideName, tOverride.value);
             }
         }
@@ -523,8 +544,11 @@ public class TowerCompiled
 
     private async void AsyncSetTower(string file, BuildingMain tower, TowerStorage t)
     {
-
-
+        if (Path.GetFileName(file) == "none" || Path.GetFileName(file) == "")
+        {
+            tower.team.SetMesh(new Mesh());
+            return;
+        }
         // Load the GLTF file
         byte[] data = File.ReadAllBytes(file);
         var gltf = new GltfImport();

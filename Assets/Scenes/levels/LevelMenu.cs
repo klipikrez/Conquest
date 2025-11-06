@@ -125,7 +125,7 @@ public class LevelMenu : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
-        //Time.timeScale = 1.0f;
+
         ScenesManager.Instance.ReturnToMainMenu();
     }
 

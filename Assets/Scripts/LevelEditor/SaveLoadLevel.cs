@@ -227,7 +227,7 @@ public class SaveLoadLevel : MonoBehaviour
                     //Debug.Log(type + "  --  " + instance == null);
                     // Set fields via reflection
                     var idField = type.GetField("ID");
-                    idField.SetValue(instance, b.Key); Debug.Log(idField.GetValue(instance));
+                    idField.SetValue(instance, b.Key);// Debug.Log(idField.GetValue(instance));
                     idField = type.GetField("File");
                     idField.SetValue(instance, b.Value.fileName);
                     idField = type.GetField("Node");
@@ -394,15 +394,19 @@ public class SaveLoadLevel : MonoBehaviour
             return;
         }
 
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player == null) Debug.Log("No player found on loading level");
-
-        player.transform.position = options.playerPos + Vector3.up * player.GetComponent<playerMovement>().zoomLevel;
-
         DynamicMeshGenerator boundGenerator = GameObject.FindGameObjectWithTag("bounds").GetComponent<DynamicMeshGenerator>();
         if (boundGenerator == null) Debug.Log("No bound generator found in level...");
 
         boundGenerator.SetMeshOnPlay(options.boundsPoints);
+
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player == null) Debug.Log("No player found on loading level");
+        CharacterController controller = player.GetComponent<playerMovement>().controller;
+        controller.enabled = false;
+
+        player.transform.position = options.playerPos + Vector3.up * player.GetComponent<playerMovement>().zoomLevel;
+
+        controller.enabled = true;
     }
 
     void SaveTerrainDetails(string levelName, TerrainData terrain)

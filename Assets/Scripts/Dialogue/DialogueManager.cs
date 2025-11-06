@@ -95,6 +95,7 @@ namespace Yarn.Unity.Example
                         Sprite sprite = Sprite.Create(tt, rect, new Vector2(0.5f, 0.5f));
                         sprite.name = Path.GetFileNameWithoutExtension(tt.name);
                         resourceSprites.Add(sprite);
+                        Destroy(tt, 5f);
                     }
                     else
                     if (IsAudio(file))
@@ -145,7 +146,7 @@ namespace Yarn.Unity.Example
             runner.AddCommandHandler<float>("FadeIn", SetFadeIn);
             runner.AddCommandHandler<string, string, float>("CamOffset", SetCameraOffset);
 
-            runner.AddCommandHandler<int>("LookAt", SetCameraLook);
+            runner.AddCommandHandler<int, float>("LookAt", SetCameraLook);
 
             // runner.onDialogueComplete.AddListener(DialogueComplete);
 
@@ -220,10 +221,12 @@ namespace Yarn.Unity.Example
             Color col = Color.yellow;
             if (spriteName != string.Empty && ColorUtility.TryParseHtmlString(spriteName, out col) == false)
             {
+                Debug.Log("Background Sprite");
                 bgImage.sprite = FetchAsset<Sprite>(spriteName);
                 bgImage.color = new Color(1, 1, 1, alpha);
                 return;
             }
+            //            Debug.Log("BGCOL");
             col.a = alpha;
             bgImage.sprite = FetchAsset<Sprite>("white");
             bgImage.color = col;
@@ -569,29 +572,39 @@ namespace Yarn.Unity.Example
             StartCoroutine(MoveCoroutine(parent, newPos, moveTime));
         }
 
-        public void SetCameraLook(int towerID)
+        public void SetCameraLook(int towerID, float zoomLevel = -1)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
 
             GameObject[] towers = GameObject.FindGameObjectsWithTag("building");
 
 
+
             foreach (GameObject tower in towers)
             {
                 if (tower.GetComponent<BuildingMain>().id == towerID)
                 {
-                    Debug.Log(tower.transform.position);
+                    //                    Debug.Log(tower.transform.position);
                     if (moveCameraCoroutine != null) StopCoroutine(moveCameraCoroutine);
-                    moveCameraCoroutine = StartCoroutine(MoveCamera(tower.transform.position, player.transform));
+                    moveCameraCoroutine = StartCoroutine(MoveCamera(tower.transform.position, player.transform, zoomLevel));
                     return;
                 }
             }
             Debug.Log("TOWER WITH ID:: " + towerID + " NOT FOUND");
         }
 
-        IEnumerator MoveCamera(Vector3 pos, Transform player)
+        IEnumerator MoveCamera(Vector3 pos, Transform player, float zoomLevel = -1)
         {
-            pos = new Vector3(pos.x, player.position.y, pos.z - 5);
+            float distanceToTower = 5;
+            if (zoomLevel >= 0)
+            {
+                playerMovement movement = player.gameObject.GetComponent<playerMovement>();
+                movement.zoomLevel = zoomLevel;
+                distanceToTower = zoomLevel / 1.5f + 1;
+            }
+
+
+            pos = new Vector3(pos.x, player.position.y, pos.z - distanceToTower);
             while (true)
             {
                 pos = new Vector3(pos.x, player.position.y, pos.z);
@@ -645,8 +658,10 @@ namespace Yarn.Unity.Example
             while (t < 1f)
             {
                 t += Time.deltaTime / 2f;
-                foreach (var spr in sprites)
+                for (int i = 0; i < sprites.Count; i++)
                 {
+                    var spr = sprites[i];
+                    if (spr == null) { sprites.Remove(spr); i--; continue; }
                     Vector3 regularScalePreserveXFlip = new Vector3(Mathf.Sign(spr.transform.localScale.x), 1f, 1f);
                     if (spr != highlightedSprite)
                     { // set back to normal

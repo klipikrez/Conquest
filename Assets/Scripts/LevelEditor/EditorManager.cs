@@ -162,6 +162,8 @@ public class EditorManager : MonoBehaviour
         }
     }
 
+    private DateTime firstClickTime;
+
     // Update is called once per frame
     void Update()
     {
@@ -173,7 +175,19 @@ public class EditorManager : MonoBehaviour
         {
             EditorOptions.Instance.UpdateBrushSize(--EditorOptions.Instance.brushSize >= 1 ? EditorOptions.Instance.brushSize : ++EditorOptions.Instance.brushSize);
         }*/
-
+        double elapsedSeconds = (DateTime.Now - firstClickTime).TotalSeconds;
+        if (elapsedSeconds >= 0.02f)
+        {
+            firstClickTime = DateTime.Now;
+            if (Input.GetKey(KeyCode.RightBracket)) // forward
+            {
+                EditorOptions.Instance.UpdateBrushSize(++EditorOptions.Instance.brushSize <= EditorOptions.Instance.brushSizeSlider.maxValue ? EditorOptions.Instance.brushSize : --EditorOptions.Instance.brushSize);
+            }
+            if (Input.GetKey(KeyCode.LeftBracket)) // backwards
+            {
+                EditorOptions.Instance.UpdateBrushSize(--EditorOptions.Instance.brushSize >= 1 ? EditorOptions.Instance.brushSize : ++EditorOptions.Instance.brushSize);
+            }
+        }
         if (selectedBehaivour != null)
             selectedBehaivour.EditorUpdate(this);
 

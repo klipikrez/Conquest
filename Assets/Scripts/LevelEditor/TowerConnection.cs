@@ -55,15 +55,15 @@ public class TowerConnection : Connection
 
     public void CycleConnectionType()
     {
-        tower1.RemoveConnection(this);
-        tower2.RemoveConnection(this);
+        //tower1.RemoveConnection(this);
+        //tower2.RemoveConnection(this);
 
         if (line1.enabled && line2.enabled)
         {
             Debug.Log("cycle tower connection mode - 1");
             line1.enabled = false; line2.enabled = true;
             //tower1.RemoveConnection(this);
-            tower2.AddConnection(tower1);
+            //tower2.AddConnection(tower1);
             return;
         }
 
@@ -71,23 +71,47 @@ public class TowerConnection : Connection
         {
             Debug.Log("cycle tower connection mode - 2");
             line1.enabled = true; line2.enabled = false;
-            tower1.AddConnection(tower2);
+            //tower1.AddConnection(tower2);
             //tower2.RemoveConnection(this);
             return;
         }
 
         Debug.Log("cycle tower connection mode - 3");
         line1.enabled = true; line2.enabled = true;
-        tower1.AddConnection(tower2);
-        tower2.AddConnection(tower1);
+        //tower1.AddConnection(tower2);
+        //tower2.AddConnection(tower1);
     }
 
-    public void CalculateUppdateConnectionType()
+    public void SetConnectionType(int type, EditorTower tower = null)
     {
+        switch (type)
+        {
+            case 0:
+                {
+                    line1.enabled = true;
+                    line2.enabled = true;
+                    break;
+                }
+            case 1:
+                {
+                    if (tower == tower1)
+                        line1.enabled = true;
+                    else
+                        line2.enabled = true;
+                    break;
+                }
+            case 2:
+                {
+                    if (tower == tower1)
+                        line2.enabled = true;
+                    else
+                        line1.enabled = true;
+                    break;
+                }
+        }
+        /* if (tower1.connections.Contains(this)) { line1.enabled = true; } else { line1.enabled = false; }
 
-        if (tower1.connections.Contains(this)) { line1.enabled = true; } else { line1.enabled = false; }
-
-        if (tower2.connections.Contains(this)) { line2.enabled = true; } else { line2.enabled = false; }
+         if (tower2.connections.Contains(this)) { line2.enabled = true; } else { line2.enabled = false; }*/
 
     }
 }

@@ -73,6 +73,13 @@ public class Team : MonoBehaviour
             meshFilter.mesh = mesh;
         }
     }
+    public void ClearMesh()
+    {
+        if (meshFilter != null)
+        {
+            meshFilter.mesh = new Mesh();
+        }
+    }
 
     public void Damage(UnitAgent attacker)
     {

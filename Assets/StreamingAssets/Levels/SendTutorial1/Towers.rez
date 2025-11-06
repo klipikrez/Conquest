@@ -1,0 +1,100 @@
+{
+    "towers": [
+        {
+            "id": 0,
+            "team": 1,
+            "modelPath": "smallTown.glb",
+            "presetName": "smallTown",
+            "towerOverrides": [
+                {
+                    "overrideName": "Starting units",
+                    "value": 17.0
+                },
+                {
+                    "overrideName": "Unit production",
+                    "value": 0.0
+                }
+            ],
+            "connections": [
+                1
+            ],
+            "position": {
+                "x": -13.367881774902344,
+                "y": 0.0,
+                "z": 4.0718536376953129
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 2,
+            "team": 0,
+            "modelPath": "smallTown.glb",
+            "presetName": "smallTown",
+            "towerOverrides": [
+                {
+                    "overrideName": "Unit production",
+                    "value": 0.0
+                }
+            ],
+            "connections": [
+                1
+            ],
+            "position": {
+                "x": -5.165458679199219,
+                "y": 0.0,
+                "z": 6.4763336181640629
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 1,
+            "team": 0,
+            "modelPath": "none",
+            "presetName": "invisiblePoint",
+            "towerOverrides": [
+                {
+                    "overrideName": "Cost as an upgrade",
+                    "value": 999.0
+                },
+                {
+                    "overrideName": "Vulnerability",
+                    "value": 5.0
+                }
+            ],
+            "connections": [
+                0,
+                2
+            ],
+            "position": {
+                "x": -9.412162780761719,
+                "y": 0.0,
+                "z": 5.1504669189453129
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        }
+    ]
+}

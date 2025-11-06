@@ -10,7 +10,7 @@ public class towerEditorToggle : MonoBehaviour
     public void ResetOverride()
     {
 
-        slider.sliderElement.value = (slider.specialValue[0]);
+        slider.UpdateValue(slider.specialValue[0]);
         toggle.SetIsOnWithoutNotify(true);
         EditorOptions.Instance.ClearOverride(slider.textString);
     }

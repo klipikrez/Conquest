@@ -841,10 +841,8 @@ MonoBehaviour:
   terrain: {fileID: 1308607000}
   towerDefaultPrefab: {fileID: 1682021026501713179, guid: 4a063165b58158846a095392b42a00f9, type: 3}
   editorTowerPrefab: {fileID: 7959154391435268685, guid: 99c3f570e06c4014894854dccffe1f6e, type: 3}
-  yarnProject: {fileID: 0}
   dialogueManager: {fileID: 0}
   dialogueRunner: {fileID: 0}
-  project: {fileID: 0}
 --- !u!114 &37163136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3301,7 +3299,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1760461145}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3726,7 +3724,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 442053188}
   m_HandleRect: {fileID: 442053187}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4144,7 +4142,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 222630217}
   m_HandleRect: {fileID: 222630216}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -5348,7 +5346,7 @@ RectTransform:
   m_GameObject: {fileID: 463065346}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.7585983}
-  m_LocalScale: {x: 0.42083332, y: 0.42083332, z: 0.42083332}
+  m_LocalScale: {x: 0.15885417, y: 0.15885417, z: 0.15885417}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1735294768}
@@ -5363,8 +5361,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 405.4726, y: 239.59946}
-  m_SizeDelta: {x: 1920.0001, y: 1097.8218}
+  m_AnchoredPosition: {x: 153.9726, y: 216.59946}
+  m_SizeDelta: {x: 1920, y: 2618.754}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &463065348
 MonoBehaviour:
@@ -10278,6 +10276,10 @@ PrefabInstance:
       value: Unit production
       objectReference: {fileID: 0}
     - target: {fileID: 1869613457175661619, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
+      propertyPath: showDecimal
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869613457175661619, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
       propertyPath: specilaText
       value: (Preset) Unit production
       objectReference: {fileID: 0}
@@ -10311,7 +10313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2030268569940781966, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
       propertyPath: m_MaxValue
-      value: 20
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2030268569940781966, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
       propertyPath: m_MinValue
@@ -10417,9 +10419,21 @@ PrefabInstance:
       propertyPath: m_FillAmount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6841209038774563771, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
+      propertyPath: m_ContentType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6841209038774563771, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
+      propertyPath: m_KeyboardType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6841209038774563771, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
+      propertyPath: m_CharacterValidation
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7180583424966686458, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1.230011
+      value: -1.2299805
       objectReference: {fileID: 0}
     - target: {fileID: 7957994950661724375, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
       propertyPath: m_TagString
@@ -12063,8 +12077,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 818104049}
   m_HandleRect: {fileID: 818104048}
   m_Direction: 2
-  m_Value: 0.99999976
-  m_Size: 0.6443266
+  m_Value: 0.9999998
+  m_Size: 0.60908604
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -22098,7 +22112,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 110887876}
   m_HandleRect: {fileID: 110887875}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 0.9999998
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -23478,6 +23492,10 @@ PrefabInstance:
       value: Vulnerability
       objectReference: {fileID: 0}
     - target: {fileID: 1869613457175661619, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
+      propertyPath: showDecimal
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869613457175661619, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
       propertyPath: specilaText
       value: (Preset) Vulnerability
       objectReference: {fileID: 0}
@@ -23511,7 +23529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2030268569940781966, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
       propertyPath: m_MaxValue
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2030268569940781966, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
       propertyPath: m_MinValue
@@ -23616,6 +23634,18 @@ PrefabInstance:
     - target: {fileID: 6665050814617201693, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
       propertyPath: m_FillAmount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6841209038774563771, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
+      propertyPath: m_ContentType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6841209038774563771, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
+      propertyPath: m_KeyboardType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6841209038774563771, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
+      propertyPath: m_CharacterValidation
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7180583424966686458, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -23784,8 +23814,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 765156040}
   m_HandleRect: {fileID: 765156039}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

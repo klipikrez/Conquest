@@ -47,7 +47,6 @@ public class EditorTower : MonoBehaviour
     public MeshRenderer meshRenderer;
     public void SetId(int givenId = -1)
     {
-        Debug.Log(givenId);
         if (givenId == -1)
             for (int i = 0; true; i++)
             {
@@ -122,6 +121,7 @@ public class EditorTower : MonoBehaviour
 
     public void SetPreset(TowerPresetData preset, string presetName, meshAndName mesh = null)
     {
+        //Debug.Log(presetName);
         this.preset = preset;
         this.presetName = presetName;
         mesh = mesh == null ? EditorManager.Instance.towerPresets.GetRandomMesh() : mesh;
@@ -187,26 +187,31 @@ public class EditorTower : MonoBehaviour
             {
                 case "ID":
                     {
+                        //Debug.Log("ID " + ovr.Value);
                         tmpGUI["ID"].text = ovr.Value.ToString();
                         return;
                     }
                 case "Starting units":
                     {
+                        //Debug.Log("Starting units " + ovr.Value);
                         tmpGUI["Starting units"].text = ovr.Value.ToString();
                         return;
                     }
                 case "Max units":
                     {
+                        //Debug.Log("Max units " + ovr.Value);
                         tmpGUI["Max units"].text = ovr.Value.ToString();
                         return;
                     }
                 case "Unit production":
                     {
+                        //Debug.Log("Unit production " + ovr.Value);
                         tmpGUI["Unit production"].text = ovr.Value.ToString();
                         return;
                     }
                 case "Vulnerability":
                     {
+                        //Debug.Log("Vulnerability " + ovr.Value);
                         tmpGUI["Vulnerability"].text = ovr.Value.ToString();
                         return;
                     }
@@ -216,28 +221,39 @@ public class EditorTower : MonoBehaviour
 
     public void AddConnection(EditorTower connection, int direction = 0)
     {
+
         //check if connection is self or if it already exists in local connections :)
         if (connection == this) return;
-        foreach (TowerConnection conn in connections)
+        /*foreach (TowerConnection conn in connections)
         {
             if ((conn.tower2 == connection && conn.tower1 == this) || (conn.tower1 == connection && conn.tower2 == this)) return;
-        }
+        }*/
 
         //check if connection already exists in global connections
         TowerConnection ExistigTowerConnection = null;
         foreach (TowerConnection conn in EditorManager.Instance.editorconnections)
         {
+
             if ((conn.tower2 == connection && conn.tower1 == this) || (conn.tower1 == connection && conn.tower2 == this)) { ExistigTowerConnection = conn; break; }
         }
 
         if (ExistigTowerConnection == null)
         {
+
             ExistigTowerConnection = Instantiate(connectionPrefab).GetComponent<TowerConnection>();
             ExistigTowerConnection.SetConnection(this, connection);
             EditorManager.Instance.editorconnections.Add(ExistigTowerConnection);
+            ExistigTowerConnection.line1.enabled = false;
+            ExistigTowerConnection.line2.enabled = false;
         }
 
-        switch (direction)
+
+        if (!connection.connections.Contains(ExistigTowerConnection))
+            connection.connections.Add(ExistigTowerConnection);
+        if (!connections.Contains(ExistigTowerConnection))
+            connections.Add(ExistigTowerConnection);
+
+        /*switch (direction)
         {
             case 0:
                 {
@@ -258,9 +274,9 @@ public class EditorTower : MonoBehaviour
                     connection.connections.Add(ExistigTowerConnection);
                     break;
                 }
-        }
-        if (direction != 0)
-            ExistigTowerConnection.CalculateUppdateConnectionType();
+        }*/
+        /* if (direction != 0)*/
+        ExistigTowerConnection.SetConnectionType(direction, this);
 
 
     }

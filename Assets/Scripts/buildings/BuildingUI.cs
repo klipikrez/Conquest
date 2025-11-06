@@ -16,7 +16,7 @@ public class BuildingUI : MonoBehaviour
     public Button[] otherOptions;
     public TextMeshProUGUI[] optionsCost;
     public int screenEdgeBuffer = 40;
-
+    bool UIVisible = true;
     [System.NonSerialized]
     public bool selected = false;
 
@@ -34,13 +34,16 @@ public class BuildingUI : MonoBehaviour
 
     void Update()
     {
-        if (selector.activeInHierarchy)
+        if (UIVisible)
         {
-            UiFollow();
-        }
-        else
-        {
-            UiIdle();
+            if (selector.activeInHierarchy)
+            {
+                UiFollow();
+            }
+            else
+            {
+                UiIdle();
+            }
         }
     }
 
@@ -173,6 +176,17 @@ public class BuildingUI : MonoBehaviour
     public void SwordResetRotation()
     {
         rotateTo = Quaternion.Euler(0, 0, 0);
+    }
+
+    public void DisableUI()
+    {
+        UIVisible = false;
+        Ui.SetActive(false);
+        rect.SetActive(false);
+        selector.SetActive(false);
+        allyOptions.SetActive(false);
+        enemyOptions.SetActive(false);
+        allyOptions.transform.parent.gameObject.SetActive(false);
     }
 
 }

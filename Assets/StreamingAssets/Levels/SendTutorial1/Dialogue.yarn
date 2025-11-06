@@ -1,0 +1,68 @@
+title: Start
+tags:
+position: NaN,NaN
+---
+<<Reset>>
+<<Scene #000000 0.985>>
+
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+<<LookAt 1 7>>
+Zoran: Ah... Your majesty. I see you got my urgent message... 
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: *But you're as late as ever* <br> *Cough* *Cough*
+Zoran: Though I'd love to debate your qualifications...
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: Now we have a more urgent matter to tend to.
+
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: The situation is dire...
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+Zoran: The [normalWave]FILTHY[/normalWave] peasantry disagree with the notion of your rule.
+Zoran: And thus they have risen in rebelion...
+
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: Unlike me, your ever-loyal servant.
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: Of course, I warned the late king this might happen...
+Zoran: But, as is often the case, my brilliance was ignored.
+Zoran: No matter, we can't stand here lamenting poor decisions of the past. 
+
+
+
+Zoran: As I was saying...
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: Before you my princess is a battle map.
+<<Scene #000000 0.35>>
+<<Act Zoran zoranChill 0.25 -10.2 #a20404>>
+Zoran: Do you see those little figurines of buildings? Yes? Good.
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: they represent real life towns, castles and structures of interest in your kingdom.
+
+
+<<LookAt 2 2>>
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+Zoran: Take this one for instance, the dispicable rabble have comandeered it as their own.
+Zoran: But fear not my princess, we can *remedy* this little inconvenience, so to speak.
+
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: Thankfully not all of your subjects are as disloyal.
+<<LookAt 0 7>>
+Zoran: Some loyal men remain stationed in this town here.
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+<<LookAt 0 2>>
+Zoran: It's marked with green as to indicate that it has men loyal to the crown.
+
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+<<LookAt 0 7>>
+Zoran: And above it sits the number of expendable troops it has of course.
+Zoran: ...
+Zoran: Now all you have to do is give the command an they'll march on the rebelious scum.
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+<<LookAt 1 7>>
+Zoran: you can do this by first  <color=#a20404> <b> clicking once <sprite name="mouse_l"> </b> <color> on your town and then <color=#a20404> <b> click <sprite name="mouse_l"> </color> </b> on the enemy town.
+Zoran: Try it. 
+<<StopAudioAll>>
+<<Reset>>
+<<stop>>
+
+===

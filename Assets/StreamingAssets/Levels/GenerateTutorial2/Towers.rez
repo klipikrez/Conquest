@@ -1,0 +1,137 @@
+{
+    "towers": [
+        {
+            "id": 0,
+            "team": 0,
+            "modelPath": "smallTown.glb",
+            "presetName": "smallTown",
+            "towerOverrides": [
+                {
+                    "overrideName": "Starting units",
+                    "value": 50.0
+                }
+            ],
+            "connections": [
+                4
+            ],
+            "position": {
+                "x": -13.770614624023438,
+                "y": -1.32696533203125,
+                "z": 9.0213623046875
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 1,
+            "team": 0,
+            "modelPath": "smallTown.glb",
+            "presetName": "smallTown",
+            "towerOverrides": [
+                {
+                    "overrideName": "Starting units",
+                    "value": 40.0
+                }
+            ],
+            "connections": [
+                3,
+                4
+            ],
+            "position": {
+                "x": -6.1740570068359379,
+                "y": -1.1388092041015626,
+                "z": 11.81195068359375
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 2,
+            "team": 1,
+            "modelPath": "largeTown.glb",
+            "presetName": "largeTown",
+            "towerOverrides": [],
+            "connections": [
+                3
+            ],
+            "position": {
+                "x": -0.235107421875,
+                "y": -0.99798583984375,
+                "z": 7.30975341796875
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 3,
+            "team": 0,
+            "modelPath": "none",
+            "presetName": "invisiblePoint",
+            "towerOverrides": [],
+            "connections": [
+                1,
+                2
+            ],
+            "position": {
+                "x": -1.4416046142578126,
+                "y": -0.860870361328125,
+                "z": 11.800094604492188
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 4,
+            "team": 0,
+            "modelPath": "none",
+            "presetName": "invisiblePoint",
+            "towerOverrides": [],
+            "connections": [
+                0,
+                1
+            ],
+            "position": {
+                "x": -10.930656433105469,
+                "y": -1.106292724609375,
+                "z": 12.576675415039063
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        }
+    ]
+}

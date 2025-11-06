@@ -39,7 +39,7 @@ public class EditorSelection : Selection
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("" + other.gameObject.name);
+        //        Debug.Log("" + other.gameObject.name);
         if (other.gameObject.GetComponent<EditorTower>() != null)
         {
             selectedDictionary.AddSelectedEditor(other.gameObject);

@@ -73,7 +73,8 @@ public class AIManager : MonoBehaviour
     //all buildigs in the game
     GameObject[] buildingObjects;
     //unit controllers for getting current number of units for each ai and plaer
-    List<BuildingMain> buildings = new List<BuildingMain>();
+    [System.NonSerialized]
+    public List<BuildingMain> buildings = new List<BuildingMain>();
     //ai object types
     public AIType[] AITypeByTeam;
     //curently active ais

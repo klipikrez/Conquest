@@ -50,6 +50,7 @@ public class CreateTextureButtons : MonoBehaviour
                 }
                 textureButtons.Add(b);
                 i++;
+                Destroy(tt, 5f);
             }
 
         }

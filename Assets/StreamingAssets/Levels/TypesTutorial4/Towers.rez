@@ -1,0 +1,156 @@
+{
+    "towers": [
+        {
+            "id": 0,
+            "team": 0,
+            "modelPath": "smallTown.glb",
+            "presetName": "smallTown",
+            "towerOverrides": [],
+            "connections": [
+                2,
+                5
+            ],
+            "position": {
+                "x": 1.0099868774414063,
+                "y": 0.0,
+                "z": -5.164131164550781
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 1,
+            "team": 0,
+            "modelPath": "castle.glb",
+            "presetName": "castle",
+            "towerOverrides": [],
+            "connections": [
+                2
+            ],
+            "position": {
+                "x": -5.20159912109375,
+                "y": 1.9959716796875,
+                "z": 10.477935791015625
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 2,
+            "team": 0,
+            "modelPath": "largeTown.glb",
+            "presetName": "largeTown",
+            "towerOverrides": [],
+            "connections": [
+                0,
+                1,
+                6
+            ],
+            "position": {
+                "x": -4.7884063720703129,
+                "y": 0.2691497802734375,
+                "z": -1.6943359375
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 3,
+            "team": 1,
+            "modelPath": "castle.glb",
+            "presetName": "castle",
+            "towerOverrides": [],
+            "connections": [
+                6,
+                5
+            ],
+            "position": {
+                "x": -5.67803955078125,
+                "y": 0.0,
+                "z": -13.126129150390625
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 5,
+            "team": 1,
+            "modelPath": "largeTown.glb",
+            "presetName": "largeTown",
+            "towerOverrides": [],
+            "connections": [
+                0,
+                3,
+                6
+            ],
+            "position": {
+                "x": -1.481475830078125,
+                "y": 0.0,
+                "z": -10.69110107421875
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 6,
+            "team": 1,
+            "modelPath": "smallTown.glb",
+            "presetName": "smallTown",
+            "towerOverrides": [],
+            "connections": [
+                2,
+                3,
+                5
+            ],
+            "position": {
+                "x": -7.524604797363281,
+                "y": 0.0,
+                "z": -7.160758972167969
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        }
+    ]
+}

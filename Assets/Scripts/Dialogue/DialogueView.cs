@@ -652,7 +652,7 @@ public class DialogueView : DialogueViewBase
                 {
                     if (meshAnimations.ContainsKey(markup.Name))
                     {
-                        Debug.Log(markup.Name + " " + (markup.Position - (dialogueLine.CharacterName == null ? 0 : dialogueLine.CharacterName.Length + 2)) + " " + markup.Length);
+                        //                        Debug.Log(markup.Name + " " + (markup.Position - (dialogueLine.CharacterName == null ? 0 : dialogueLine.CharacterName.Length + 2)) + " " + markup.Length);
                         currentAnimations.Add(new Par(meshAnimations[markup.Name], markup));
                     }
                     /* switch (markup.Name)

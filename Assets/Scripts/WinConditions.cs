@@ -84,6 +84,15 @@ public class WinConditions : MonoBehaviour
                 value = false;
             }
         }
+
+        if (value)
+        {
+            foreach (BuildingMain building in AIManager.Instance.buildings)
+            {
+                if (building.unitDetector.Engage == true && building.unitDetector.Imune == false && building.team.teamid != 1) value = false;
+            }
+        }
+
         noMorePlayerTowersLeft = AIManager.Instance.Player.buildings.Count == 0 ? true : false;
         noMoreEnwmyTowersLeft = value;
 

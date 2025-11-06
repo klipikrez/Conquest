@@ -29,7 +29,9 @@ public class Production : MonoBehaviour
 
     public void SetProduct(float value)
     {
+        //        Debug.Log(value);
         product = value;
+        numberRefrence.text = "<mspace=0.6em>" + ((int)product).ToString() + "</mspace>";
         // WinConditions.Instance.AddProducedUnits(product, team.teamid);
     }
     public void SubtractProduct(float value)

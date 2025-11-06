@@ -1,0 +1,44 @@
+title: Start
+tags:
+position: NaN,NaN
+---
+<<Reset>>
+<<Scene #000000 0.985>>
+
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: Ah, delegation. The mark of a true ruler...
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: ...Or at least, one who does not wish to micromanage every miserable little decision.
+
+Zoran: Instead of selecting one town at a time like some peasant fumbling with a ledger.
+Zoran: you can select multiple structures by simply <b>clicking and dragging</b> over the towers you want to select.
+
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+Zoran: But perhaps you are the meticulous type, unwilling to commit to a single sweeping motion.
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: Fine!
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: You may also hold <sprite name="key_shift"> and individually add structures to your selection.
+
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+Zoran: [smoothWave]Now, onto something truly convenient![/smoothWave]
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoan: War is…
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: tedious at best, and unsightly at worst.
+Zoran: Your Majesty surely has more important matters to attend to than babysitting every little skirmish.
+Zoran: Instead of constantly issuing orders...
+Zoran: simply <b>double-click</b> when attacking, and your troops will continue their assault without further supervision.
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: Now, try it!
+Zoran: Select multiple structures, send your troops, and let them handle the dirty work while you…
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: I don’t know…
+<<Scene #000000 0.585>>
+Zoran: sit on a throne or whatever it is monarchs do?
+
+<<StopAudioAll>>
+<<Reset>>
+<<stop>>
+
+===

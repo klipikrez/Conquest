@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Tymski;
+using System.Diagnostics;
 
 public class ScenesManager : MonoBehaviour
 {
@@ -35,7 +36,23 @@ public class ScenesManager : MonoBehaviour
     public void ReturnToMainMenu()
     {
 
-        Load(mainMenu);
+        if (Application.isEditor)
+        {
+            Load(mainMenu);
+        }
+        else
+        {
+            RestartApplication();//we do this to stop buffer overflow 
+                                 //unity stupid
+        }
+    }
+
+    public void RestartApplication()
+    {
+        // Path to the built executable (adjust extension as needed)
+        string exePath = Application.dataPath.Replace("_Data", ".exe");
+        Process.Start(exePath);    // Launches a new process
+        Application.Quit();        // Exits the current process
     }
 
     public void Load(SceneReference sceneRef)

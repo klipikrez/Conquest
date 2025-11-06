@@ -19,6 +19,7 @@ public class LevelInfoManage : MonoBehaviour
 
     public void SetSelectedLevel(string levelName)
     {
+        //        Debug.Log(" - - - -- " + levelName);
         nameElement.text = levelName;
         this.levelName = levelName;
 
@@ -42,6 +43,7 @@ public class LevelInfoManage : MonoBehaviour
             tt.name = Path.GetFileName(filePath);
 
             image.sprite = Sprite.Create(tt, new Rect(0, 0, tt.width, tt.height), new Vector2(0.5f, 0.5f));
+            Destroy(tt, 5f);
         }
 
     }

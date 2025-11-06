@@ -45,6 +45,7 @@ public class CreateBrushButtons : MonoBehaviour
                 }
                 brushButtons.Add(b);
                 i++;
+                Destroy(tt, 5f);
             }
 
         }

@@ -7,8 +7,6 @@ public class playerMovement : MonoBehaviour
 
     public CharacterController controller;
     public Camera payerCamera;
-    Vector3 baseCameraAnchor;
-    Vector3 previousPosition;
     public float speed = 1f;
     public float mouseSpeed = 20f;
 
@@ -27,8 +25,7 @@ public class playerMovement : MonoBehaviour
 
     private void Start()
     {
-        baseCameraAnchor = transform.position;
-        Zoom(1);
+        //Zoom(1);
     }
     void Update()
     {
@@ -163,15 +160,5 @@ public class playerMovement : MonoBehaviour
         {
             payerCamera.transform.rotation = target;
         }
-    }
-
-    void SpaceAction()
-    {
-        Vector3 acc = new Vector3(
-            Mathf.Lerp(transform.position.x, baseCameraAnchor.x, Time.deltaTime),
-            baseCameraAnchor.y,
-            Mathf.Lerp(transform.position.z, baseCameraAnchor.z, Time.deltaTime));
-
-        controller.Move(acc - transform.position);
     }
 }

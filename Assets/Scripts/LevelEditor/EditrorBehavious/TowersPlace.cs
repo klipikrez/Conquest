@@ -122,28 +122,38 @@ public class TowersPlace : EditorBehaviour
             if (startedPlaceBuilding && !editor.editorSelection.dragSelect && Physics.Raycast(ray, out hit, 50000.0f, LayerMask.GetMask("terrain")) && !EventSystem.current.IsPointerOverGameObject())
             {
 
-                GameObject obj = Object.Instantiate(editor.editorTowerPrefab, hit.point, Quaternion.identity);
-                EditorTower tower = obj.GetComponent<EditorTower>();
-
-                //apply default preset and overrides if there are any
-                tower.SetPreset(editor.towerPresets.presetData, editor.towerPresets.GetName());
-                foreach (towerEditorToggle toggle in editor.toggles)
-                {
-                    if (!toggle.toggle.isOn)
-                    {
-                        tower.AddOverride(toggle.slider.textString, toggle.slider.sliderElement.value);
-                    }
-                }
-                EditorManager.Instance.editorTowers.Add(tower);
-                tower.SetId();
-                if (!Input.GetKey(KeyCode.LeftShift))
+                //it wont be placed if we have anythyng selected(in this case we deselect everything)
+                Debug.Log(editor.editorSelection.selectedDictionary.selected.Count);
+                if (editor.editorSelection.selectedDictionary.selected.Count != 0 && !Input.GetKey(KeyCode.LeftShift))
                 {
                     editor.editorSelection.selectedDictionary.RemoveAllEditor();
                 }
+                else
+                {
 
-                editor.editorSelection.selectedDictionary.AddSelectedEditor(obj);
+                    GameObject obj = Object.Instantiate(editor.editorTowerPrefab, hit.point, Quaternion.identity);
+                    EditorTower tower = obj.GetComponent<EditorTower>();
+
+                    //apply default preset and overrides if there are any
+                    tower.SetPreset(editor.towerPresets.presetData, editor.towerPresets.GetName());
+                    foreach (towerEditorToggle toggle in editor.toggles)
+                    {
+                        if (!toggle.toggle.isOn)
+                        {
+                            tower.AddOverride(toggle.slider.textString, toggle.slider.sliderElement.value);
+                        }
+                    }
+                    EditorManager.Instance.editorTowers.Add(tower);
+                    tower.SetId();
+
+                    if (editor.editorSelection.selectedDictionary.selected.Count == 0)
+                    {
+                        editor.editorSelection.selectedDictionary.RemoveAllEditor();
+                    }
+
+                    editor.editorSelection.selectedDictionary.AddSelectedEditor(obj);
+                }
                 EditorOptions.Instance.SelectedEditorTowers();
-
             }
             else
             {

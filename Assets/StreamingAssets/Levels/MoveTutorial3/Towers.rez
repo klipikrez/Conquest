@@ -1,0 +1,98 @@
+{
+    "towers": [
+        {
+            "id": 0,
+            "team": 1,
+            "modelPath": "largeTown.glb",
+            "presetName": "largeTown",
+            "towerOverrides": [],
+            "connections": [
+                1
+            ],
+            "position": {
+                "x": -13.57080078125,
+                "y": 0.0,
+                "z": -6.8144683837890629
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 1,
+            "team": 0,
+            "modelPath": "smallTown.glb",
+            "presetName": "smallTown",
+            "towerOverrides": [],
+            "connections": [
+                2
+            ],
+            "position": {
+                "x": -9.253578186035157,
+                "y": 0.0,
+                "z": -0.510223388671875
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 2,
+            "team": 0,
+            "modelPath": "smallTown.glb",
+            "presetName": "smallTown",
+            "towerOverrides": [],
+            "connections": [
+                3
+            ],
+            "position": {
+                "x": -1.3945465087890626,
+                "y": 0.0,
+                "z": -6.357765197753906
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 3,
+            "team": 0,
+            "modelPath": "smallTown.glb",
+            "presetName": "smallTown",
+            "towerOverrides": [],
+            "connections": [],
+            "position": {
+                "x": 8.168777465820313,
+                "y": 0.0,
+                "z": -1.563262939453125
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        }
+    ]
+}
