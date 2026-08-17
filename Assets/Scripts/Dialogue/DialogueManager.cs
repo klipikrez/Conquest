@@ -95,7 +95,7 @@ namespace Yarn.Unity.Example
                         Sprite sprite = Sprite.Create(tt, rect, new Vector2(0.5f, 0.5f));
                         sprite.name = Path.GetFileNameWithoutExtension(tt.name);
                         resourceSprites.Add(sprite);
-                        Destroy(tt, 5f);
+                        //Destroy(tt, 5f);
                     }
                     else
                     if (IsAudio(file))

@@ -56,7 +56,7 @@ public class CreateTowerButtons : MonoBehaviour
 
 
                     b.master = this;
-                    Destroy(tt, 5f);
+                    //Destroy(tt, 5f);
 
 
                     b.textName.text = Path.GetFileName(dirName);

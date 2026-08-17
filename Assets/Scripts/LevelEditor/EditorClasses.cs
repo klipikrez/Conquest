@@ -232,7 +232,7 @@ public class LayersCompiled
                 textures.Add(tt.name, tt);
                 //                Debug.Log(tt.name);
                 i++;
-                Destroy(tt, 5f);
+                //Destroy(tt, 5f);
             }
 
         }
