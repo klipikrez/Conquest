@@ -39,7 +39,7 @@ Zoran: Do you see those little figurines of buildings? Yes? Good.
 Zoran: they represent real life towns, castles and structures of interest in your kingdom.
 
 
-<<LookAt 2 2>>
+<<LookAt 2 4>>
 <<Act Zoran zoranSmug 0.25 0.2 #a20404>>
 Zoran: Take this one for instance, the dispicable rabble have comandeered it as their own.
 Zoran: But fear not my princess, we can *remedy* this little inconvenience, so to speak.
@@ -49,7 +49,7 @@ Zoran: Thankfully not all of your subjects are as disloyal.
 <<LookAt 0 7>>
 Zoran: Some loyal men remain stationed in this town here.
 <<Act Zoran zoranChill 0.25 0.2 #a20404>>
-<<LookAt 0 2>>
+<<LookAt 0 4>>
 Zoran: It's marked with green as to indicate that it has men loyal to the crown.
 
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
@@ -59,7 +59,7 @@ Zoran: ...
 Zoran: Now all you have to do is give the command an they'll march on the rebelious scum.
 <<Act Zoran zoranSmug 0.25 0.2 #a20404>>
 <<LookAt 1 7>>
-Zoran: you can do this by first  <color=#a20404> <b> clicking once <sprite name="mouse_l"> </b> <color> on your town and then <color=#a20404> <b> click <sprite name="mouse_l"> </color> </b> on the enemy town.
+Zoran: you can do this by first <color=red><b>clicking once <sprite name="mouse_l"></b></color> on your town and then <color=red><b>click <sprite name="mouse_l"></b></color> on the enemy town.
 Zoran: Try it. 
 <<StopAudioAll>>
 <<Reset>>
