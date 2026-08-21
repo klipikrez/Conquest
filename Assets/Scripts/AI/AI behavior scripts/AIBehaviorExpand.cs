@@ -11,30 +11,56 @@ public class AIBehaviorExpand : AIBehavior
     public float minUnitDifferenceSendPercent = 0.75f;
     public override bool ExecuteMove(AIManager manager, AIPlayer player)
     {
-        BuildingMain sendFrom = null;
+        List<BuildingMain> sendFrom = new List<BuildingMain>();
         BuildingMain sendTo = null;
         float units = 0f;
+
+        foreach (BuildingMain tower in player.buildings)//da vidimo dal' ima neprijatelja ko komsiju, ako ima ignorisemo ga
+        {
+            bool hasEnemyNeighbour = false;
+            foreach (BuildingMain neighbor in tower.neighbours)
+            {
+                if (neighbor.team.teamid != player.team && neighbor.team.teamid != 0)
+                {
+                    hasEnemyNeighbour = true;
+                    break;
+                }
+            }
+            if (hasEnemyNeighbour) continue;
+
+            sendFrom.Add(tower);
+            units += tower.production.product * minUnitDifferenceSendPercent;
+        }
+
+        float bestAttackValue = 0;
         foreach (BuildingMain tower in player.buildings)
         {
             foreach (BuildingMain neighbor in tower.neighbours)//pass trough all neighbours of current tower
             {
-                float attackValue = tower.production.product * minUnitDifferenceSendPercent - neighbor.production.product * (neighbor.team.teamid == 0 ? 1 : EnemyCostMultiplyer);
-                if (neighbor.team.teamid != player.team && attackValue > units)// if calc better update new target
+                if (neighbor.team.teamid == player.team) continue;
+                float attackValue = units - neighbor.production.product * (neighbor.team.teamid == 0 ? 1 : EnemyCostMultiplyer);
+                if (attackValue > bestAttackValue)// if calc better update new target
                 {
-                    units = attackValue;
+                    bestAttackValue = attackValue;
                     sendTo = neighbor;
-                    sendFrom = tower;
                 }
             }
         }
 
-        if (sendTo != null && sendFrom != null)
+        if (sendTo != null && sendFrom.Count > 0)
         {
-            Debug.Log("AI " + player.team + " Expand from: " + sendFrom.id + " to " + sendTo.id);
-            sendFrom.unitController.Attack(expandAmount, sendTo.transform, false);
+            Debug.Log("AI " + player.team + " defending(support units): " + sendTo.id + " from: ");
+            foreach (BuildingMain from in sendFrom)
+            {
+                from.unitController.Attack(expandAmount, sendTo.transform, false);
+                Debug.Log("  -from: " + from.id);
+            }
+
             return true;
         }
-        Debug.Log("AI " + player.team + " Nowhere to expand");
+        Debug.Log(
+    "AI " + player.team +
+    " could not find a tower that needs defending or a tower to send from.");
         return false;
 
     }

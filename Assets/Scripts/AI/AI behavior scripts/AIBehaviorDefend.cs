@@ -11,10 +11,10 @@ public class AIBehaviorDefend : AIBehavior
     {
         BuildingMain sendTo = null;// zasad salje samo jednom liku, jkasnije bi voleo da podeli svim tornjevima koji su u opasnosti od napada
         List<BuildingMain> sendFrom = new List<BuildingMain>();
-        float bestNumberOfEnemyUnitsNearby = 0;
+        float bestNumberOfEnemyUnitsNearby = 0f;
         foreach (BuildingMain tower in player.buildings)
         {
-            float numberOfEnemyUnitsNearby = 0;
+            float numberOfEnemyUnitsNearby = 0f;
             foreach (BuildingMain neighbor in tower.neighbours)//pass trough all neighbours of current tower
             {
                 if (neighbor.team.teamid != player.team)// 
@@ -24,6 +24,7 @@ public class AIBehaviorDefend : AIBehavior
                 }
             }
 
+            //ovaj toranj nema neprijatelja u blizini, moze da salje jedinice da pomogne nekom drugom tornju
             if (numberOfEnemyUnitsNearby <= 0)
             {
                 sendFrom.Add(tower);
@@ -32,12 +33,13 @@ public class AIBehaviorDefend : AIBehavior
             {
                 if (numberOfEnemyUnitsNearby > bestNumberOfEnemyUnitsNearby)
                 {
+                    bestNumberOfEnemyUnitsNearby = numberOfEnemyUnitsNearby;
                     sendTo = tower;
                 }
             }
         }
 
-        if (sendTo != null && sendFrom != null)
+        if (sendTo != null && sendFrom.Count > 0)
         {
             Debug.Log("AI " + player.team + " defending(support units): " + sendTo.id + " from: ");
             foreach (BuildingMain from in sendFrom)
@@ -48,7 +50,9 @@ public class AIBehaviorDefend : AIBehavior
 
             return true;
         }
-        Debug.Log("AI " + player.team + " Nowhere to attack");
+        Debug.Log(
+    "AI " + player.team +
+    " could not find a tower that needs defending or a tower to send from.");
         return false;
 
     }

@@ -558,15 +558,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8641976697096856680, guid: 11385e7a488b28141bf6778d111fb51c, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 0.98099947
       objectReference: {fileID: 0}
     - target: {fileID: 8641976697096856680, guid: 11385e7a488b28141bf6778d111fb51c, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8641976697096856680, guid: 11385e7a488b28141bf6778d111fb51c, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8641976697096856680, guid: 11385e7a488b28141bf6778d111fb51c, type: 3}
       propertyPath: m_Texture
@@ -3298,7 +3298,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1760461146}
   m_HandleRect: {fileID: 1760461145}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4142,8 +4142,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 222630217}
   m_HandleRect: {fileID: 222630216}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.9999998
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5344,9 +5344,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463065346}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.7585983}
-  m_LocalScale: {x: 0.15885417, y: 0.15885417, z: 0.15885417}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1735294768}
@@ -5361,9 +5361,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 153.9726, y: 216.59946}
-  m_SizeDelta: {x: 1920, y: 2618.754}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &463065348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5739,7 +5739,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &474992005
 Transform:
   m_ObjectHideFlags: 0
@@ -10095,7 +10095,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1728935752}
   m_HandleRect: {fileID: 1728935751}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -12077,8 +12077,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 818104049}
   m_HandleRect: {fileID: 818104048}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.66693866
+  m_Value: 0.99999976
+  m_Size: 0.7024382
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -22113,7 +22113,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 110887875}
   m_Direction: 0
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -22239,8 +22239,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 325602037}
   m_HandleRect: {fileID: 325602036}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -23024,7 +23024,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8641976697096856680, guid: 11385e7a488b28141bf6778d111fb51c, type: 3}
       propertyPath: m_Color.g
-      value: 0.5563879
+      value: 0.026158014
       objectReference: {fileID: 0}
     - target: {fileID: 8641976697096856680, guid: 11385e7a488b28141bf6778d111fb51c, type: 3}
       propertyPath: m_Color.r
@@ -23814,7 +23814,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 765156040}
   m_HandleRect: {fileID: 765156039}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

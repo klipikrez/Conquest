@@ -86,6 +86,21 @@ public class playerSelection : Selection
                         else selectedDictionary.AddSelected(hit.collider.gameObject);
                     else
                     {
+                        if (selectedDictionary.selected.Count == 1 && selectedDictionary.selected.First().Value.transform == hit.collider.transform)
+                        {
+                            if (clickCoroutine != null)
+                            {
+                                StopCoroutine(clickCoroutine);
+                                clickCoroutine = null;
+                            }
+
+                            selectedDictionary.Attack(hit.collider.transform, 62);
+                            selectedDictionary.RemoveAll();
+                            clicks = 1;
+                            clickedOn = null;
+                            return;
+                        }
+
                         //Debug.Log("selected more than 0");
                         if (clickCoroutine != null)
                         {//double click detected
@@ -98,39 +113,15 @@ public class playerSelection : Selection
                             }
                             else
                             {//we clicked once on one tower and then fast on another
-                                if (selectedDictionary.selected.Count == 1 && selectedDictionary.selected.First().Value.transform == hit.collider.transform)
-                                {
-
-
-                                    //Debug.Log("we clicked on the only selected tower");
-                                    StopCoroutine(clickCoroutine);
-                                    selectedDictionary.RemoveAll();
-                                    clicks = 1;
-                                    clickedOn = null;
-
-                                }
-                                else
-                                {
-                                    //Debug.Log("we clicked once on one tower and then fast on another");
-                                    StopCoroutine(clickCoroutine);
-                                    clickCoroutine = StartCoroutine(ClickDetection());
-                                }
+                                //Debug.Log("we clicked once on one tower and then fast on another");
+                                StopCoroutine(clickCoroutine);
+                                clickCoroutine = StartCoroutine(ClickDetection());
                             }
                         }
                         else
                         {//normal click
-                            if (selectedDictionary.selected.Count == 1 && selectedDictionary.selected.First().Value.transform == hit.collider.transform)
-                            {
-                                //Debug.Log("we clicked on the only selected tower");
-                                selectedDictionary.RemoveAll();
-                                clicks = 1;
-                                clickedOn = null;
-                            }
-                            else
-                            {
-                                //Debug.Log("normal click");
-                                clickCoroutine = StartCoroutine(ClickDetection());
-                            }
+                            //Debug.Log("normal click");
+                            clickCoroutine = StartCoroutine(ClickDetection());
                         }
                     }
                 }
