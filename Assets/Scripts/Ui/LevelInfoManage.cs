@@ -33,12 +33,13 @@ public class LevelInfoManage : EditorLevelInfoManage
             {
 
                 image.sprite = dressingSprites[levelSet];
+                image.SetNativeSize();
                 return;
             }
 
         }
         image.sprite = defaultDressingSprite;
-
+        image.SetNativeSize();
 
     }
     public override void Snap()
