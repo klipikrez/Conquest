@@ -11,6 +11,49 @@ public class DynamicMeshGenerator : MonoBehaviour
     public Material material;
     public float tilingU = 1f;
     public float tilingV = 1f;
+    private Mesh dynamicMesh;
+    public float meshHeight = 152f;
+
+    private void Awake()
+    {
+        // Get/create components.
+        if (col == null)
+            col = GetComponent<MeshCollider>();
+
+        if (rend == null)
+            rend = GetComponent<MeshRenderer>();
+
+        if (filter == null)
+            filter = GetComponent<MeshFilter>();
+
+        if (rend == null)
+            rend = gameObject.AddComponent<MeshRenderer>();
+
+        if (filter == null)
+            filter = gameObject.AddComponent<MeshFilter>();
+
+        // Create the mesh ONCE.
+        dynamicMesh = new Mesh
+        {
+            name = $"{gameObject.name}_DynamicMesh"
+        };
+
+        dynamicMesh.MarkDynamic();
+
+        // Prevent this runtime-generated mesh from being saved.
+        dynamicMesh.hideFlags = HideFlags.DontSave;
+
+        // Assign the same mesh to both.
+        filter.sharedMesh = dynamicMesh;
+
+        if (col != null)
+            col.sharedMesh = dynamicMesh;
+
+        // sharedMaterial avoids creating a material instance.
+        if (rend != null)
+            rend.sharedMaterial = material;
+    }
+
 
     private void Start()
     {
@@ -26,79 +69,51 @@ public class DynamicMeshGenerator : MonoBehaviour
 
     public void SetMeshVisibility(bool visible)
     {
-        rend.enabled = visible;
+        if (rend != null)
+            rend.enabled = visible;
+
     }
 
     public void UpdateMeshEditor(List<Vector3> bounds)
     {
-
-        //Mesh mesh;
-        if (bounds.Count >= 3)
+        if (bounds == null || bounds.Count < 3)
         {
-
-
-
-
-            Vector3[] convxPoints = bounds.ToArray(); ///GetConvexHull(bounds).ToArray();
-            Mesh dynamicMesh = GenerateMesh(convxPoints);
-            if (col != null) col.sharedMesh = dynamicMesh;
-            filter.mesh = dynamicMesh;/**/
+            ClearMesh();
+            return;
         }
-        else
-        {
-            if (filter.mesh != new Mesh() || col.sharedMesh != new Mesh())
-            {
-                filter.mesh = new Mesh();
-                if (col != null) col.sharedMesh = new Mesh();
-            }
-        }
-        //else
-        //{
-        //    mesh = GenerateMesh(pits);
-        //}
-        //col.sharedMesh = dynamicMesh;
-        //filter.mesh = dynamicMesh;/**/
 
-        /*else
-        {
-            List<Vector3> PiramidPoints = new List<Vector3>();
-            foreach (Vector3 point in pointsssdfdfs)
-            {
-                PiramidPoints.Add(new Vector3(point.x, -52, point.z));
-            }
-            //PiramidPoints.AddRange(pointsssdfdfs);
-            Vector3[] convxPoints = GetConvexHull(PiramidPoints).ToArray();
-            Mesh dynamicMesh = GenerateMesh(convxPoints);
-            col.sharedMesh = dynamicMesh;
-            filter.mesh = dynamicMesh;
-        }*/
+        Vector3[] convexPoints = bounds.ToArray();
+
+        GenerateMesh(convexPoints);
     }
+
 
     public void SetMeshOnPlay(Vector2[] bounds)
     {
-        if (bounds.Length >= 3)
+        if (bounds == null || bounds.Length < 3)
         {
+            Debug.LogWarning(
+                "Bounds in save file have less than 3 points...",
+                this
+            );
 
-            Vector3[] convxPoints = new Vector3[bounds.Length];
-
-            for (int i = 0; i < bounds.Length; i++)
-            {
-                convxPoints[i] = new Vector3(bounds[i].x, 0, bounds[i].y);
-            }
-
-            Mesh dynamicMesh = GenerateMesh(convxPoints);
-            if (col != null) col.sharedMesh = dynamicMesh;
-            filter.mesh = dynamicMesh;/**/
+            ClearMesh();
+            return;
         }
-        else
+
+        Vector3[] points = new Vector3[bounds.Length];
+
+        for (int i = 0; i < bounds.Length; i++)
         {
-            Debug.Log("Bounds in save file have less than 3 points...");
-            if (filter.mesh != new Mesh() || col.sharedMesh != new Mesh())
-            {
-                filter.mesh = new Mesh();
-                if (col != null) col.sharedMesh = new Mesh();
-            }
+            points[i] = new Vector3(
+                bounds[i].x,
+                0f,
+                bounds[i].y
+            );
         }
+
+        GenerateMesh(points);
+
     }
 
     public void OnTriggerEnter(Collider other)
@@ -106,249 +121,349 @@ public class DynamicMeshGenerator : MonoBehaviour
         Debug.Log(other.name);
     }
 
-    public Mesh GenerateMesh(Vector3[] points)
+    public void GenerateMesh(Vector3[] points)
     {
-        Vector3[] verts = new Vector3[points.Length * 4];
-        //int[] tris = new int[verts.Length * 2];
-        List<int> tris = new List<int>();
-        for (int i = 0; i < points.Length - 1; i++)
+        if (dynamicMesh == null)
+            return;
+
+        if (points == null || points.Length < 3)
         {
-            verts[i * 4] = points[i];
-            verts[i * 4 + 1] = points[i] + Vector3.up * 152f;
-
-            verts[i * 4 + 2] = points[i + 1];
-            verts[i * 4 + 3] = points[i + 1] + Vector3.up * 152f;
-
-            tris.Add((i + 1) * 4 - 4);
-            tris.Add((i + 1) * 4 - 3);
-            tris.Add((i + 1) * 4 - 2);
-
-            tris.Add((i + 1) * 4 - 3);
-            tris.Add((i + 1) * 4 - 1);
-            tris.Add((i + 1) * 4 - 2);
-
+            ClearMesh();
+            return;
         }
 
-        verts[verts.Length - 4] = points[points.Length - 1];
-        verts[verts.Length - 3] = points[points.Length - 1] + Vector3.up * 152f;
+        int pointCount = points.Length;
 
-        verts[verts.Length - 2] = points[0];
-        verts[verts.Length - 1] = points[0] + Vector3.up * 152f;
+        Vector3[] verts = new Vector3[pointCount * 4];
+        List<int> tris = new List<int>((pointCount) * 6);
 
-
-        tris.Add(verts.Length - 4);
-        tris.Add(verts.Length - 3);
-        tris.Add(verts.Length - 2);
-
-        tris.Add(verts.Length - 3);
-        tris.Add(verts.Length - 1);
-        tris.Add(verts.Length - 2);
-
-        /*for (int i = 0; i < verts.Length - 2; i++)
+        // Generate the vertical wall sections.
+        for (int i = 0; i < pointCount - 1; i++)
         {
-            if (i % 2 == 0)
-            {
-                tris.Add(i);
-                tris.Add(i + 1);
-                tris.Add(i + 2);
-            }
-            else
-            {
-                tris.Add(i);
-                tris.Add(i + 2);
-                tris.Add(i + 1);
-            }
+            int vertexIndex = i * 4;
+
+            verts[vertexIndex] =
+                points[i];
+
+            verts[vertexIndex + 1] =
+                points[i] + Vector3.up * meshHeight;
+
+            verts[vertexIndex + 2] =
+                points[i + 1];
+
+            verts[vertexIndex + 3] =
+                points[i + 1] + Vector3.up * meshHeight;
+
+            tris.Add(vertexIndex);
+            tris.Add(vertexIndex + 1);
+            tris.Add(vertexIndex + 2);
+
+            tris.Add(vertexIndex + 1);
+            tris.Add(vertexIndex + 3);
+            tris.Add(vertexIndex + 2);
         }
-        tris.Add(verts.Length - 2);
-        tris.Add(verts.Length - 1);
-        tris.Add(0);
-        tris.Add(verts.Length - 1);
-        tris.Add(1);
-        tris.Add(0);*/
-        //int[] tris = { 0, 1, 2, 2, 1, 3, 4, 6, 0, 0, 6, 2, 6, 7, 2, 2, 7, 3, 7, 5, 3, 3, 5, 1, 5, 0, 1, 1, 4, 0, 4, 5, 6, 6, 5, 7 }; //map the tris of our cube
 
+        // Close the loop.
+        int lastVertex = verts.Length - 4;
 
+        verts[lastVertex] =
+            points[pointCount - 1];
 
-        Mesh generatedMesh = new Mesh();
-        generatedMesh.vertices = verts;
-        generatedMesh.triangles = tris.ToArray();
+        verts[lastVertex + 1] =
+            points[pointCount - 1] + Vector3.up * meshHeight;
 
-        generatedMesh.uv = CalcUVPerFace(generatedMesh.vertices);
-        generatedMesh.uv2 = CalcUVAllStreach(generatedMesh.vertices);
-        generatedMesh.uv3 = CalcUVAllTile(generatedMesh.vertices);
-        generatedMesh.RecalculateBounds();
-        return generatedMesh;
-        //
-        //selectionMesh.RecalculateNormals();
+        verts[lastVertex + 2] =
+            points[0];
 
+        verts[lastVertex + 3] =
+            points[0] + Vector3.up * meshHeight;
+
+        tris.Add(lastVertex);
+        tris.Add(lastVertex + 1);
+        tris.Add(lastVertex + 2);
+
+        tris.Add(lastVertex + 1);
+        tris.Add(lastVertex + 3);
+        tris.Add(lastVertex + 2);
+
+        // Replace the contents of the existing mesh.
+        dynamicMesh.Clear();
+
+        dynamicMesh.vertices = verts;
+        dynamicMesh.triangles = tris.ToArray();
+
+        dynamicMesh.uv =
+            CalcUVPerFace(verts);
+
+        dynamicMesh.uv2 =
+            CalcUVAllStreach(verts);
+
+        dynamicMesh.uv3 =
+            CalcUVAllTile(verts);
+
+        dynamicMesh.RecalculateBounds();
+
+        // Keep the references pointing at the same mesh.
+        if (filter != null)
+            filter.sharedMesh = dynamicMesh;
+
+        if (col != null)
+        {
+            col.sharedMesh = null;
+            col.sharedMesh = dynamicMesh;
+        }
     }
+
 
     public Vector2[] CalcUVPerFace(Vector3[] verts)
     {
-
         Vector2[] uvs = new Vector2[verts.Length];
+
         for (int i = 0; i < verts.Length / 4; i++)
         {
-            uvs[i * 4] = new Vector2(0, 0);
-            uvs[i * 4 + 1] = new Vector2(0, 1);
-            uvs[i * 4 + 2] = new Vector2(1, 0);
-            uvs[i * 4 + 3] = new Vector2(1, 1);
+            int index = i * 4;
+
+            uvs[index] =
+                new Vector2(0f, 0f);
+
+            uvs[index + 1] =
+                new Vector2(0f, 1f);
+
+            uvs[index + 2] =
+                new Vector2(1f, 0f);
+
+            uvs[index + 3] =
+                new Vector2(1f, 1f);
         }
+
         return uvs;
     }
+
 
     public Vector2[] CalcUVAllStreach(Vector3[] verts)
     {
         Vector2[] uvs = new Vector2[verts.Length];
+
         int numOfFaces = verts.Length / 4;
-        //      Debug.Log("=========" + numOfFaces);
+
+        if (numOfFaces == 0)
+            return uvs;
+
         for (int i = 0; i < numOfFaces; i++)
         {
-            uvs[i * 4] = new Vector2(i / (float)numOfFaces, 0);
-            uvs[i * 4 + 1] = new Vector2(i / (float)numOfFaces, 1);
-            uvs[i * 4 + 2] = new Vector2((i + 1) / (float)numOfFaces, 0);
-            uvs[i * 4 + 3] = new Vector2((i + 1) / (float)numOfFaces, 1);
-            //            Debug.Log(i / (float)numOfFaces + " ==:::== " + (i + 1) / (float)numOfFaces);
+            int index = i * 4;
+
+            float start =
+                i / (float)numOfFaces;
+
+            float end =
+                (i + 1) / (float)numOfFaces;
+
+            uvs[index] =
+                new Vector2(start, 0f);
+
+            uvs[index + 1] =
+                new Vector2(start, 1f);
+
+            uvs[index + 2] =
+                new Vector2(end, 0f);
+
+            uvs[index + 3] =
+                new Vector2(end, 1f);
         }
+
         return uvs;
     }
+
 
     public Vector2[] CalcUVAllTile(Vector3[] verts)
     {
         Vector2[] uvs = new Vector2[verts.Length];
-        int numOfFaces = verts.Length / 4;
-        Vector3 firstPoint = verts[0];
-        float distanceFromStart = 0;
 
-        //      Debug.Log("=========" + numOfFaces);
+        int numOfFaces = verts.Length / 4;
+
+        if (numOfFaces == 0)
+            return uvs;
+
+        Vector3 firstPoint = verts[0];
+
+        float distanceFromStart = 0f;
+
         for (int i = 0; i < numOfFaces; i++)
         {
-            float faceWidth = Vector3.Distance(verts[i * 4], verts[i * 4 + 2]);
+            int index = i * 4;
 
-            uvs[i * 4] = new Vector2(distanceFromStart * tilingV / 52, firstPoint.y * tilingU / 52);
-            uvs[i * 4 + 1] = new Vector2(distanceFromStart * tilingV / 52, (firstPoint.y - verts[i * 4 + 1].y) * tilingU / 52);
-            uvs[i * 4 + 2] = new Vector2((distanceFromStart + faceWidth) * tilingV / 52, firstPoint.y * tilingU / 52);
-            uvs[i * 4 + 3] = new Vector2((distanceFromStart + faceWidth) * tilingV / 52, (firstPoint.y - verts[i * 4 + 1].y) * tilingU / 52);
+            float faceWidth =
+                Vector3.Distance(
+                    verts[index],
+                    verts[index + 2]
+                );
+
+            float x0 =
+                distanceFromStart * tilingV / 52f;
+
+            float x1 =
+                (distanceFromStart + faceWidth)
+                * tilingV / 52f;
+
+            float yBottom =
+                firstPoint.y * tilingU / 52f;
+
+            float yTop =
+                (firstPoint.y - verts[index + 1].y)
+                * tilingU / 52f;
+
+            uvs[index] =
+                new Vector2(x0, yBottom);
+
+            uvs[index + 1] =
+                new Vector2(x0, yTop);
+
+            uvs[index + 2] =
+                new Vector2(x1, yBottom);
+
+            uvs[index + 3] =
+                new Vector2(x1, yTop);
+
             distanceFromStart += faceWidth;
-            //            Debug.Log(i / (float)numOfFaces + " ==:::== " + (i + 1) / (float)numOfFaces);
         }
+
         return uvs;
     }
-    public List<Vector3> GetConvexHull(List<Vector3> points)
+
+    public List<Vector3> GetConvexHull(List<Vector3> inputPoints)
     {
-        if (points.Count == 3)
-        {
-            return points;
-        }
+        if (inputPoints == null)
+            return new List<Vector3>();
 
+        if (inputPoints.Count <= 3)
+            return new List<Vector3>(inputPoints);
 
-        List<Vector3> convexHull = new List<Vector3>();
+        // Make a copy so we DON'T modify the caller's list.
+        List<Vector3> points =
+            new List<Vector3>(inputPoints);
 
-        //Step 1. Find the vertex with the smallest x coordinate
-        //If several have the same x coordinate, find the one with the smallest z
+        List<Vector3> convexHull =
+            new List<Vector3>();
+
         Vector3 startVertex = points[0];
 
+        // Find left-most point.
         for (int i = 1; i < points.Count; i++)
         {
             Vector3 testPos = points[i];
 
-            //Because of precision issues, we use Mathf.Approximately to test if the x positions are the same
-            if (testPos.x < startVertex.x || (Mathf.Approximately(testPos.x, startVertex.x) && testPos.z < startVertex.z))
+            if (testPos.x < startVertex.x ||
+                (
+                    Mathf.Approximately(
+                        testPos.x,
+                        startVertex.x
+                    )
+                    &&
+                    testPos.z < startVertex.z
+                ))
             {
-                startVertex = points[i];
+                startVertex = testPos;
             }
         }
 
-        //This vertex is always on the convex hull
         convexHull.Add(startVertex);
-
         points.Remove(startVertex);
 
+        Vector3 currentPoint =
+            convexHull[0];
 
-
-        //Step 2. Loop to generate the convex hull
-        Vector3 currentPoint = convexHull[0];
-        List<Vector3> colinearPoints = new List<Vector3>();
+        List<Vector3> colinearPoints =
+            new List<Vector3>();
 
         int counter = 0;
 
         while (true)
         {
-            //After 2 iterations we have to add the start position again so we can terminate the algorithm
-            //Cant use convexhull.count because of colinear points, so we need a counter
             if (counter == 2)
             {
                 points.Add(convexHull[0]);
             }
+
             if (points.Count == 0)
-            {
                 break;
-            }
-            //Pick next point randomly
-            Vector3 nextPoint = points[Random.Range(0, points.Count)];
 
-            //To 2d space so we can see if a point is to the left is the vector ab
-            Vector2 a = new Vector2(currentPoint.x, currentPoint.z);
+            Vector3 nextPoint =
+                points[Random.Range(0, points.Count)];
 
-            Vector2 b = new Vector2(nextPoint.x, nextPoint.z);
+            Vector2 a =
+                new Vector2(
+                    currentPoint.x,
+                    currentPoint.z
+                );
 
-            //Test if there's a point to the right of ab, if so then it's the new b
+            Vector2 b =
+                new Vector2(
+                    nextPoint.x,
+                    nextPoint.z
+                );
+
             for (int i = 0; i < points.Count; i++)
             {
-                //Dont test the point we picked randomly
                 if (points[i].Equals(nextPoint))
-                {
                     continue;
-                }
 
-                Vector2 c = new Vector2(points[i].x, points[i].z);
+                Vector2 c =
+                    new Vector2(
+                        points[i].x,
+                        points[i].z
+                    );
 
-                //Where is c in relation to a-b
-                // < 0 -> to the right
-                // = 0 -> on the line
-                // > 0 -> to the left
-                float relation = CheckPositionBasedOnLine(a, b, c);
+                float relation =
+                    CheckPositionBasedOnLine(
+                        a,
+                        b,
+                        c
+                    );
 
-                //Colinear points
-                //Cant use exactly 0 because of floating point precision issues
-                //This accuracy is smallest possible, if smaller points will be missed if we are testing with a plane
-                float accuracy = 0.00001f;
+                const float accuracy = 0.00001f;
 
-                if (relation < accuracy && relation > -accuracy)
+                if (relation < accuracy &&
+                    relation > -accuracy)
                 {
-                    colinearPoints.Add(points[i]);
+                    colinearPoints.Add(
+                        points[i]
+                    );
                 }
-                //To the right = better point, so pick it as next point on the convex hull
                 else if (relation < 0f)
                 {
                     nextPoint = points[i];
 
-                    b = new Vector2(nextPoint.x, nextPoint.z);
+                    b =
+                        new Vector2(
+                            nextPoint.x,
+                            nextPoint.z
+                        );
 
-                    //Clear colinear points
                     colinearPoints.Clear();
                 }
-                //To the left = worse point so do nothing
             }
 
-
-
-            //If we have colinear points
             if (colinearPoints.Count > 0)
             {
                 colinearPoints.Add(nextPoint);
 
-                //Sort this list, so we can add the colinear points in correct order
-                //colinearPoints = colinearPoints.Sort((n,n2) => Vector3.SqrMagnitude(n - currentPoint)).ToList();
+                convexHull.AddRange(
+                    colinearPoints
+                );
 
-                convexHull.AddRange(colinearPoints);
+                currentPoint =
+                    colinearPoints[
+                        colinearPoints.Count - 1
+                    ];
 
-                currentPoint = colinearPoints[colinearPoints.Count - 1];
-
-                //Remove the points that are now on the convex hull
-                for (int i = 0; i < colinearPoints.Count; i++)
+                for (int i = 0;
+                     i < colinearPoints.Count;
+                     i++)
                 {
-                    points.Remove(colinearPoints[i]);
+                    points.Remove(
+                        colinearPoints[i]
+                    );
                 }
 
                 colinearPoints.Clear();
@@ -362,26 +477,63 @@ public class DynamicMeshGenerator : MonoBehaviour
                 currentPoint = nextPoint;
             }
 
-            //Have we found the first point on the hull? If so we have completed the hull
-            if (currentPoint.Equals(convexHull[0]))
+            if (currentPoint.Equals(
+                    convexHull[0]))
             {
-                //Then remove it because it is the same as the first point, and we want a convex hull with no duplicates
-                convexHull.RemoveAt(convexHull.Count - 1);
+                convexHull.RemoveAt(
+                    convexHull.Count - 1
+                );
 
                 break;
             }
 
-            counter += 1;
+            counter++;
         }
 
         return convexHull;
     }
+
+
     public float CheckPositionBasedOnLine(Vector2 linePointA, Vector2 linePointB, Vector2 point)
     {
         float fx = linePointB.x - linePointA.x;
         float fy = linePointB.y - linePointA.y;
         return fx * (point.y - linePointA.y) - fy * (point.x - linePointA.x);
     }
+
+    private void ClearMesh()
+    {
+        if (dynamicMesh == null)
+            return;
+
+        dynamicMesh.Clear();
+
+        if (filter != null)
+            filter.sharedMesh = dynamicMesh;
+
+        if (col != null)
+            col.sharedMesh = dynamicMesh;
+    }
+
+
+    private void OnDestroy()
+    {
+        // Detach mesh first.
+        if (filter != null)
+            filter.sharedMesh = null;
+
+        if (col != null)
+            col.sharedMesh = null;
+
+        // Destroy the mesh we created.
+        if (dynamicMesh != null)
+        {
+            Destroy(dynamicMesh);
+            dynamicMesh = null;
+        }
+    }
+
+
 
 }
 

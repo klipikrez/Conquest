@@ -30,21 +30,21 @@ public class ScenesManager : MonoBehaviour
 
     private void ChangedActiveScene(Scene current, Scene next)
     {
-        SetLoadingGizmos(false);
+        //SetLoadingGizmos(false);
     }
 
     public void ReturnToMainMenu()
     {
 
-        if (Application.isEditor)
-        {
-            Load(mainMenu);
-        }
-        else
-        {
-            RestartApplication();//we do this to stop buffer overflow 
-                                 //unity stupid
-        }
+        //if (Application.isEditor)
+        //{
+        Load(mainMenu);
+        //}
+        //else
+        //{
+        //    RestartApplication();//we do this to stop buffer overflow 
+        //                         //unity stupid
+        //}
     }
 
     public void RestartApplication()
@@ -101,14 +101,32 @@ public class ScenesManager : MonoBehaviour
         // This is particularly good for creating loading screens.
         // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
         // a sceneBuildIndex of 1 as shown in Build Settings.
+
         yield return new WaitForEndOfFrame();
+
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneRef);
+
+        // Don't let Unity activate the scene immediately.
+        asyncLoad.allowSceneActivation = false;
+
         // Wait until the asynchronous scene fully loads
+        while (asyncLoad.progress < 0.9f)
+        {
+
+            yield return null;
+        }
+
+        // Scene is now loaded and ready to be activated.
+        asyncLoad.allowSceneActivation = true;
+
+        // Wait until Unity has finished activating the scene.
         while (!asyncLoad.isDone)
         {
 
             yield return null;
         }
+
+        SetLoadingGizmos(false);
 
     }
 
@@ -118,20 +136,47 @@ public class ScenesManager : MonoBehaviour
         // This is particularly good for creating loading screens.
         // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
         // a sceneBuildIndex of 1 as shown in Build Settings.
+
         yield return new WaitForEndOfFrame();
+
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneRef);
+
+        // Don't let Unity activate the scene immediately.
+        asyncLoad.allowSceneActivation = false;
+
         // Wait until the asynchronous scene fully loads
+        while (asyncLoad.progress < 0.9f)
+        {
+
+            yield return null;
+        }
+
+        // Scene is now loaded and ready to be activated.
+        asyncLoad.allowSceneActivation = true;
+
+        // Wait until Unity has finished activating the scene.
         while (!asyncLoad.isDone)
         {
 
             yield return null;
         }
 
+        // Give Unity one frame after activating the scene.
+        yield return null;
 
-        yield return GameObject.Find("LoadLevel").GetComponent<SaveLoadLevel>().LoadLevelAsync(levelName);
+        GameObject loadLevel = GameObject.Find("LoadLevel");
 
+        if (loadLevel != null)
+        {
+            SaveLoadLevel saveLoadLevel = loadLevel.GetComponent<SaveLoadLevel>();
 
+            if (saveLoadLevel != null)
+            {
+                yield return saveLoadLevel.LoadLevelAsync(levelName);
+            }
+        }
 
+        SetLoadingGizmos(false);
     }
 
     IEnumerator LoadAsyncSceneEditor(SceneReference sceneRef, string levelName)
@@ -140,16 +185,47 @@ public class ScenesManager : MonoBehaviour
         // This is particularly good for creating loading screens.
         // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
         // a sceneBuildIndex of 1 as shown in Build Settings.
+
         yield return new WaitForEndOfFrame();
+
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneRef);
+
+        // Don't let Unity activate the scene immediately.
+        asyncLoad.allowSceneActivation = false;
+
         // Wait until the asynchronous scene fully loads
+        while (asyncLoad.progress < 0.9f)
+        {
+
+            yield return null;
+        }
+
+        // Scene is now loaded and ready to be activated.
+        asyncLoad.allowSceneActivation = true;
+
+        // Wait until Unity has finished activating the scene.
         while (!asyncLoad.isDone)
         {
 
             yield return null;
         }
 
-        GameObject.Find("Canvas").GetComponent<SaveLoadLevel>().LoadLevelEditor(levelName);
+        // Give Unity one frame after activating the scene.
+        yield return null;
+
+        GameObject canvas = GameObject.Find("Canvas");
+
+        if (canvas != null)
+        {
+            SaveLoadLevel saveLoadLevel = canvas.GetComponent<SaveLoadLevel>();
+
+            if (saveLoadLevel != null)
+            {
+                yield return saveLoadLevel.LoadLevelEditorAsync(levelName);
+            }
+        }
+
+        SetLoadingGizmos(false);
     }
 
     IEnumerator LoadAsyncScene(int cseneIndex)
@@ -158,19 +234,39 @@ public class ScenesManager : MonoBehaviour
         // This is particularly good for creating loading screens.
         // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
         // a sceneBuildIndex of 1 as shown in Build Settings.
+
         yield return new WaitForEndOfFrame();
+
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(cseneIndex);
+
+        // Don't let Unity activate the scene immediately.
+        asyncLoad.allowSceneActivation = false;
+
         // Wait until the asynchronous scene fully loads
+        while (asyncLoad.progress < 0.9f)
+        {
+
+            yield return null;
+        }
+
+        // Scene is now loaded and ready to be activated.
+        asyncLoad.allowSceneActivation = true;
+
+        // Wait until Unity has finished activating the scene.
         while (!asyncLoad.isDone)
         {
 
             yield return null;
         }
+
+        SetLoadingGizmos(false);
+
     }
 
     void SetLoadingGizmos(bool val)
     {
         tekibelike.SetActive(val);
+
         if (val)
         {
             gozmo.StartInvokeRepeating();

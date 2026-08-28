@@ -71,19 +71,24 @@ public class SaveLoadLevel : MonoBehaviour
         ErrorManager.Instance.SendSucsess("Oops...\n we successfully saved your level ;D"); return;
     }
 
-    public void LoadLevelEditor(string levelName)
+    public IEnumerator LoadLevelEditorAsync(string levelName)
     {
-        if (levelName == "") return;// if empty string, we want a blank level. dont load anything.
+        if (levelName == "") yield break;// if empty string, we want a blank level. dont load anything.
         CheckLevelFolder(levelName);
+        yield return null;
         LoadTerrainHeight(levelName, terrain.terrainData);
+        yield return null;
         LoadTerrainAlpha(levelName, terrain.terrainData);
+        yield return null;
         LoadTerrainTrees(levelName, terrain.terrainData);
+        yield return null;
         LoadTerrainDetails(levelName, terrain.terrainData, true);
+        yield return null;
         LoadTerrainTowersEditor(levelName);
+        yield return null;
         LoadLevelOptionsEditor(levelName);
-
+        yield return null;
         EditorOptions.Instance.terrainNameInput.text = levelName;
-
 
     }
 
@@ -91,13 +96,21 @@ public class SaveLoadLevel : MonoBehaviour
     {
         CheckLevelFolder(levelName);
         LoadTerrainHeight(levelName, terrain.terrainData);
+        yield return null;
         LoadTerrainAlpha(levelName, terrain.terrainData, false);
+        yield return null;
         LoadTerrainTrees(levelName, terrain.terrainData);
+        yield return null;
         LoadTerrainDetails(levelName, terrain.terrainData, false);
+        yield return null;
         LoadTerrainTowers(levelName);
+        yield return null;
         LoadLevelOptions(levelName);
+        yield return null;
         GameObject.Find("navManager").GetComponent<NavManager>().Inicialize(GameObject.FindGameObjectsWithTag("building"));
+        yield return null;
         GameObject.Find("TowerAIManager").GetComponent<AIManager>().Inicialize();
+        yield return null;
         LoadDialogue(levelName);
         yield return null;
     }

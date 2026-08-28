@@ -12,11 +12,13 @@ public class TowerConnection : Connection
 
     private void OnDestroy()
     {
+        Debug.Log("Destroying connection");
         EditorManager.Instance.editorconnections.Remove(this);
     }
 
     public void SetConnection(EditorTower p1, EditorTower p2)
     {
+        Debug.Log("Setting connection between " + p1.name + " and " + p2.name);
         tower1 = p1;
         tower2 = p2;
         /*line1.SetPosition(0, p1.transform.position + Vector3.up);
@@ -28,6 +30,7 @@ public class TowerConnection : Connection
 
     public void Drag(EditorTower p1, Vector3 p2)
     {
+        Debug.Log("Dragging connection between " + p1.name + " and " + p2);
         /*line1.SetPosition(0, p1.transform.position + Vector3.up);
         line1.SetPosition(1, p2 + Vector3.up);
         line2.SetPosition(0, p2 + Vector3.up);
@@ -37,6 +40,7 @@ public class TowerConnection : Connection
 
     public void UpdatePosition()
     {
+        Debug.Log("Updating connection between " + tower1.name + " and " + tower2.name);
         /*line1.SetPosition(0, tower1.transform.position + Vector3.up);
         line1.SetPosition(1, tower2.transform.position + Vector3.up);
         line2.SetPosition(0, tower2.transform.position + Vector3.up);
@@ -48,6 +52,7 @@ public class TowerConnection : Connection
 
     public void Delete()
     {
+        Debug.Log("Deleting connection between " + tower1.name + " and " + tower2.name);
         tower1.RemoveConnection(this);
         tower2.RemoveConnection(this);
         Destroy(gameObject);
@@ -55,6 +60,7 @@ public class TowerConnection : Connection
 
     public void CycleConnectionType()
     {
+        Debug.Log("Cycling connection type between " + tower1.name + " and " + tower2.name);
         //tower1.RemoveConnection(this);
         //tower2.RemoveConnection(this);
 
@@ -84,6 +90,7 @@ public class TowerConnection : Connection
 
     public void SetConnectionType(int type, EditorTower tower = null)
     {
+        Debug.Log("Setting connection type between " + tower1.name + " and " + tower2.name);
         switch (type)
         {
             case 0:

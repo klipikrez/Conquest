@@ -4,19 +4,54 @@ using UnityEngine;
 
 public abstract class Connection : MonoBehaviour
 {
-
+    [Header("Line Renderers")]
     public LineRenderer line1;
     public LineRenderer line2;
+    [Header("Collider")]
     public MeshCollider coll;
+
+    [Header("Collider Update")]
+    [Tooltip("How often the collider mesh is regenerated, in seconds.")]
+    [Min(0.01f)]
+    public float colliderUpdateInterval = 0.1f;
+    private Mesh colliderMesh;
+    private float colliderUpdateTimer;
+
+
+    private void Awake()
+    {
+        // Create the mesh only ONCE.
+        colliderMesh = new Mesh
+        {
+            name = $"{gameObject.name}_ColliderMesh"
+        };
+
+        // Prevent Unity from saving this mesh as an asset.
+        colliderMesh.hideFlags = HideFlags.DontSave;
+
+        if (coll != null)
+        {
+            coll.sharedMesh = colliderMesh;
+        }
+    }
+
     private void Start()
     {
         transform.position = new Vector3(0, 0, 0);
         //EditorManager.Instance.editorconnections.Add(this);
+        SetMesh();
+
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
-        SetMesh();
+        colliderUpdateTimer += Time.deltaTime;
+
+        if (colliderUpdateTimer >= colliderUpdateInterval)
+        {
+            colliderUpdateTimer = 0f;
+            SetMesh();
+        }
     }
 
 
@@ -64,11 +99,40 @@ public abstract class Connection : MonoBehaviour
     }
 
 
-    void SetMesh()
+    private void SetMesh()
     {
-        Mesh mesh = new Mesh();
-        line1.BakeMesh(mesh, true);
-        coll.sharedMesh = mesh;
+        if (colliderMesh == null)
+            return;
+
+        if (coll == null)
+            return;
+
+        if (line1 == null)
+            return;
+
+        // IMPORTANT:
+        // Reuse the existing mesh instead of creating a new one.
+        colliderMesh.Clear();
+
+        line1.BakeMesh(colliderMesh, true);
+
+        coll.sharedMesh = colliderMesh;
+    }
+
+    protected virtual void OnDestroy()
+    {
+        // Detach the mesh from the collider first.
+        if (coll != null)
+        {
+            coll.sharedMesh = null;
+        }
+
+        // Destroy the mesh we created in Awake().
+        if (colliderMesh != null)
+        {
+            Destroy(colliderMesh);
+            colliderMesh = null;
+        }
     }
 
 
