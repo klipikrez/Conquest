@@ -53,7 +53,7 @@ public class SaveLoadLevel : MonoBehaviour
         string levelName = EditorOptions.Instance.terrainNameInput.text;
         Debug.Log("SaveLevel: " + levelName + " || playerSpawn: " + EditorManager.Instance.playerSpawn);
         if (levelName == "" || levelName == null) { ErrorManager.Instance.SendError("Name your level, bruh..."); return; }
-        if (!levelName.Any(c => Path.GetInvalidFileNameChars().Contains(c))) { ErrorManager.Instance.SendError("Invalid file name >:V"); return; }
+        if (levelName.Any(c => Path.GetInvalidFileNameChars().Contains(c))) { ErrorManager.Instance.SendError("Invalid file name >:V"); return; }
         //if (char.IsDigit(levelName[0])) { ErrorManager.Instance.SendError("The first character in the save name can't be a number :("); return; }
         if (math.abs(EditorManager.Instance.playerSpawn.x) > 200) { ErrorManager.Instance.SendError("Player spawn location not set :P"); return; }
         if (EditorManager.Instance.bounds == null || EditorManager.Instance.bounds.Count <= 2) { ErrorManager.Instance.SendError("Playspace bounds not set >:L"); return; }

@@ -80,7 +80,12 @@
             "team": 0,
             "modelPath": "castle.glb",
             "presetName": "castle",
-            "towerOverrides": [],
+            "towerOverrides": [
+                {
+                    "overrideName": "Max units",
+                    "value": 50.0
+                }
+            ],
             "connections": [
                 1,
                 4

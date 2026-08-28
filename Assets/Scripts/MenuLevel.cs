@@ -25,7 +25,7 @@ public class MenuLevel : MonoBehaviour
         string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, "cover.png");
 
-        if (!File.Exists(filePath))
+        if (bgImage != null && !File.Exists(filePath))
         {
             bgImage.sprite = manager.defaultSprite;
             Debug.Log("Failed to load coverImage for: " + filePath);
@@ -33,7 +33,7 @@ public class MenuLevel : MonoBehaviour
         }
 
 
-        if (EditorLevelInfoManage.IsImage(filePath))
+        if (bgImage != null && EditorLevelInfoManage.IsImage(filePath))
         {
             Byte[] pngBytes = System.IO.File.ReadAllBytes(filePath);
             Texture2D tt = new Texture2D(52, 52);

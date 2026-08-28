@@ -66,7 +66,7 @@ public class EditorOptions : MonoBehaviour
     }
     public void UpdateBrushSize(float val)
     {
-        decalProjectorBrush.size = new Vector3(val, val, decalProjectorBrush.size.z);
+        decalProjectorBrush.size = new Vector3(val / 2, val / 2, decalProjectorBrush.size.z);
         brushSizeSlider.value = val;
         brushSize = (int)val;
     }
