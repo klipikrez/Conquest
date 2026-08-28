@@ -5,35 +5,33 @@ position: NaN,NaN
 <<Reset>>
 <<Scene #000000 0.985>>
 
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: Ah... Your Majesty! You are still awake. Good. Great. Wonderful...
+Zoran: Uhh...
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: I have urgent news. There is a... small... situation on the border.
+<<Scene #000000 0.585>>
+<<LookAt 7 7>>
+Zoran: Do not ask questions. Just look at the map. You see those blue flags?
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: Thore are Bri...
 <<Act Zoran zoranChill 0.25 0.2 #a20404>>
-<<LookAt 2 7>>
-Zoran: Ah... Good morning princess.
+Zoran:  I mean... those are bandits...
+
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+Zoran: Very well organised bandits.
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
-Zoran: You know what they say, another day another pitiful rebelion.
+Zoran: Do not parley. Just send the troops.
+<<LookAt 2 7>>
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
-<<Scene #000000 0.35>>
-Zoran: ... 
-<<LookAt 7 7>>
-Zoran: [normalWave]*SHIT*[/normalWave]
-<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
-<<LookAt 2 7>>
-Zoran: I mean *hohoho* of course it's just a normal rebelion.
-<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
-Zoran: pffft!  <br> OF COURSE...
-<<LookAt 7 7>>
-Zoran: ...
-<<LookAt 2 7>>
-Zoran: ...
-<<LookAt 7 7>>
-<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
-Zoran: *Cough* *Cough* *Cough*
-Zoran: E-excuse me princess, I have no idea what came over me just then.
+Zoran: Why are you staring at me? I am not nervous. 
+Zoran: I am simply...
+Zoran: Concerned for your kingdom. And also for my own personal future.
 
 <<Act Zoran zoranChill 0.25 0.2 #a20404>>
-<<LookAt 2 7>>
-Zoran: For now try to deal with them like you have before, im sure you can manage.
-<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
-Zoran: I... have some urgent matter to tend to...
+Zoran: Let us change the subject. How are you? The weather is lovely. Would you like to discuss crop rotation?
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: No? Fine. Kill the blue bandits. Please... Immediately.
 <<StopAudioAll>>
 <<Reset>>
 <<stop>>

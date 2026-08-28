@@ -1,0 +1,102 @@
+title: Start
+tags:
+position: NaN,NaN
+---
+<<Reset>>
+<<Scene #000000 0.985>>
+
+<<Act Wizard wizardChill 0.75 0.2 #61eb45>>
+<<Draw mirrorBroken 1.0 0.35>>
+Wizard: Ah! Your Majesty! 
+
+Wizard: I have done it! The royal mirror is restored!
+Wizard: It was really a simple fix, no mo' need to thank me. hehe.
+
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: No! That is not necessary. It was fine broken. It had character!
+<<Act Wizard wizardChill 0.75 0.2 #61eb45>>
+<<Hide mirrorBroken>>
+<<Draw mirror 1.0 0.35>>
+Wizard: Some Absolute donkey enchanted the mirror with an ancient curse called "Windows 11" (No idea what that was)... 
+Wizard: The mirror now runs the latest Mirror 7 IOS, fully runescribed and aether bound.
+Wizard: Now it has custon Backdrop support, Scrype calls, and what the young mages call the "Vine".
+Wizard: Which is, as I understand it, a magical network of... flying pigs.
+
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: I do not wish to Scrype anyone. Throw a sheet over it, it's destracting the princess in her royal duties!
+<<Act Wizard wizardChill 0.75 0.2 #61eb45>>
+Wizard: Too late. Incoming call from... “The Blue Brigade”?
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: Decline! Where is the button? Where is the button?!
+
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+<<Hide mirror>>
+Brigada: ZORAN!
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: ...
+<<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
+Brigada: Do you know how long I have been trying to call you? I had to listen to lute music for three days!
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: You are breaking up. KRRRK. I cannot hear you. KRRRK.
+<<Act Wizard wizardChill 0.75 0.2 #61eb45>>
+Wizard: The connection is crystal clear, my lord.
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+Zoran: Not now, you insolent buffoon!
+
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+Brigada: You left without a word, Zoran! I sent fourteen ravens! They all came back! One even had a broken wing!
+<<Act Zoran zoranTalk  0.25 0.2 #a20404>>
+Zoran: Ah, that! A misunderstanding. I assumed they were carriers for bad news, so I ignored them. A wise man picks his ravens.
+Zoran: You look well. Are those new horns? Very slimming.
+
+Brigada: THOSE ARENT HORNS, THATS MY ROYAL CROWN YOU...! YOU!
+Brigada: And another thing! Some little army attacked my outriders near the border! They came from YOUR direction, Zoran!
+
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: Whaa? My direction? No, no, that was... The... One of my rats! Very pale. Her name is Gertrude.
+<<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
+Brigada: A rat attacked my soldiers?!
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: Very territorial. But very disciplined for a mere rodent.
+
+<<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
+Brigada: I don't care if it's a rat, a goblin, or a goat wearing a crown! If someone attacks my people, they answer to me!
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+Brigada: And if that someone is hiding behind YOUR walls, then I'm coming to get them!
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: That seems hasty. Have you considered... 
+Zoran: Idk...
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: Not doing that?
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+Brigada: I'm done playing these games! I'm bringing the army, I'm bringing our son, and I'm enforcing the Royal Decree!
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: That decree is invalid! You... You can't inforce it...
+
+<<Act Wizard wizardChill 0.75 0.2 #61eb45>>
+Wizard: My lord, the late King Cefan Susni ratified your marriage. I have the royal decree right here.
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: Put that down! It is not a decree! It is a napkin with a donkey drawn on it!
+<<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
+Brigada: That donkey is the Royal Seal of Love! <3 The late king himself drew a little crown on it and wrote "Zoran + Brigada 4ever".
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: It was written in crayon. It has a smiley face. It is legally worthless.
+<<Act Wizard wizardChill 0.75 0.2 #61eb45>>
+Wizard: The late king did love crayon. His final will had a dapper crayon unicorn.
+
+
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+Brigada: I am coming to your little tower, Zoran! And when I get there, I'm going to drag you back to the Blue Marches by your skinny, lying neck!
+Brigada: And if that anyone tries to stop me, I'll bury them in a sea of holy salt!
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: The line is breaking. Goodbye.
+
+<<Scene #000000 0.585>>
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: We must fight her troops before she reaches the capital.
+
+<<StopAudioAll>>
+<<Reset>>
+<<stop>>
+
+===

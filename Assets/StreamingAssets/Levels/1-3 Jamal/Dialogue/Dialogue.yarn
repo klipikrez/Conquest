@@ -1,0 +1,114 @@
+title: Start
+tags:
+position: NaN,NaN
+---
+<<Reset>>
+<<Scene #000000 0.985>>
+
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+Brigada: ZORAN! I have been marching for TWO DAYS through YOUR miserable countryside!
+
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: Ah, Brigada. Still alive, I see. The roads are... treacherous this time of year.
+<<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
+Brigada: Treacherous?! The roads are FINE! It's your TROOPS that keep attacking my supply lines!
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+Zoran: My troops? Preposterous. Probably just bandits hehe.
+
+<<Act Brigada brigadaAngryRat 1.0 0.2 #7E00FF>>
+Brigada: And ANOTHER thing! You left your FILTHY RAT NURSERY with me, Zoran!
+Brigada: Do you know what it's like to wake up to seventeen hundred rats looking at you in the middle of the night?!
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+Brigada: They BREED, Zoran. Constantly! I can't sleep! There's always more rats!
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: Ah yes, my most prized breeding program. You're taking good care of Gertrude's descendants?
+<<Act Brigada brigadaAngryRat 1.0 0.2 #7E00FF>>
+Brigada: NO! They are NOT doing well! They've formed a UNION!
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+Zoran: Ha! Give them a tiny running wheel, they'll negotiate for a bigger one.
+Zoran: They grow up so fast~ <br>Just like papa taught them.
+
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+Brigada: Even in your absence you find a way to terrorize me...
+Brigada: while you're off... off... doing WHAT exactly?!
+
+<<LookAt 1 7>>
+<<Scene #000000 0.585>>
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: ...
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: On a diplomatic mission... Advising. On... matters of state.
+<<Scene #000000 0.985>>
+<<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
+Brigada: Advising WHO?
+
+<<Act Wizard wizardChill 0.75 0.2 #61eb45>>
+Wizard: The Princess, actually. She's standing right here.
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: WHYYY would you say that?!
+<<Act Wizard wizardChill 0.75 0.2 #61eb45>>
+Wizard: You asked me to always announce guests properly. I'm doing helpful!
+<<Hide Wizard>>
+
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+Brigada: ...
+Brigada: A PRINCESS?!
+<<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
+Brigada: Zoran, you're "advising" a PRINCESS?
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: It's purely professional! She needed help with...
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: ...learning third grade math? Very boring. You wouldn't be interested.
+
+<<LookAt 1 7>>
+<<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
+Brigada: Let me see her.
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: NO! She's... Hideously scarred. It would upset you.
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+Brigada: Show me the harlot! NOW!
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+
+<<Act Wizard wizardChill 0.75 0.2 #61eb45>>
+Wizard: I can adjust the mirror's view angle! One moment...
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: Don't you dare, you geriatric midget!
+<<Hide Wizard>>
+
+<<Draw mirror 0.75 0.35>>
+<<LookAt 1 4>>
+Brigada: ...
+Brigada: THAT'S her?
+<<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
+Brigada: She's... so YOUNG.
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: She's older than she looks! Very old. Ancient, even. Practically a crone.
+
+<<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
+Brigada: And she doesn't say anything... What's wrong? Cat got your tongue, little princess?
+Zoran: She's stoic. A warrior's disposition. Very intimidating.
+<<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
+Brigada: Or maybe she's just SIMPLE.
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: How dare you! She can read and everything! (I think...)
+
+<<Act Wizard wizardChill 0.75 0.2 #61eb45>>
+Wizard: Actually, I've noticed she never speaks. It's been quite peaceful since the king passed.
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+Zoran: See? The wizard appreciates her. We've bonded.
+
+<<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
+Brigada: That's it! I'm doubling my march speed! I'll be at your gates within the week!
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: The gates are very sturdy. Take your time. Maybe stop for a picnic.
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+Brigada: And when I get there, I'm going to have a nice LONG chat with your little CRONE about what happens to women who steal other women's HUSBANDS!
+
+<<Scene #000000 0.585>>
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: Your Majesty, we need to slow her advance. NOW.
+<<StopAudioAll>>
+<<Reset>>
+<<stop>>
+
+===

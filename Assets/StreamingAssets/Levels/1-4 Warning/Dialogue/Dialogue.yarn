@@ -1,0 +1,168 @@
+title: Start
+tags:
+position: NaN,NaN
+---
+<<Reset>>
+<<Scene #000000 0.985>>
+
+<<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
+Brigada: Zoran, I brought someone who wants to meet you!
+
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: No. Absolutely not. I am busy. I have a... Scheduling conflict.
+
+<<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
+Brigada: Jamal, come here! Say hello to your papa!
+<<Act Jamal jamalChill 0.8 0.1 #505050>>
+Jamal: Yo.
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: ...
+Zoran: That is...
+Zoran: NOT my child.
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+Brigada: How DARE you! He has your eyes!
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: He has NOBODY'S eyes! He's... he's...
+<<Act Jamal jamalTalk 0.8 0.2 #505050>>
+Jamal: I'm what? Spit it out, old fart.
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: ... I... Uh...
+
+<<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
+Brigada: Remember, you thaught me how babies are made?
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: Oh no.
+<<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
+Brigada: You said that when two people really, really like eachother...
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+Zoran: JUST GET TO THE POINT!
+
+Brigada: ...they go into a dark room and the darkness blesses them with child.
+<<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
+Brigada: Then little Jamal came out as dark as dragon's scale!
+<<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
+Brigada: It's PROOF! he's yours!
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+Zoran: I was being POETIC, you absolute turnip!
+<<Act Jamal jamalChill 0.8 0.1 #505050>>
+Jamal: Ma', why is pa-pa so pale? He sick or something?
+<<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
+Brigada: He's just confused, honey-muffin. He left to get milk seven years ago and forgot where the store was.
+
+<<Act Jamal jamalTalk 0.8 0.2 #505050>>
+Jamal: Seven years? Damn. That's a looot of milk.
+Jamal: Can I have some now cuh?
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: I was NOT getting milk! I was on DIPLOMATIC BUSINESS!
+
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: And another thing! Your son is clearly not of my blood!
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: Look at him!
+<<Act Jamal jamalChains1 0.8 0.2 #505050>>
+Jamal: You got a problem with my chains, pa? 
+Jamal: These are 24 karat drossium. <br>Ma got them for my birthday.
+<<Act Jamal jamalChains2 0.8 0.2 #505050>>
+Jamal: *rattles chains* You want one? I can put in a good word for you on the street.
+<<Hide Jamal>>
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: WHY does this kid have CHAINS?!
+<<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
+Brigada: Every handsome young prince needs accessories!
+Brigada: He's just expressing himself!
+
+<<Scene #000000 0.585>>
+<<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
+Brigada: And he's already doing FOURTH GRADE MATH! Unlike YOUR little princess over there!
+Brigada: TAKE THAT!
+Zoran: ...
+Brigada: Come now pumpkin, show them you're not slow. Tell mommy whats 9 plus 10.
+<<Act Jamal jamalChill 0.8 0.1 #505050>>
+Jamal: Ye ye... 
+Jamal: Uhh...
+<<Act Jamal jamalMath 0.8 0.3 #505050>>
+Jamal: 21?
+<<LookAt 1 7>>
+
+
+
+<<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
+Brigada: ...
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+Brigada: THAT'S WRONG, BABY! It's NINETEEN! We practiced this!
+<<Act Jamal jamalChains2 0.8 0.2 #505050>>
+Jamal: Nah, ma', I don't care about math. What matters is the HUSTLE.
+<<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
+Brigada: That's for the STREETS, honey! This is for proving a POINT!
+<<Act Jamal jamalChill 0.8 0.1 #505050>>
+Jamal: He don't look impressed anyway. Look at his face. <br>Like a lemon, tuff.
+<<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+Zoran: I... I for once am left speechless...
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+Brigada: He's SEVEN, Zoran! 
+Brigada: What were YOU doing at seven?!
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: At seven..? 
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: I had already cornered the lake-trading futures market.
+Zoran: Then I had a whole shipping fleet under my command.
+Zoran: I could have bought the whole world...
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: But instead I decided to buy my way into the nobility...
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+Brigada: And you bought YOURSELF A WIFE!
+Jamal: Tell EM' CUH!
+
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: It was a mere merger. The dowry was... substantial.
+<<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
+Brigada: You traded THREE THOUSAND WAR PIGS for my hand!
+Zoran: Battle trained. Your father was... uh... desperate.
+
+<<Act Jamal jamalTalk 0.8 0.2 #505050>>
+Jamal: You bought ma' for PIGS?!
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: She came as part of the deal.
+
+<<Act Jamal jamalChill 0.8 0.1 #505050>>
+Jamal: 'Ight, this is a snooze. Ma', can I go play?
+<<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
+Brigada: Of course, sugar-bear!
+<<Act Jamal jamalGun 0.8 0.2 #505050>>
+Brigada: Dont hurt yourelf.
+Jamal: Fo sho!
+<<Hide Jamal>>
+
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: You gave a CHILD a GRENADE?!
+<<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
+Brigada: He's mature for his age! And the pin is... mostly in.
+<<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
+Brigada: He's so full of energy. Just like his father.
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: I have NEVER thrown a grenade at anyone!
+
+<<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
+Brigada: Give it time, Zoran. Our visit will surely change you!
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: Please leave the explosive child at home!!!
+<<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
+Brigada: No can do. He's anxious to meet you.
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: HE HAS A GRENADE.
+<<Act Brigada brigadaAngryRat 1.0 0.2 #7E00FF>>
+Brigada:  See you soon, darling!
+
+<<Scene #000000 0.585>>
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: Y..your Majesty... we need to prepare the defenses. 
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: ...
+<<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
+Zoran: NOW!
+
+<<StopAudioAll>>
+<<Reset>>
+<<stop>>
+
+===
