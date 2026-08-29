@@ -90,7 +90,7 @@ public class TowerConnection : Connection
 
     public void SetConnectionType(int type, EditorTower tower = null)
     {
-        Debug.Log("Setting connection type between " + tower1.name + " and " + tower2.name);
+        //Debug.Log("Setting connection type between " + tower1.name + " and " + tower2.name);
         switch (type)
         {
             case 0:

@@ -47,6 +47,18 @@ public class SaveLoadLevel : MonoBehaviour
     {
 
     }
+
+    private static SaveLoadLevel Instance = null;
+
+    public static SaveLoadLevel GetInstance()
+    {
+        if (Instance == null)
+        {
+            Instance = FindObjectOfType<SaveLoadLevel>();
+        }
+        return Instance;
+
+    }
     public void SaveTerrain()
     {
 
@@ -109,7 +121,9 @@ public class SaveLoadLevel : MonoBehaviour
         yield return null;
         GameObject.Find("navManager").GetComponent<NavManager>().Inicialize(GameObject.FindGameObjectsWithTag("building"));
         yield return null;
-        GameObject.Find("TowerAIManager").GetComponent<AIManager>().Inicialize();
+        bool hasAI = GameObject.Find("TowerAIManager").GetComponent<AIManager>().Inicialize();
+        yield return null;
+        GameObject.Find("winConditions").GetComponent<WinConditions>().Initialize(hasAI);
         yield return null;
         LoadDialogue(levelName);
         yield return null;
@@ -321,6 +335,7 @@ public class SaveLoadLevel : MonoBehaviour
 
     void LoadTerrainTowersEditor(string levelName)
     {
+        Debug.Log("Loading towers for: " + levelName);
         EditorTower.TowerIDs.Clear();
         string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, "Towers.rez");

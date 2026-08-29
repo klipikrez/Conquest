@@ -3,212 +3,17 @@
         {
             "id": 0,
             "team": 1,
-            "modelPath": "largeTown.glb",
-            "presetName": "largeTown",
-            "towerOverrides": [],
-            "connections": [
-                11,
-                2,
-                1,
-                4,
-                3,
-                12
-            ],
-            "position": {
-                "x": -8.9010009765625,
-                "y": 1.7093963623046876,
-                "z": -9.278823852539063
-            },
-            "rotation": {
-                "value": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            },
-            "scale": 1.0
-        },
-        {
-            "id": 1,
-            "team": 0,
-            "modelPath": "smallTown.glb",
-            "presetName": "smallTown",
-            "towerOverrides": [],
-            "connections": [
-                0,
-                5,
-                2,
-                3,
-                4
-            ],
-            "position": {
-                "x": -12.097923278808594,
-                "y": 0.3572845458984375,
-                "z": -4.739845275878906
-            },
-            "rotation": {
-                "value": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            },
-            "scale": 1.0
-        },
-        {
-            "id": 2,
-            "team": 0,
-            "modelPath": "smallTown.glb",
-            "presetName": "smallTown",
-            "towerOverrides": [],
-            "connections": [
-                0,
-                1,
-                4,
-                9,
-                10,
-                12
-            ],
-            "position": {
-                "x": -2.2460708618164064,
-                "y": 0.5786590576171875,
-                "z": -6.9825592041015629
-            },
-            "rotation": {
-                "value": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            },
-            "scale": 1.0
-        },
-        {
-            "id": 3,
-            "team": 0,
-            "modelPath": "smallTown.glb",
-            "presetName": "smallTown",
-            "towerOverrides": [],
-            "connections": [
-                0,
-                1,
-                11
-            ],
-            "position": {
-                "x": -17.234329223632814,
-                "y": 1.5167236328125,
-                "z": -11.0787353515625
-            },
-            "rotation": {
-                "value": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            },
-            "scale": 1.0
-        },
-        {
-            "id": 4,
-            "team": 0,
-            "modelPath": "castle.glb",
-            "presetName": "castle",
-            "towerOverrides": [],
-            "connections": [
-                0,
-                1,
-                2,
-                5,
-                6
-            ],
-            "position": {
-                "x": -5.418937683105469,
-                "y": -1.2578887939453126,
-                "z": 0.27561187744140627
-            },
-            "rotation": {
-                "value": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            },
-            "scale": 1.0
-        },
-        {
-            "id": 5,
-            "team": 0,
-            "modelPath": "smallTown.glb",
-            "presetName": "smallTown",
+            "modelPath": "hugeTown.glb",
+            "presetName": "hugeTown",
             "towerOverrides": [],
             "connections": [
                 1,
-                4,
-                6,
-                7
+                2
             ],
             "position": {
-                "x": -14.307807922363282,
-                "y": 0.6468963623046875,
-                "z": 5.4416046142578129
-            },
-            "rotation": {
-                "value": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            },
-            "scale": 1.0
-        },
-        {
-            "id": 6,
-            "team": 0,
-            "modelPath": "smallTown.glb",
-            "presetName": "smallTown",
-            "towerOverrides": [],
-            "connections": [
-                4,
-                5,
-                8,
-                13
-            ],
-            "position": {
-                "x": -8.372360229492188,
-                "y": 0.7359619140625,
-                "z": 10.2430419921875
-            },
-            "rotation": {
-                "value": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            },
-            "scale": 1.0
-        },
-        {
-            "id": 7,
-            "team": 0,
-            "modelPath": "smallTown.glb",
-            "presetName": "smallTown",
-            "towerOverrides": [],
-            "connections": [
-                5,
-                8,
-                15
-            ],
-            "position": {
-                "x": -21.85240936279297,
-                "y": 1.302825927734375,
-                "z": 11.12152099609375
+                "x": -6.058052062988281,
+                "y": 1.612060546875,
+                "z": -13.104103088378907
             },
             "rotation": {
                 "value": {
@@ -227,10 +32,8 @@
             "presetName": "largeTown",
             "towerOverrides": [],
             "connections": [
-                6,
-                7,
-                14,
-                15
+                5,
+                4
             ],
             "position": {
                 "x": -14.697074890136719,
@@ -248,58 +51,7 @@
             "scale": 1.0
         },
         {
-            "id": 9,
-            "team": 0,
-            "modelPath": "largeTown.glb",
-            "presetName": "largeTown",
-            "towerOverrides": [],
-            "connections": [
-                2,
-                10
-            ],
-            "position": {
-                "x": 5.75244140625,
-                "y": 0.972686767578125,
-                "z": -3.0146865844726564
-            },
-            "rotation": {
-                "value": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            },
-            "scale": 1.0
-        },
-        {
-            "id": 10,
-            "team": 0,
-            "modelPath": "smallTown.glb",
-            "presetName": "smallTown",
-            "towerOverrides": [],
-            "connections": [
-                2,
-                9,
-                12
-            ],
-            "position": {
-                "x": 5.1600799560546879,
-                "y": 0.9136810302734375,
-                "z": -11.550758361816407
-            },
-            "rotation": {
-                "value": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            },
-            "scale": 1.0
-        },
-        {
-            "id": 11,
+            "id": 1,
             "team": 0,
             "modelPath": "largeTown.glb",
             "presetName": "largeTown",
@@ -307,12 +59,12 @@
             "connections": [
                 0,
                 3,
-                12
+                2
             ],
             "position": {
-                "x": -8.462532043457032,
-                "y": 1.0871429443359376,
-                "z": -17.894607543945314
+                "x": -2.1396331787109377,
+                "y": 0.3932037353515625,
+                "z": -5.888267517089844
             },
             "rotation": {
                 "value": {
@@ -325,21 +77,20 @@
             "scale": 1.0
         },
         {
-            "id": 12,
+            "id": 2,
             "team": 0,
             "modelPath": "smallTown.glb",
             "presetName": "smallTown",
             "towerOverrides": [],
             "connections": [
+                3,
                 0,
-                2,
-                10,
-                11
+                1
             ],
             "position": {
-                "x": -2.27764892578125,
-                "y": 1.214599609375,
-                "z": -15.005516052246094
+                "x": -13.20452880859375,
+                "y": 0.76470947265625,
+                "z": -6.6077880859375
             },
             "rotation": {
                 "value": {
@@ -352,19 +103,21 @@
             "scale": 1.0
         },
         {
-            "id": 13,
+            "id": 3,
             "team": 0,
-            "modelPath": "largeTown.glb",
-            "presetName": "largeTown",
+            "modelPath": "castle.glb",
+            "presetName": "castle",
             "towerOverrides": [],
             "connections": [
-                6,
-                14
+                1,
+                2,
+                5,
+                4
             ],
             "position": {
-                "x": -2.697998046875,
-                "y": 1.3626708984375,
-                "z": 15.571914672851563
+                "x": -9.467117309570313,
+                "y": -0.6060638427734375,
+                "z": 3.1652984619140627
             },
             "rotation": {
                 "value": {
@@ -377,19 +130,20 @@
             "scale": 1.0
         },
         {
-            "id": 14,
+            "id": 4,
             "team": 0,
             "modelPath": "smallTown.glb",
             "presetName": "smallTown",
             "towerOverrides": [],
             "connections": [
+                3,
                 8,
-                13
+                5
             ],
             "position": {
-                "x": -8.484336853027344,
-                "y": 2.6680145263671877,
-                "z": 22.394287109375
+                "x": -17.082977294921876,
+                "y": 1.4976654052734376,
+                "z": 8.925445556640625
             },
             "rotation": {
                 "value": {
@@ -402,19 +156,20 @@
             "scale": 1.0
         },
         {
-            "id": 15,
+            "id": 5,
             "team": 0,
-            "modelPath": "largeTown.glb",
-            "presetName": "largeTown",
+            "modelPath": "smallTown.glb",
+            "presetName": "smallTown",
             "towerOverrides": [],
             "connections": [
-                7,
-                8
+                3,
+                8,
+                4
             ],
             "position": {
-                "x": -24.042312622070314,
-                "y": 1.99615478515625,
-                "z": 19.379653930664064
+                "x": -7.568977355957031,
+                "y": 0.9064483642578125,
+                "z": 11.274444580078125
             },
             "rotation": {
                 "value": {

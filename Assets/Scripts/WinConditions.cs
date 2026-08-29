@@ -5,17 +5,22 @@ using System;
 
 public class WinConditions : MonoBehaviour
 {
+    List<Team> buildings = new List<Team>();
 
-    List<Team> buildings = new List<Team>();//added in Buildings Team.cs scripts Start()
     public int PlayerTeam = 1;
-    bool noMoreEnwmyTowersLeft = false;
+
+    bool noMoreEnemyTowersLeft = false;
     bool noMorePlayerTowersLeft = false;
     bool GameOver = false;
+
+    // True if there were AI players when the level started.
+    bool hadAIPlayersAtStart = false;
+    bool inicialized = false;
     [Serializable]
     public struct ValueTimePair
     {
-        float value;
-        float time;
+        public float value;
+        public float time;
 
         public ValueTimePair(float value, float time)
         {
@@ -23,49 +28,125 @@ public class WinConditions : MonoBehaviour
             this.time = time;
         }
     }
-    [SerializeField]
-    public Dictionary<int, List<ValueTimePair>> UnitsProduced = new Dictionary<int, List<ValueTimePair>>();
 
+    [SerializeField]
+    public Dictionary<int, List<ValueTimePair>> UnitsProduced =
+        new Dictionary<int, List<ValueTimePair>>();
 
     public static WinConditions Instance { get; private set; }
+
     LevelMenu levelMenu;
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
     }
 
-    private void Start()
+    public void Initialize(bool hadAIPlayersAtStart)
     {
-        levelMenu = GameObject.FindObjectOfType<LevelMenu>();
+        levelMenu = FindFirstObjectByType<LevelMenu>();
+
+        // Remember whether the level STARTED with any AI players.
+        this.hadAIPlayersAtStart = hadAIPlayersAtStart;
+        inicialized = true;
     }
 
     private void Update()
     {
-        if (noMoreEnwmyTowersLeft || noMorePlayerTowersLeft)
+        if (GameOver || !inicialized || LevelMenu.paused)
+            return;
+        //Debug.Log($"WinConditions Update: hadAIPlayersAtStart={hadAIPlayersAtStart}");
+        CheckWinOrLose();
+    }
+
+    private void CheckWinOrLose()
+    {
+        // -----------------------------------------
+        // LOSE CONDITION
+        // -----------------------------------------
+
+        if (noMorePlayerTowersLeft)
         {
             if (AIManager.Instance.Player.numberOfUnits <= 0)
             {
-                if (!GameOver)
-                    Izgubida();
-            }
-            else
-            {
-                bool win = true;
-                foreach (AIPlayer ai in AIManager.Instance.AIPlayers)
-                {
-                    if (ai.numberOfUnits > 0)
-                    {
-                        win = false;
-                    }
-                }
-                if (win)
-                {
-                    if (!GameOver)
-                        Pobeda();
-                }
+                Izgubida();
+                return;
             }
         }
+
+        // -----------------------------------------
+        // WIN CONDITION
+        // -----------------------------------------
+
+        if (hadAIPlayersAtStart)
+        {
+            // -----------------------------------------
+            // LEVEL STARTED WITH AI PLAYERS
+            // -----------------------------------------
+            //
+            // Neutral towers (teamid == 0) don't matter.
+            // We only need every AI player to be dead.
+            //
+
+            bool allAIPlayersDead = true;
+            //Debug.Log($"Checking win condition: {AIManager.Instance.AIPlayers.Count} AI players");
+            foreach (AIPlayer ai in AIManager.Instance.AIPlayers)
+            {
+                //Debug.Log($"Checking AI player {ai.team}: units={ai.numberOfUnits}, buildings={ai.buildings.Count}");
+                if (ai.numberOfUnits > 0 || ai.buildings.Count > 0)
+                {
+                    allAIPlayersDead = false;
+                    break;
+                }
+            }
+
+            if (allAIPlayersDead)
+            {
+                Pobeda();
+            }
+        }
+        else
+        {
+            //Debug.Log("Checking win condition: no AI players at start, checking if all towers are taken");
+            // -----------------------------------------
+            // LEVEL STARTED WITH NO AI PLAYERS
+            // -----------------------------------------
+            //
+            // There were no AI players, so ALL towers
+            // must be taken/destroyed, including neutral
+            // teamid == 0 towers.
+            //
+
+            if (AllTowersTaken())
+            {
+                Pobeda();
+            }
+        }
+    }
+
+    private bool AllTowersTaken()
+    {
+        foreach (BuildingMain building in AIManager.Instance.buildings)
+        {
+
+            // Any building that isn't owned by the player
+            // means there are still towers left to take.
+            if (building.team.teamid != PlayerTeam &&
+                building.unitDetector.Engage &&
+                !building.unitDetector.Imune)
+            {
+                //Debug.Log("Building not taken: " + building.name);
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public void AddBuildingTeam(Team team)
@@ -75,58 +156,54 @@ public class WinConditions : MonoBehaviour
 
     public void CheckTeams()
     {
-        bool value = true;
+        // -----------------------------------------
+        // PLAYER TOWERS
+        // -----------------------------------------
+
+        noMorePlayerTowersLeft =
+            AIManager.Instance.Player.buildings.Count == 0;
+
+
+        // -----------------------------------------
+        // ENEMY TOWERS
+        // -----------------------------------------
+
+        bool enemyTowersLeft = false;
+
         foreach (AIPlayer ai in AIManager.Instance.AIPlayers)
         {
-
             if (ai.buildings.Count > 0)
             {
-                value = false;
+                enemyTowersLeft = true;
+                break;
             }
         }
 
-        if (value)
+        // Check buildings directly as well.
+        foreach (BuildingMain building in AIManager.Instance.buildings)
         {
-            foreach (BuildingMain building in AIManager.Instance.buildings)
+            if (building == null)
+                continue;
+
+            if (building.team.teamid != PlayerTeam &&
+                building.unitDetector.Engage &&
+                !building.unitDetector.Imune)
             {
-                if (building.unitDetector.Engage == true && building.unitDetector.Imune == false && building.team.teamid != 1) value = false;
+                enemyTowersLeft = true;
+                break;
             }
         }
 
-        noMorePlayerTowersLeft = AIManager.Instance.Player.buildings.Count == 0 ? true : false;
-        noMoreEnwmyTowersLeft = value;
-
+        noMoreEnemyTowersLeft = !enemyTowersLeft;
     }
-
-    /*bool Player = true, Enemy = true;
-    foreach (Team t in buildings)
-    {
-        if (t.teamid == PlayerTeam)
-        {
-            Enemy = false;
-        }
-        else
-        {
-            Player = false;
-        }
-    }
-    if (Player ^ Enemy)
-    {
-        if (Player)
-        {
-            Pobeda();
-        }
-        else
-        {
-            Izgubida();
-        }
-    }*/
-
 
     public void AddProducedUnits(float amount, int team)
     {
         List<ValueTimePair> banalno = new List<ValueTimePair>();
-        ValueTimePair josBanalnije = new ValueTimePair(amount, LevelMenu.timeSinceStart);
+
+        ValueTimePair josBanalnije =
+            new ValueTimePair(amount, LevelMenu.timeSinceStart);
+
         banalno.Add(josBanalnije);
 
         if (UnitsProduced.ContainsKey(team))
@@ -135,32 +212,46 @@ public class WinConditions : MonoBehaviour
         }
         else
         {
-
             UnitsProduced.Add(team, banalno);
         }
     }
 
     public void Pobeda()
     {
+        Debug.Log("Pobeda");
+        if (GameOver)
+            return;
+
+        GameOver = true;
+
         if (SoundManager.Instance != null)
         {
             SoundManager.Instance.PlayAudioClip(2);
             SoundManager.Instance.PlayAudioClip(3);
         }
-        levelMenu.WinScreen();
-        GameOver = true;
+
+        if (levelMenu != null)
+        {
+            levelMenu.WinScreen();
+        }
     }
 
     public void Izgubida()
     {
+        if (GameOver)
+            return;
+
+        GameOver = true;
+
         if (SoundManager.Instance != null)
         {
             SoundManager.Instance.PlayAudioClip(0);
             SoundManager.Instance.PlayAudioClip(1);
         }
 
-        levelMenu.LoseScreen();
-        GameOver = true;
+        if (levelMenu != null)
+        {
+            levelMenu.LoseScreen();
+        }
     }
-
 }

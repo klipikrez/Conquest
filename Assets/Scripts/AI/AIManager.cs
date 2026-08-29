@@ -91,11 +91,12 @@ public class AIManager : MonoBehaviour
         Instance = this;
     }
 
-    public void Inicialize()
+    public bool Inicialize()
     {
-        CompileAIs();
+        bool hasAI = CompileAIs();
         InitiateAITeams();
         inicialized = true;
+        return hasAI;
     }
 
     void Update()
@@ -151,7 +152,7 @@ public class AIManager : MonoBehaviour
         UnitAmountBarCalculator.Instance.UpdateValues();
     }
 
-    void CompileAIs()
+    bool CompileAIs()
     {
         Dictionary<int, List<BuildingMain>> numberOfBuildingsPerTeam = new Dictionary<int, List<BuildingMain>>();
 
@@ -195,6 +196,8 @@ public class AIManager : MonoBehaviour
 
             AIPlayers.Add(playerTmp);
         }
+
+        return AIPlayers.Count > 0;
     }
 
     void InitiateAITeams()
@@ -234,12 +237,12 @@ public class AIManager : MonoBehaviour
             AIPlayers[oldTeam - 2].buildings.Remove(tower);
         else
             if (oldTeam == 1)
-            Player.buildings.Remove(tower);
+                Player.buildings.Remove(tower);
         if (newTeam >= 2)
             AIPlayers[newTeam - 2].buildings.Add(tower);
         else
             if (newTeam == 1)
-            Player.buildings.Add(tower);
+                Player.buildings.Add(tower);
 
     }
 

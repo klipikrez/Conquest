@@ -49,20 +49,23 @@ public class Production : MonoBehaviour
     {
         if (!Paused)
         {
-            if (product < maxUnits)
-            {
-                product += productProduction * Time.deltaTime;
-                /*Debug.Log(team.teamid);
-                if (WinConditions.Instance != null && team.teamid == WinConditions.Instance.PlayerTeam)
+            if (building.team.teamid != 0)
+                if (product < maxUnits)
                 {
-                    WinConditions.Instance.AddProducedUnits(productProduction * Time.deltaTime, team.teamid);
-                }*/
-            }
-            else
-             if (product > maxUnits + 1)
-            {
-                product -= productProduction * (((product - maxUnits) / 50) + 0.3f) * Time.deltaTime;
-            }
+
+
+                    product += productProduction * Time.deltaTime;
+                    /*Debug.Log(team.teamid);
+                    if (WinConditions.Instance != null && team.teamid == WinConditions.Instance.PlayerTeam)
+                    {
+                        WinConditions.Instance.AddProducedUnits(productProduction * Time.deltaTime, team.teamid);
+                    }*/
+                }
+                else
+                    if (product > maxUnits + 1)
+                    {
+                        product -= productProduction * (((product - maxUnits) / 50) + 0.3f) * Time.deltaTime;
+                    }
             numberRefrence.text = "<mspace=0.6em>" + ((int)product).ToString() + "</mspace>";
         }
     }

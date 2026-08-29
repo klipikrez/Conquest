@@ -45,7 +45,7 @@ public class SnapToScrollViewItem : MonoBehaviour
     void ManualMove()
     {
         currentItem = GetNearestItemIndex();
-        Debug.Log("Manual Move - Current Item: " + currentItem + " Content Panel Position: " + contentPanel.anchoredPosition.x);
+        //Debug.Log("Manual Move - Current Item: " + currentItem + " Content Panel Position: " + contentPanel.anchoredPosition.x);
         if (scrollRect.velocity.magnitude < 100)
         {
             if (!selectionLatch)
@@ -63,7 +63,7 @@ public class SnapToScrollViewItem : MonoBehaviour
 
     void AutoMove()
     {
-        Debug.Log("Auto Move - Current Item: " + currentItem + " Content Panel Position: " + contentPanel.anchoredPosition.x);
+        //Debug.Log("Auto Move - Current Item: " + currentItem + " Content Panel Position: " + contentPanel.anchoredPosition.x);
         if (scrollRect.velocity.magnitude > 100 || HasManualPointerInput())
         {
             handleMove = ManualMove;

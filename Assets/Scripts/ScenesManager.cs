@@ -164,16 +164,13 @@ public class ScenesManager : MonoBehaviour
         // Give Unity one frame after activating the scene.
         yield return null;
 
-        GameObject loadLevel = GameObject.Find("LoadLevel");
 
-        if (loadLevel != null)
+
+        if (SaveLoadLevel.GetInstance() != null)
         {
-            SaveLoadLevel saveLoadLevel = loadLevel.GetComponent<SaveLoadLevel>();
 
-            if (saveLoadLevel != null)
-            {
-                yield return saveLoadLevel.LoadLevelAsync(levelName);
-            }
+            yield return SaveLoadLevel.GetInstance().LoadLevelAsync(levelName);
+
         }
 
         SetLoadingGizmos(false);
@@ -213,16 +210,12 @@ public class ScenesManager : MonoBehaviour
         // Give Unity one frame after activating the scene.
         yield return null;
 
-        GameObject canvas = GameObject.Find("Canvas");
 
-        if (canvas != null)
+        if (SaveLoadLevel.GetInstance() != null)
         {
-            SaveLoadLevel saveLoadLevel = canvas.GetComponent<SaveLoadLevel>();
 
-            if (saveLoadLevel != null)
-            {
-                yield return saveLoadLevel.LoadLevelEditorAsync(levelName);
-            }
+            yield return SaveLoadLevel.GetInstance().LoadLevelEditorAsync(levelName);
+
         }
 
         SetLoadingGizmos(false);
