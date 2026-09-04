@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using UnityEngine.Serialization;
 using System.Collections.Generic;
 [CreateAssetMenu(fileName = "newAIType", menuName = "AI/Type")]
 public class AIType : ScriptableObject
@@ -11,40 +11,37 @@ public class AIType : ScriptableObject
     public int enemiesNearbyState = 1;
     public int attackEnemyState = 2;
     public float aggresivnes = 20;
-    public int shootingBuildingMinimumUnits = 10;
+    [FormerlySerializedAs("shootingBuildingMinimumUnits")]
+    public int shootingBuildingReserve = 100;
     public float shootingBuildingValueMultiplier = 2f;
 
     public void CalculateMove(AIManager manager, AIPlayer player)
     {
-        List<BuildingMain> enemyAsNeighbour = new List<BuildingMain>();
+        List<BuildingMain> enemyNeighbors = new List<BuildingMain>();
         foreach (BuildingMain building in player.buildings)
         {
 
-            foreach (BuildingMain neighbour in building.neighbours)
+            foreach (BuildingMain neighbor in AINeighborUtility.GetNeighbors(building))
             {
-                if (neighbour.team.teamid == player.team || neighbour.team.teamid == 0)
+                if (neighbor.team.teamid != player.team && neighbor.team.teamid != 0)
                 {
-
-                }
-                else
-                {
-                    enemyAsNeighbour.Add(neighbour);
+                    enemyNeighbors.Add(neighbor);
                     break;
                 }
             }
         }
-        if (enemyAsNeighbour.Count > 0)
+        if (enemyNeighbors.Count > 0)
         {
-            bool enemyIsNeighbour = false;
-            foreach (BuildingMain neighbour in enemyAsNeighbour)
+            bool currentEnemyIsNeighbor = false;
+            foreach (BuildingMain neighbor in enemyNeighbors)
             {
-                if (neighbour.team.teamid == player.currentEnemyTeam)
+                if (neighbor.team.teamid == player.currentEnemyTeam)
                 {
-                    enemyIsNeighbour = true;
+                    currentEnemyIsNeighbor = true;
                     break;
                 }
             }
-            if (enemyIsNeighbour)
+            if (currentEnemyIsNeighbor)
             {
                 States[attackEnemyState].CalculateMove(manager, player);
                 Debug.Log("Attack enemy");
@@ -60,9 +57,5 @@ public class AIType : ScriptableObject
             States[expandState].CalculateMove(manager, player);
             Debug.Log("Expand");
         }
-        /*
-        //Debug.Log(player.team);
-        States[0].CalculateMove(manager, player);
-        //Debug.Log("uspesno");*/
     }
 }

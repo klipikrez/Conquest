@@ -13,7 +13,12 @@ public abstract class AIBehavior : ScriptableObject
 
     protected float GetUnitsToKeep(AIPlayer player, BuildingMain building)
     {
-        return IsShootingBuilding(building) ? player.aiType.shootingBuildingMinimumUnits : 1f;
+        return IsShootingBuilding(building) ? GetShootingBuildingReserve(player) : 1f;
+    }
+
+    protected float GetShootingBuildingReserve(AIPlayer player)
+    {
+        return Mathf.Max(0f, player.aiType.shootingBuildingReserve);
     }
 
     protected float GetSendableUnits(AIPlayer player, BuildingMain building)
@@ -24,7 +29,7 @@ public abstract class AIBehavior : ScriptableObject
     protected float GetDefensiveValue(AIPlayer player, BuildingMain building, float enemyUnitsNearby)
     {
         if (!IsShootingBuilding(building)) return enemyUnitsNearby;
-        return enemyUnitsNearby + player.aiType.shootingBuildingMinimumUnits * player.aiType.shootingBuildingValueMultiplier;
+        return enemyUnitsNearby + GetShootingBuildingReserve(player) * player.aiType.shootingBuildingValueMultiplier;
     }
 
     protected bool TryStockShootingBuilding(AIPlayer player)
@@ -37,7 +42,7 @@ public abstract class AIBehavior : ScriptableObject
         {
             if (!IsShootingBuilding(building)) continue;
 
-            float deficit = player.aiType.shootingBuildingMinimumUnits - building.production.product;
+            float deficit = GetShootingBuildingReserve(player) - building.production.product;
             if (deficit > largestDeficit)
             {
                 largestDeficit = deficit;
@@ -68,5 +73,50 @@ public abstract class AIBehavior : ScriptableObject
             sendPercent, sendTo.transform, false, GetUnitsToKeep(player, sendFrom));
         Debug.Log("AI " + player.team + " stocking shooting building: " + sendTo.id + " from: " + sendFrom.id);
         return true;
+    }
+}
+
+public static class AINeighborUtility
+{
+    public static List<BuildingMain> GetNeighbors(BuildingMain building)
+    {
+        List<BuildingMain> neighbors = new List<BuildingMain>();
+        if (building == null || building.neighbours == null)
+        {
+            return neighbors;
+        }
+
+        HashSet<BuildingMain> visited = new HashSet<BuildingMain> { building };
+        Stack<BuildingMain> pending = new Stack<BuildingMain>(building.neighbours);
+
+        while (pending.Count > 0)
+        {
+            BuildingMain neighbor = pending.Pop();
+            if (neighbor == null || !visited.Add(neighbor))
+            {
+                continue;
+            }
+
+            if (!CanAIInteractWith(neighbor))
+            {
+                if (neighbor.neighbours == null) continue;
+
+                foreach (BuildingMain linkedNeighbor in neighbor.neighbours)
+                {
+                    pending.Push(linkedNeighbor);
+                }
+
+                continue;
+            }
+
+            neighbors.Add(neighbor);
+        }
+
+        return neighbors;
+    }
+
+    private static bool CanAIInteractWith(BuildingMain building)
+    {
+        return building.unitDetector == null || building.unitDetector.Engage;
     }
 }

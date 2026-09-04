@@ -21,47 +21,24 @@ public class AIPlayer
 
     public static bool operator ==(AIPlayer a, AIPlayer b)
     {
-        if (a.team == b.team)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        if (ReferenceEquals(a, b)) return true;
+        if (a is null || b is null) return false;
+        return a.team == b.team;
     }
 
     public static bool operator !=(AIPlayer a, AIPlayer b)
     {
-        if (a.team != b.team)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return !(a == b);
     }
 
     public override bool Equals(object obj)
     {
-        var item = obj as AIPlayer;
-
-        if (item == null)
-        {
-            return false;
-        }
-
-        return this.team.Equals(item.team);
+        return obj is AIPlayer other && team == other.team;
     }
 
     public override int GetHashCode()
     {
-        // Which is preferred?
-
-        return base.GetHashCode();
-
-        //return this.FooId.GetHashCode();
+        return team.GetHashCode();
     }
 }
 
@@ -103,25 +80,7 @@ public class AIManager : MonoBehaviour
     void Update()
     {
         if (!inicialized || LevelMenu.paused) return;
-        //ovo je samo za playereaza
-        Player.numberOfUnits = 0;
-        foreach (BuildingMain building in Player.buildings)
-        {
-            Player.numberOfUnits += building.production.product;
-        }
-
-        //da vidimo koliko ai-ovi imaju unita :D u towerima
-        foreach (AIPlayer ai in AIPlayers)
-        {
-            ai.numberOfUnits = 0;
-            foreach (BuildingMain building in ai.buildings)
-            {
-                ai.numberOfUnits += building.production.product;
-            }
-        }
-
-
-        //za sve unite koji su na talonu trenutno
+        UpdateStoredUnitCounts();
         foreach (BuildingMain building in buildings)
         {
             foreach (UnitAgent agent in building.unitController.agents)
@@ -137,13 +96,12 @@ public class AIManager : MonoBehaviour
             }
         }
 
-        //prodjemo kroz sve ai timo da vidimo dal imaju 0 unita;
         foreach (AIPlayer ai in AIPlayers)
         {
             if (ai.numberOfUnits <= 0 && !ai.isDead)
             {
                 ai.isDead = true;
-                StopCoroutine(ai.repeatingFunction);//nezelimo da ai racuna svoje poteze ako nema sta da odigra :(
+                StopCoroutine(ai.repeatingFunction);
                 if (SoundManager.Instance != null)
                 {
                     SoundManager.Instance.PlayAudioClip(4);
@@ -153,49 +111,56 @@ public class AIManager : MonoBehaviour
         UnitAmountBarCalculator.Instance.UpdateValues();
     }
 
+    private void UpdateStoredUnitCounts()
+    {
+        Player.numberOfUnits = GetUnitCount(Player.buildings);
+        foreach (AIPlayer ai in AIPlayers)
+        {
+            ai.numberOfUnits = GetUnitCount(ai.buildings);
+        }
+    }
+
+    private float GetUnitCount(List<BuildingMain> teamBuildings)
+    {
+        float unitCount = 0;
+        foreach (BuildingMain building in teamBuildings)
+        {
+            unitCount += building.production.product;
+        }
+        return unitCount;
+    }
+
     bool CompileAIs()
     {
         Dictionary<int, List<BuildingMain>> numberOfBuildingsPerTeam = new Dictionary<int, List<BuildingMain>>();
 
         buildingObjects = GameObject.FindGameObjectsWithTag("building");
-        foreach (GameObject building in buildingObjects)
+        foreach (GameObject buildingObject in buildingObjects)
         {
-
-            BuildingMain main = building.GetComponent<BuildingMain>();
-            buildings.Add(main);
-            if (main.team.teamid != 0)//znaci da nije siv i player
+            BuildingMain building = buildingObject.GetComponent<BuildingMain>();
+            buildings.Add(building);
+            if (building.team.teamid != 0)
             {
-
-                if (main.team.teamid != 1)
+                if (building.team.teamid != 1)
                 {
-                    if (numberOfBuildingsPerTeam.ContainsKey(main.team.teamid))// checks if team already exists in numberOfTowersPerTeam
+                    if (numberOfBuildingsPerTeam.ContainsKey(building.team.teamid))
                     {
-                        //if AIPlayers List contains, then add tower to numberOfTowersPerTeam dictionary
-                        numberOfBuildingsPerTeam[main.team.teamid].Add(main);
+                        numberOfBuildingsPerTeam[building.team.teamid].Add(building);
                     }
                     else
                     {
-                        //else add new AIPlayer object to AIPlayers list
-                        numberOfBuildingsPerTeam.Add(main.team.teamid, new List<BuildingMain>());
-                        numberOfBuildingsPerTeam[main.team.teamid].Add(main);
+                        numberOfBuildingsPerTeam.Add(building.team.teamid, new List<BuildingMain> { building });
                     }
                 }
                 else
                 {
-                    Player.buildings.Add(main);
+                    Player.buildings.Add(building);
                 }
             }
         }
-        foreach (var temp in numberOfBuildingsPerTeam)
+        foreach (KeyValuePair<int, List<BuildingMain>> team in numberOfBuildingsPerTeam)
         {
-            AIPlayer playerTmp = new AIPlayer(temp.Key);
-
-            foreach (var tmp2 in temp.Value)
-            {
-                playerTmp.buildings.Add(tmp2);
-            }
-
-            AIPlayers.Add(playerTmp);
+            AIPlayers.Add(new AIPlayer(team.Key) { buildings = team.Value });
         }
 
         return AIPlayers.Count > 0;
@@ -205,10 +170,8 @@ public class AIManager : MonoBehaviour
     {
         foreach (AIPlayer ai in AIPlayers)
         {
-            //Debug.Log(ai.team + "    " + AITypeByTeam.Length + "   " + (ai.team <= AITypeByTeam.Length - 1));
-            if (ai.team <= AITypeByTeam.Length - 1)//check if team ai exists
+            if (ai.team >= 0 && ai.team < AITypeByTeam.Length && AITypeByTeam[ai.team] != null)
             {
-                //Debug.Log(AITypeByTeam[ai.team].name);
                 ai.aiType = AITypeByTeam[ai.team];
                 ai.repeatingFunction = StartCoroutine(AIClockRepeating(ai));
             }
@@ -216,25 +179,20 @@ public class AIManager : MonoBehaviour
     }
     IEnumerator AIClockRepeating(AIPlayer ai)
     {
-        //just a timer on witch ais will be calculating their moves
-        yield return new WaitForSeconds(AITypeByTeam[ai.team].clockCycleTime);
+        yield return new WaitForSeconds(ai.aiType.clockCycleTime);
         while (true)//  kor
         {
-
-            yield return new WaitForSeconds(AITypeByTeam[ai.team].clockCycleTime);
+            yield return new WaitForSeconds(ai.aiType.clockCycleTime);
             while (LevelMenu.paused)
             {
                 yield return null;
             }
-            //Debug.Log(AITypeByTeam[ai.team].clockCycleTime);
-            AITypeByTeam[ai.team].CalculateMove(this, ai);
+            ai.aiType.CalculateMove(this, ai);
         }
     }
 
     public void UpdateTeamTowers(BuildingMain tower, int oldTeam, int newTeam)
     {
-        //magicno odredimo sta se desi kad neko zauzme nesto
-        //inace nemam pojma sta se desava
         if (oldTeam >= 2)
             AIPlayers[oldTeam - 2].buildings.Remove(tower);
         else

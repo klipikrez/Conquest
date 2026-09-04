@@ -17,7 +17,7 @@ public class AIBehaviorDefend : AIBehavior
         foreach (BuildingMain tower in player.buildings)
         {
             float numberOfEnemyUnitsNearby = 0f;
-            foreach (BuildingMain neighbor in tower.neighbours)//pass trough all neighbours of current tower
+            foreach (BuildingMain neighbor in AINeighborUtility.GetNeighbors(tower))
             {
                 if (neighbor.team.teamid != player.team)// 
                 {

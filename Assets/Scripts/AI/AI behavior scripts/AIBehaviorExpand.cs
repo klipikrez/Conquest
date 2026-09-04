@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,10 +16,10 @@ public class AIBehaviorExpand : AIBehavior
         BuildingMain sendTo = null;
         float units = 0f;
 
-        foreach (BuildingMain tower in player.buildings)//da vidimo dal' ima neprijatelja ko komsiju, ako ima ignorisemo ga
+        foreach (BuildingMain sourceBuilding in player.buildings)
         {
             bool hasEnemyNeighbour = false;
-            foreach (BuildingMain neighbor in tower.neighbours)
+            foreach (BuildingMain neighbor in AINeighborUtility.GetNeighbors(sourceBuilding))
             {
                 if (neighbor.team.teamid != player.team && neighbor.team.teamid != 0)
                 {
@@ -30,18 +29,19 @@ public class AIBehaviorExpand : AIBehavior
             }
             if (hasEnemyNeighbour) continue;
 
-            sendFrom.Add(tower);
-            units += GetSendableUnits(player, tower) * minUnitDifferenceSendPercent;
+            sendFrom.Add(sourceBuilding);
+            units += GetSendableUnits(player, sourceBuilding) * minUnitDifferenceSendPercent;
         }
 
         float bestAttackValue = 0;
-        foreach (BuildingMain tower in player.buildings)
+        foreach (BuildingMain sourceBuilding in player.buildings)
         {
-            foreach (BuildingMain neighbor in tower.neighbours)//pass trough all neighbours of current tower
+            foreach (BuildingMain neighbor in AINeighborUtility.GetNeighbors(sourceBuilding))
             {
                 if (neighbor.team.teamid == player.team) continue;
-                float attackValue = units - neighbor.production.product * (neighbor.team.teamid == 0 ? 1 : EnemyCostMultiplyer);
-                if (attackValue > bestAttackValue)// if calc better update new target
+                float attackValue = units - neighbor.production.product
+                    * (neighbor.team.teamid == 0 ? 1 : EnemyCostMultiplyer);
+                if (attackValue > bestAttackValue)
                 {
                     bestAttackValue = attackValue;
                     sendTo = neighbor;
@@ -51,7 +51,7 @@ public class AIBehaviorExpand : AIBehavior
 
         if (sendTo != null && sendFrom.Count > 0)
         {
-            Debug.Log("AI " + player.team + " defending(support units): " + sendTo.id + " from: ");
+            Debug.Log("AI " + player.team + " expanding to: " + sendTo.id);
             foreach (BuildingMain from in sendFrom)
             {
                 from.unitController.Attack(expandAmount, sendTo.transform, false, GetUnitsToKeep(player, from));
@@ -66,7 +66,4 @@ public class AIBehaviorExpand : AIBehavior
         return false;
 
     }
-
-
-
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class AIState : ScriptableObject
@@ -10,42 +8,39 @@ public abstract class AIState : ScriptableObject
         public int chance;
         public AIBehavior behavior;
     }
-    //public int[] rngStateChances = new int[3] { 5, 35, 60 };//treba ukupno da bude 100 
     public AIBehaviorChances[] chanceBehaviorsTable;
-    //public AIBehaviorAttack attackBehavior;
-    //public AIBehaviorDefend defendBehavior;
-    //public AIBehaviorExpand expandBehavior;
+
     public abstract void CalculateMove(AIManager manager, AIPlayer player);
+
+    protected bool ExecuteRandomBehavior(AIManager manager, AIPlayer player)
+    {
+        int action = GetAction();
+        if (action < 0 || chanceBehaviorsTable[action].behavior == null)
+        {
+            return false;
+        }
+
+        return chanceBehaviorsTable[action].behavior.ExecuteMove(manager, player);
+    }
+
     public int GetAction()
     {
-        //calculate ranom number based on chance table
-        System.Random r = new System.Random();
-        int randz = r.Next(101); /*Random.Range(101);*/
-        //        Debug.Log("" + randz);
+        if (chanceBehaviorsTable == null || chanceBehaviorsTable.Length == 0)
+        {
+            return -1;
+        }
 
-        int chanceSum = chanceBehaviorsTable[0].chance;
+        int randomValue = Random.Range(0, 101);
+        int chanceTotal = 0;
         for (int i = 0; i < chanceBehaviorsTable.Length; i++)
         {
-            if (chanceSum >= randz)
+            chanceTotal += chanceBehaviorsTable[i].chance;
+            if (randomValue < chanceTotal)
             {
                 return i;
             }
-            chanceSum += chanceBehaviorsTable[i + 1].chance;
         }
 
-        /*for (int i = 0; i < chanceBehaviorsTable.Length; i++)
-        {
-            int chance = 0;
-            for (int j = 0; j < i; j++)
-            {
-                chance += chanceBehaviorsTable[j].chance;
-                if (chance > randz)
-                {
-                    return i;
-                }
-            }
-
-        }*/
         return chanceBehaviorsTable.Length - 1;
     }
 }

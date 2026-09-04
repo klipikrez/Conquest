@@ -16,7 +16,7 @@ public class AIBehaviorAttack : AIBehavior
         float units = 0f;
         foreach (BuildingMain tower in player.buildings)
         {
-            foreach (BuildingMain neighbor in tower.neighbours)//pass trough all neighbours of current tower
+            foreach (BuildingMain neighbor in AINeighborUtility.GetNeighbors(tower))
             {
                 float attackValue = GetSendableUnits(player, tower) * minUnitDifferenceSendPercent - neighbor.production.product;//how valiable is this tower vs. how dificult it's to capture
                 if (neighbor.team.teamid != player.team && neighbor.team.teamid == player.currentEnemyTeam && attackValue > units)// if calc better update new target
