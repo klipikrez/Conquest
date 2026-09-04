@@ -12,9 +12,10 @@ public class TowerPresetData
     public float cost = 10;//nes nis dobit//
     public float productProduction = 0.4f;//increment by 0.4?//
     public int maxUnits = 10;//increment by 10?//
-    public float vulnerability = 0.81f; //
-    public string[] enabledUpgrades; //
+    public float vulnerability = 0.81f; //how much damage does each attacker deal
+    public string[] enabledUpgrades; //not used now
     public string[] meshPath; // meshes
+    public string type = null;//some special ability
 
 
 

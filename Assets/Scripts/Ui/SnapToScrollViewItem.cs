@@ -21,11 +21,17 @@ public class SnapToScrollViewItem : MonoBehaviour
 
     Action handleMove;
 
+    void OnEnable()
+    {
+        currentItem = contentPanel.childCount - 1;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         UpdateLayoutPadding();
         handleMove = ManualMove;
+        SnapToItem(contentPanel.childCount - 1);
     }
 
     bool selectionLatch = false;
@@ -51,7 +57,8 @@ public class SnapToScrollViewItem : MonoBehaviour
             if (!selectionLatch)
             {
                 selectionLatch = true;
-                levelManager.SetSelectedLevel(GetItem(currentItem).levelName);
+                MenuLevel menuLevel = GetItem(currentItem);
+                levelManager.SetSelectedLevel(menuLevel.levelName, menuLevel.levelNumber);
             }
             MoveToItem(currentItem);
         }
@@ -183,7 +190,16 @@ public class SnapToScrollViewItem : MonoBehaviour
                 break;
             }
         }
-        levelManager.SetSelectedLevel(GetItem(currentItem).levelName);
+        MenuLevel menuLevel = GetItem(currentItem);
+        levelManager.SetSelectedLevel(menuLevel.levelName, menuLevel.levelNumber);
+        handleMove = AutoMove;
+    }
+
+    public void SnapToItem(int levelNumber)
+    {
+        Debug.Log("Level number snap: " + levelNumber);
+        MenuLevel menuLevel = GetItem(levelNumber);
+        levelManager.SetSelectedLevel(menuLevel.levelName, menuLevel.levelNumber);
         handleMove = AutoMove;
     }
 }

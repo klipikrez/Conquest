@@ -2,9 +2,9 @@
     "towers": [
         {
             "id": 0,
-            "team": 0,
-            "modelPath": "smallTown.glb",
-            "presetName": "smallTown",
+            "team": 1,
+            "modelPath": "largeTown.glb",
+            "presetName": "largeTown",
             "towerOverrides": [],
             "connections": [
                 12,
@@ -129,8 +129,8 @@
         {
             "id": 5,
             "team": 0,
-            "modelPath": "smallTown.glb",
-            "presetName": "smallTown",
+            "modelPath": "largeTown.glb",
+            "presetName": "largeTown",
             "towerOverrides": [],
             "connections": [
                 15,
@@ -154,8 +154,8 @@
         {
             "id": 6,
             "team": 0,
-            "modelPath": "smallTown.glb",
-            "presetName": "smallTown",
+            "modelPath": "castle.glb",
+            "presetName": "castle",
             "towerOverrides": [],
             "connections": [
                 17,
@@ -179,8 +179,8 @@
         {
             "id": 7,
             "team": 0,
-            "modelPath": "smallTown.glb",
-            "presetName": "smallTown",
+            "modelPath": "largeTown.glb",
+            "presetName": "largeTown",
             "towerOverrides": [],
             "connections": [
                 8,
@@ -229,7 +229,7 @@
         },
         {
             "id": 9,
-            "team": 0,
+            "team": 2,
             "modelPath": "smallTown.glb",
             "presetName": "smallTown",
             "towerOverrides": [],
@@ -255,13 +255,13 @@
         },
         {
             "id": 10,
-            "team": 0,
+            "team": 2,
             "modelPath": "smallTown.glb",
             "presetName": "smallTown",
             "towerOverrides": [],
             "connections": [
-                18,
                 9,
+                18,
                 11
             ],
             "position": {
@@ -281,13 +281,13 @@
         },
         {
             "id": 11,
-            "team": 0,
-            "modelPath": "smallTown.glb",
-            "presetName": "smallTown",
+            "team": 2,
+            "modelPath": "largeTown.glb",
+            "presetName": "largeTown",
             "towerOverrides": [],
             "connections": [
-                10,
-                9
+                9,
+                10
             ],
             "position": {
                 "x": -16.21954345703125,
@@ -336,8 +336,8 @@
             "presetName": "invisiblePoint",
             "towerOverrides": [],
             "connections": [
-                4,
-                0
+                0,
+                4
             ],
             "position": {
                 "x": -20.364395141601564,
@@ -411,8 +411,8 @@
             "presetName": "invisiblePoint",
             "towerOverrides": [],
             "connections": [
-                5,
-                4
+                4,
+                5
             ],
             "position": {
                 "x": -16.723007202148439,
@@ -463,8 +463,8 @@
             "towerOverrides": [],
             "connections": [
                 8,
-                10,
-                9
+                9,
+                10
             ],
             "position": {
                 "x": -8.6978759765625,

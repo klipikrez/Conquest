@@ -9,6 +9,8 @@ public class AIBehaviorAttack : AIBehavior
     public float minUnitDifferenceSendPercent = 0.75f;
     public override bool ExecuteMove(AIManager manager, AIPlayer player)
     {
+        if (TryStockShootingBuilding(player)) return true;
+
         BuildingMain sendTo = null;
         BuildingMain sendFrom = null;
         float units = 0f;
@@ -16,7 +18,7 @@ public class AIBehaviorAttack : AIBehavior
         {
             foreach (BuildingMain neighbor in tower.neighbours)//pass trough all neighbours of current tower
             {
-                float attackValue = tower.production.product * minUnitDifferenceSendPercent - neighbor.production.product;//how valiable is this tower vs. how dificult it's to capture
+                float attackValue = GetSendableUnits(player, tower) * minUnitDifferenceSendPercent - neighbor.production.product;//how valiable is this tower vs. how dificult it's to capture
                 if (neighbor.team.teamid != player.team && neighbor.team.teamid == player.currentEnemyTeam && attackValue > units)// if calc better update new target
                 {
                     units = attackValue;
@@ -28,7 +30,7 @@ public class AIBehaviorAttack : AIBehavior
 
         if (sendTo != null && sendFrom != null)
         {
-            sendFrom.unitController.Attack(expandAmount, sendTo.transform, false);
+            sendFrom.unitController.Attack(expandAmount, sendTo.transform, false, GetUnitsToKeep(player, sendFrom));
             Debug.Log("AI " + player.team + " attack: " + sendTo.id + " from: " + sendFrom.id);
             return true;
         }

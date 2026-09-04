@@ -44,11 +44,14 @@ public class LevelMenu : MonoBehaviour
         {
             timeSinceStart += Time.deltaTime;
         }
-        if (Input.GetKeyUp(KeyCode.Escape) && !blocked)
+        if (Input.GetKeyUp(KeyCode.Escape))
         {
             if (UI.activeSelf)
             {
-                Resume();
+                if (blocked)
+                    UI.SetActive(false);
+                else
+                    Resume();
             }
             else
             {
@@ -102,6 +105,15 @@ public class LevelMenu : MonoBehaviour
     }
     public void Resume()
     {
+        if (Yarn.Unity.Example.DialogueManager.Instance != null && Yarn.Unity.Example.DialogueManager.Instance.inDialogue)
+        {
+            paused = true;
+            blocked = true;
+            Main.SetObjectsActive(0);
+            UI.SetActive(false);
+            return;
+        }
+
         paused = false;
         blocked = false;
         Main.SetObjectsActive(0);
@@ -131,6 +143,7 @@ public class LevelMenu : MonoBehaviour
 
     public void WinScreen()
     {
+        ScenesManager.Instance.UpdateCurrentCampaignProgress();
         Pause();
         Main.SetObjectsActive(1);
         WinUI.SetActive(true);
@@ -152,6 +165,14 @@ public class LevelMenu : MonoBehaviour
 
     public void Continue()
     {
-        Resume();
+        if (blocked)
+            UI.SetActive(false);
+        else
+            Resume();
+    }
+
+    public void NextLevel()
+    {
+        ScenesManager.Instance.LoadNextLevel();
     }
 }

@@ -17,6 +17,8 @@ public class BuildingMain : MonoBehaviour
     public UnitDetector unitDetector;
     [System.NonSerialized]
     public BuildingOptions buildingOptions;
+    [System.NonSerialized]
+    public BuildingShoot buildingShoot;
 
     public List<BuildingMain> neighbours;
 
@@ -40,12 +42,15 @@ public class BuildingMain : MonoBehaviour
         if (unitDetector == null) Debug.LogError("unitDetector Missing on tower: " + id);
         buildingOptions = gameObject.GetComponent<BuildingOptions>();
         if (buildingOptions == null) Debug.LogError("buildingOptions Missing on tower: " + id);
+        buildingShoot = gameObject.GetComponent<BuildingShoot>();
+        if (buildingShoot == null) Debug.LogError("buildingShoot Missing on tower: " + id);
         unitController.building = this;
         production.building = this;
         team.building = this;
         buildingUI.building = this;
         unitDetector.building = this;
         buildingOptions.building = this;
+        buildingShoot.building = this;
 
 
         if (autoInitialize)

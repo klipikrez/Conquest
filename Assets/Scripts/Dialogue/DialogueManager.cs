@@ -54,6 +54,33 @@ namespace Yarn.Unity.Example
         public bool inDialogue = false;
         private LevelMenu levelMenu = null;
         private Coroutine moveCameraCoroutine = null;
+        private float enterHoldTime = 0f;
+        private bool dialogueSkipTriggered = false;
+
+        private void Update()
+        {
+            if (!inDialogue || (levelMenu != null && levelMenu.UI != null && levelMenu.UI.activeSelf))
+            {
+                enterHoldTime = 0f;
+                dialogueSkipTriggered = false;
+                return;
+            }
+
+            if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
+            {
+                enterHoldTime += Time.deltaTime;
+                if (!dialogueSkipTriggered && enterHoldTime >= 1f)
+                {
+                    dialogueSkipTriggered = true;
+                    runner.Stop();
+                }
+            }
+            else
+            {
+                enterHoldTime = 0f;
+                dialogueSkipTriggered = false;
+            }
+        }
 
         public void Initiate()
         {
@@ -98,16 +125,16 @@ namespace Yarn.Unity.Example
                         //Destroy(tt, 5f);
                     }
                     else
-                    if (IsAudio(file))
-                    {
-                        /*Byte[] pngBytes = System.IO.File.ReadAllBytes(file);
-                        Texture2D tt = new Texture2D(52, 52);
-                        tt.LoadImage(pngBytes);//moguce je ede da dovo treba da se sacuva negde na disky
-                                               //tt.alphaIsTransparency = true;
-                        tt.name = Path.GetFileName(file);*/
+                        if (IsAudio(file))
+                        {
+                            /*Byte[] pngBytes = System.IO.File.ReadAllBytes(file);
+                            Texture2D tt = new Texture2D(52, 52);
+                            tt.LoadImage(pngBytes);//moguce je ede da dovo treba da se sacuva negde na disky
+                                                   //tt.alphaIsTransparency = true;
+                            tt.name = Path.GetFileName(file);*/
 
-                        Debug.Log(file);
-                    }
+                            Debug.Log(file);
+                        }
                     i++;
                 }
                 //EditorManager.Instance.SetTerrainTextures(layers.ToArray());
@@ -184,6 +211,8 @@ namespace Yarn.Unity.Example
                 levelMenu.Block();
 
             inDialogue = true;
+            enterHoldTime = 0f;
+            dialogueSkipTriggered = false;
             spriteGroup.gameObject.SetActive(true);
             bgImage.gameObject.SetActive(true);
             fadeBG.gameObject.SetActive(true);
@@ -200,10 +229,13 @@ namespace Yarn.Unity.Example
 */
             if (levelMenu == null)
                 levelMenu = GameObject.FindGameObjectWithTag("levelMenu").GetComponent<LevelMenu>();
+            inDialogue = false;
+            enterHoldTime = 0f;
+            dialogueSkipTriggered = false;
+
             if (levelMenu != null)
                 levelMenu.Resume();
 
-            inDialogue = false;
             spriteGroup.gameObject.SetActive(false);
             bgImage.gameObject.SetActive(false);
             fadeBG.gameObject.SetActive(false);

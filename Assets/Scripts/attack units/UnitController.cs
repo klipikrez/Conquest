@@ -96,6 +96,11 @@ public class UnitController : MonoBehaviour
             /*for (int i = 0; i < agents.Count; i++)
             {
                 UnitAgent agent = agents[i];*/
+            if (agent.TrackPositions.Count == 0)
+            {
+                return;
+            }
+
             List<Transform> context = GetNearbyObjects(agent);
             context.Insert(0, agent.TrackPositions.Peek()); //insert na prvo mesto liste track transform
 
@@ -144,16 +149,18 @@ public class UnitController : MonoBehaviour
         }
     }
 
-    public void Attack(int percent, Transform attack, bool dalDaSeVidiOnaLinijaKadSaljesLikoveIzmedjuSmajli = true)
+    public void Attack(int percent, Transform attack, bool dalDaSeVidiOnaLinijaKadSaljesLikoveIzmedjuSmajli = true, float minimumUnits = 1f)
     {
 
-        int amount = (int)(building.production.product * (percent / 100f));
+        int amount = Mathf.Min(
+            (int)(building.production.product * (percent / 100f)),
+            Mathf.Max(0, Mathf.FloorToInt(building.production.product - minimumUnits)));
 
         if (amount >= 1)
         {
             StopAttackUnits();
             Transform[] path = CalculatePath(transform, attack, dalDaSeVidiOnaLinijaKadSaljesLikoveIzmedjuSmajli);
-            if (path != null) attackCoroutine = StartCoroutine(SpawnAttackUnits(amount, path, building.team.teamid));
+            if (path != null) attackCoroutine = StartCoroutine(SpawnAttackUnits(amount, path, building.team.teamid, minimumUnits));
         }
     }
 
@@ -222,7 +229,7 @@ public class UnitController : MonoBehaviour
         line.enabled = false;
     }
 
-    IEnumerator SpawnAttackUnits(int amount, Transform[] attack, int teamid)
+    IEnumerator SpawnAttackUnits(int amount, Transform[] attack, int teamid, float minimumUnits)
     {
 
         while (true)
@@ -230,7 +237,7 @@ public class UnitController : MonoBehaviour
 
             for (int i = 0; i < maxDispatchRate; i++)
             {
-                if (building.production.product - 1 <= 0 || amount < 0)
+                if (building.production.product - minimumUnits <= 0 || amount < 0)
                 {
                     yield break;
                 }

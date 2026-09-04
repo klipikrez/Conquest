@@ -23,6 +23,11 @@ public class UnitDetector : MonoBehaviour
         foreach (Collider unit in contextColliders)
         {
             UnitAgent unitAgent = unit.GetComponent<UnitAgent>();
+            if (unitAgent.TrackPositions.Count == 0)
+            {
+                continue;
+            }
+
             if (Engage)
             {
                 if (unitAgent.Controller != building.unitController)

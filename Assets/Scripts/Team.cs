@@ -11,6 +11,7 @@ public class Team : MonoBehaviour
     public MeshRenderer meshRenderer;
     public MeshRenderer markerRend;
     public MeshFilter meshFilter;
+    public MeshFilter meshFilterWeapon;
     public Animator ObjectAnimatior;
 
     public float vulnerability = 0.81f;

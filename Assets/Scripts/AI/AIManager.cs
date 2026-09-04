@@ -6,6 +6,7 @@ using UnityEngine;
 public class AIPlayer
 {
     public int team;
+    public AIType aiType;
     public int currentEnemyTeam = -52;
     public float numberOfUnits = 0;
     public float distress;
@@ -208,6 +209,7 @@ public class AIManager : MonoBehaviour
             if (ai.team <= AITypeByTeam.Length - 1)//check if team ai exists
             {
                 //Debug.Log(AITypeByTeam[ai.team].name);
+                ai.aiType = AITypeByTeam[ai.team];
                 ai.repeatingFunction = StartCoroutine(AIClockRepeating(ai));
             }
         }

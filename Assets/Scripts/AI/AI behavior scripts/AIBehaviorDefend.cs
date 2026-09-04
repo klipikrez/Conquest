@@ -9,6 +9,8 @@ public class AIBehaviorDefend : AIBehavior
 
     public override bool ExecuteMove(AIManager manager, AIPlayer player)
     {
+        if (TryStockShootingBuilding(player)) return true;
+
         BuildingMain sendTo = null;// zasad salje samo jednom liku, jkasnije bi voleo da podeli svim tornjevima koji su u opasnosti od napada
         List<BuildingMain> sendFrom = new List<BuildingMain>();
         float bestNumberOfEnemyUnitsNearby = 0f;
@@ -31,9 +33,10 @@ public class AIBehaviorDefend : AIBehavior
             }
             else
             {
-                if (numberOfEnemyUnitsNearby > bestNumberOfEnemyUnitsNearby)
+                float defensiveValue = GetDefensiveValue(player, tower, numberOfEnemyUnitsNearby);
+                if (defensiveValue > bestNumberOfEnemyUnitsNearby)
                 {
-                    bestNumberOfEnemyUnitsNearby = numberOfEnemyUnitsNearby;
+                    bestNumberOfEnemyUnitsNearby = defensiveValue;
                     sendTo = tower;
                 }
             }
@@ -44,7 +47,7 @@ public class AIBehaviorDefend : AIBehavior
             Debug.Log("AI " + player.team + " defending(support units): " + sendTo.id + " from: ");
             foreach (BuildingMain from in sendFrom)
             {
-                from.unitController.Attack(expandAmount, sendTo.transform, false);
+                from.unitController.Attack(expandAmount, sendTo.transform, false, GetUnitsToKeep(player, from));
                 Debug.Log("  -from: " + from.id);
             }
 

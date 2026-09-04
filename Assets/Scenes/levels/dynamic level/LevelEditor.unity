@@ -3308,8 +3308,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1760461146}
   m_HandleRect: {fileID: 1760461145}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.99999976
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5665,7 +5665,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -5.5005493, y: 5.0900574}
+  m_AnchoredPosition: {x: -5.5005493, y: 5.090027}
   m_SizeDelta: {x: 402.01, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &468691399
@@ -10128,7 +10128,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1728935752}
   m_HandleRect: {fileID: 1728935751}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -11554,10 +11554,10 @@ MonoBehaviour:
   - {fileID: -6465566751694194690, guid: 76aac6a615db66845ab261315cbd34d3, type: 3}
   - {fileID: 4800000, guid: a534f61a8716249499546a38470edcef, type: 3}
   terrainShadersUnlit:
-  - {fileID: -6465566751694194690, guid: 5b91fefe08b344248b72b5d6c9de3a6e, type: 3}
+  - {fileID: -6465566751694194690, guid: 47440d7a6bbaf624d99dba305bc09a50, type: 3}
   - {fileID: 4800000, guid: d215f133070e2b1428dc87707d3b447d, type: 3}
   terrainMaterial: {fileID: 2100000, guid: f6b4c99013c1c9a4f8e29d0d293cd428, type: 2}
-  terrainMaterialUnlit: {fileID: 2100000, guid: e9608f6ffc162b14091f605fa5484576, type: 2}
+  terrainMaterialUnlit: {fileID: 2100000, guid: 8334f12ff5c2645429c7a5f0e91b4948, type: 2}
   parentSpawn: {fileID: 987209751}
   prefab: {fileID: 8832561273661788842, guid: 9a3a5cb7074fb9740b0f6ea84f6c8714, type: 3}
   textureButtons: {fileID: 1666530613}
@@ -12129,7 +12129,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 818104048}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.61276394
+  m_Size: 0.6504999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13057,7 +13057,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 0
-  m_MaterialTemplate: {fileID: 2100000, guid: e9608f6ffc162b14091f605fa5484576, type: 2}
+  m_MaterialTemplate: {fileID: 2100000, guid: 8334f12ff5c2645429c7a5f0e91b4948, type: 2}
   m_BakeLightProbesForTrees: 0
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -16044,7 +16044,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 510556964}
   m_HandleRect: {fileID: 510556963}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -22237,7 +22237,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 110887876}
   m_HandleRect: {fileID: 110887875}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -22363,8 +22363,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 325602037}
   m_HandleRect: {fileID: 325602036}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -23950,8 +23950,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 765156040}
   m_HandleRect: {fileID: 765156039}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99999976
+  m_Value: 0
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

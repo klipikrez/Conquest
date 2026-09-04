@@ -88,6 +88,7 @@ public class playerSelectionDictionary : MonoBehaviour
         {
             if (pair.Value != null)
             {
+                if (selected[pair.Key].GetComponent<Team>().teamid != 1) continue;
                 if (selected[pair.Key] != attack.gameObject)
                 {
                     selected[pair.Key].GetComponent<UnitController>().Attack(percent, attack);
@@ -109,7 +110,7 @@ public class playerSelectionDictionary : MonoBehaviour
         {
             if (pair.Value != null)
             {
-
+                if (selected[pair.Key].GetComponent<Team>().teamid != 1) continue;
                 selected[pair.Key].GetComponent<UnitController>().ContinuousAttack(attack);
 
             }

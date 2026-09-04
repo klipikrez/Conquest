@@ -16,9 +16,12 @@ public class EditorLevelInfoManage : MonoBehaviour
     public Sprite defaultSprite;
     public TextMeshProUGUI flavourTextElement;
     public string levelName;
+    protected int levelNumber = -52;
 
-    public virtual void SetSelectedLevel(string levelName)
+    public virtual void SetSelectedLevel(string levelName, int levelNumber = -52)
     {
+
+        this.levelNumber = levelNumber;
         //        Debug.Log(" - - - -- " + levelName);
         nameElement.text = levelName;
         this.levelName = levelName;
@@ -48,7 +51,7 @@ public class EditorLevelInfoManage : MonoBehaviour
 
     }
 
-    public void Play()
+    public virtual void Play()
     {
         if (levelName == "" || levelName == "Editor") { SoundManager.Instance.PlayDeniedSound(); return; }
         Debug.Log("Play: " + levelName);

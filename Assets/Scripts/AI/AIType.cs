@@ -11,6 +11,8 @@ public class AIType : ScriptableObject
     public int enemiesNearbyState = 1;
     public int attackEnemyState = 2;
     public float aggresivnes = 20;
+    public int shootingBuildingMinimumUnits = 10;
+    public float shootingBuildingValueMultiplier = 2f;
 
     public void CalculateMove(AIManager manager, AIPlayer player)
     {

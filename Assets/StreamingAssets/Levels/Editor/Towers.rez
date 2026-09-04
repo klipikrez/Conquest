@@ -3,7 +3,6 @@
         {
             "id": 0,
             "team": 1,
-            
             "modelPath": "smallTown.glb",
             "presetName": "smallTown",
             "towerOverrides": [],
@@ -28,7 +27,6 @@
         {
             "id": 1,
             "team": 2,
-
             "modelPath": "smallTown.glb",
             "presetName": "smallTown",
             "towerOverrides": [],
@@ -37,7 +35,7 @@
             ],
             "position": {
                 "x": -5.959693908691406,
-                "y": 7.2357635498046879,
+                "y": 7.173675537109375,
                 "z": 16.971755981445314
             },
             "rotation": {
@@ -53,13 +51,12 @@
         {
             "id": 2,
             "team": 3,
-            
             "modelPath": "smallTown.glb",
             "presetName": "smallTown",
             "towerOverrides": [],
             "connections": [
-                1,
-                0
+                0,
+                1
             ],
             "position": {
                 "x": -4.413139343261719,

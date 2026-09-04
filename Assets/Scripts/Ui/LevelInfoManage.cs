@@ -14,11 +14,13 @@ public class LevelInfoManage : EditorLevelInfoManage
     public List<Sprite> dressingSprites;
     public Sprite defaultDressingSprite;
     public SnapToScrollViewItem snapToScrollViewItem;
-    public override void SetSelectedLevel(string levelName)
+    public override void SetSelectedLevel(string levelName, int levelNumber = -52)
     {
+        Debug.Log("Selected level Number: " + levelNumber);
         //        Debug.Log(" - - - -- " + levelName);
         nameElement.text = levelName;
         this.levelName = levelName;
+        this.levelNumber = levelNumber;
 
         string folderPath = Application.dataPath + "/StreamingAssets/Levels/" + levelName;
         string filePath = Path.Combine(folderPath, "cover.png");
@@ -45,6 +47,13 @@ public class LevelInfoManage : EditorLevelInfoManage
     public override void Snap()
     {
         snapToScrollViewItem.SnapToItem(levelName);
+    }
+
+    public override void Play()
+    {
+        if (levelName == "" || levelName == "Editor") { SoundManager.Instance.PlayDeniedSound(); return; }
+        Debug.Log("Play: " + levelName);
+        ScenesManager.Instance.LoadLevel(level, levelName, levelNumber);
     }
 
 }

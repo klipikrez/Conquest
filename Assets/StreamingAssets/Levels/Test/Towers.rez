@@ -3,7 +3,6 @@
         {
             "id": 0,
             "team": 0,
-
             "modelPath": "smallTown.glb",
             "presetName": "smallTown",
             "towerOverrides": [],
@@ -30,7 +29,6 @@
         {
             "id": 1,
             "team": 2,
-
             "modelPath": "smallTown.glb",
             "presetName": "smallTown",
             "towerOverrides": [
@@ -68,13 +66,12 @@
         {
             "id": 2,
             "team": 3,
-
             "modelPath": "smallTown.glb",
             "presetName": "smallTown",
             "towerOverrides": [],
             "connections": [
-                3,
                 0,
+                3,
                 4
             ],
             "position": {
@@ -95,14 +92,13 @@
         {
             "id": 3,
             "team": 0,
-
             "modelPath": "smallTown.glb",
             "presetName": "smallTown",
             "towerOverrides": [],
             "connections": [
                 0,
-                5,
                 2,
+                5,
                 4
             ],
             "position": {
@@ -123,15 +119,14 @@
         {
             "id": 4,
             "team": 0,
-
             "modelPath": "smallTown.glb",
             "presetName": "smallTown",
             "towerOverrides": [],
             "connections": [
-                5,
-                0,
                 2,
-                3
+                3,
+                5,
+                0
             ],
             "position": {
                 "x": -7.0692291259765629,
@@ -151,14 +146,13 @@
         {
             "id": 5,
             "team": 0,
-
             "modelPath": "smallTown.glb",
             "presetName": "smallTown",
             "towerOverrides": [],
             "connections": [
-                6,
+                3,
                 4,
-                3
+                6
             ],
             "position": {
                 "x": -10.480484008789063,
@@ -178,7 +172,6 @@
         {
             "id": 6,
             "team": 1,
-
             "modelPath": "smallTown.glb",
             "presetName": "smallTown",
             "towerOverrides": [

@@ -14,10 +14,13 @@ public class MenuLevel : MonoBehaviour
     public TextMeshProUGUI text;
     public Image bgImage;
     EditorLevelInfoManage manager;
+    [System.NonSerialized]
+    public int levelNumber = -52;
 
-    public void Initialize(string levelName, EditorLevelInfoManage manager, bool cuttoffLevelName = false)
+    public void Initialize(string levelName, EditorLevelInfoManage manager, int levelNumber, bool cuttoffLevelName = false)
     {
-
+        Debug.Log("initialize level: " + levelNumber);
+        this.levelNumber = levelNumber;
         this.levelName = levelName;
         text.text = cuttoffLevelName ? levelName.Split(' ')[0] : levelName;
         this.manager = manager;
@@ -53,7 +56,8 @@ public class MenuLevel : MonoBehaviour
 
     public void Selected()
     {
-        manager.SetSelectedLevel(levelName);
+        Debug.Log("Clicked: " + levelNumber);
+        manager.SetSelectedLevel(levelName, levelNumber);
         manager.Snap();
     }
 

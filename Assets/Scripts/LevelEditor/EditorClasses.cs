@@ -458,9 +458,26 @@ public class TowerCompiled
                 tower.id = t.id;
                 tower.team.teamid = t.team;
 
+                switch (preset.type)
+                {
+                    case ("wizard1"):
+                        {
+                            tower.buildingShoot.enabled = true;
+                            break;
+                        }
+                    default:
+                        {
+                            //notin'
+                            break;
+                        }
+                }
+
+
+
                 if (t.presetName == "invisiblePoint")
                 {
                     tower.unitDetector.Engage = false;
+                    tower.GetComponent<BoxCollider>().enabled = false;
                     tower.buildingUI.DisableUI();
                     if (t.modelPath == "none")
                     {
@@ -560,7 +577,9 @@ public class TowerCompiled
 
         if (success)
         {
+
             tower.team.SetMesh(gltf.GetMeshes()[0]);
+
         }
         else
         {

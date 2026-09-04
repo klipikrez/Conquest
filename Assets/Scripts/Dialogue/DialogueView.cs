@@ -255,7 +255,7 @@ public static class Effects
     /// <param name="onCharacterTyped">An <see cref="Action"/> that should be called for each character that was revealed.</param>
     /// <param name="stopToken">A <see cref="CoroutineInterruptToken"/> that
     /// can be used to interrupt the coroutine.</param>
-    public static IEnumerator Typewriter(TextMeshProUGUI text, float lettersPerSecond, Action onCharacterTyped, CoroutineInterruptToken stopToken = null)
+    public static IEnumerator Typewriter(TextMeshProUGUI text, float lettersPerSecond, Action onCharacterTyped, string charName, CoroutineInterruptToken stopToken = null)
     {
         stopToken?.Start();
 
@@ -293,13 +293,16 @@ public static class Effects
         // the requested speed.
         var accumulator = Time.deltaTime;
 
+        float textDelayTime = 0.05f;
+
         while (text.maxVisibleCharacters < characterCount)
         {
+
             if (stopToken?.WasInterrupted ?? false)
             {
                 yield break;
             }
-
+            SoundManager.Instance.PlayTalkSound(charName);
             // We need to show as many letters as we have accumulated
             // time for.
             while (accumulator >= secondsPerLetter)
@@ -308,9 +311,11 @@ public static class Effects
                 onCharacterTyped?.Invoke();
                 accumulator -= secondsPerLetter;
             }
-            accumulator += Time.deltaTime;
+            accumulator += Time.deltaTime + textDelayTime;
 
-            yield return null;
+
+
+            yield return new WaitForSeconds(textDelayTime);
         }
 
         // We either finished displaying everything, or were
@@ -429,6 +434,9 @@ public class DialogueView : DialogueViewBase
     [SerializeField]
     internal TextMeshProUGUI characterNameText = null;
 
+    [SerializeField]
+    public Animator animator;
+
     /// <summary>
     /// Controls whether the text of <see cref="lineText"/> should be
     /// gradually revealed over time.
@@ -531,6 +539,7 @@ public class DialogueView : DialogueViewBase
     /// A stop token that is used to interrupt the current animation.
     /// </summary>
     Effects.CoroutineInterruptToken currentStopToken = new Effects.CoroutineInterruptToken();
+    private LevelMenu levelMenu;
     private void Start()
     {
         onCharacterTyped.AddListener(UpdateAnimations);
@@ -610,6 +619,7 @@ public class DialogueView : DialogueViewBase
         }
         else
         {
+            if (characterNameText.text == (dialogueLine.CharacterName == null ? dialogueLine.CharacterName : dialogueLine.CharacterName.Replace("_", " "))) animator.Play("NamePlate", 0, 0f);
             characterNameText.text = dialogueLine.CharacterName == null ? dialogueLine.CharacterName : dialogueLine.CharacterName.Replace("_", " ");
             lineText.text = dialogueLine.TextWithoutCharacterName.Text;
             length = dialogueLine.TextWithoutCharacterName.Text.Length;
@@ -626,6 +636,18 @@ public class DialogueView : DialogueViewBase
 
         onInterruptLineFinished();
     }
+
+    public override void DialogueComplete()
+    {
+        StopAllCoroutines();
+        currentLine = null;
+        currentDialogueLine = null;
+        canvasGroup.alpha = 0f;
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
+
+    }
+
     /// <inheritdoc/>
 
     Coroutine animateCorutine;
@@ -987,6 +1009,8 @@ public class DialogueView : DialogueViewBase
                 // If we have a character name text view, show the character
                 // name in it, and show the rest of the text in our main
                 // text view.
+                if (characterNameText.text == (dialogueLine.CharacterName == null ? dialogueLine.CharacterName : dialogueLine.CharacterName.Replace("_", " "))) animator.Play("NamePlate", 0, 0f);
+
                 characterNameText.text = dialogueLine.CharacterName == null ? dialogueLine.CharacterName : dialogueLine.CharacterName.Replace("_", " ");
                 lineText.text = dialogueLine.TextWithoutCharacterName.Text;
             }
@@ -1046,6 +1070,7 @@ public class DialogueView : DialogueViewBase
                         lineText,
                         typewriterEffectSpeed,
                         () => onCharacterTyped.Invoke(),
+                        characterNameText.text,
                         currentStopToken
                     )
                 );
@@ -1104,6 +1129,16 @@ public class DialogueView : DialogueViewBase
     /// <inheritdoc/>
     public override void UserRequestedViewAdvancement()
     {
+        if (levelMenu == null)
+        {
+            GameObject levelMenuObject = GameObject.FindGameObjectWithTag("levelMenu");
+            if (levelMenuObject != null)
+                levelMenu = levelMenuObject.GetComponent<LevelMenu>();
+        }
+
+        if (levelMenu != null && levelMenu.UI != null && levelMenu.UI.activeSelf)
+            return;
+
         // We received a request to advance the view. If we're in the middle of
         // an animation, skip to the end of it. If we're not current in an
         // animation, interrupt the line so we can skip to the next one.
@@ -1123,6 +1158,10 @@ public class DialogueView : DialogueViewBase
             // Stop the current animation, and skip to the end of whatever
             // started it.
             currentStopToken.Interrupt();
+
+            // Consume this input so the line is not skipped while it is
+            // still being presented.
+            return;
         }
         // No animation is now running. Signal that we want to
         // interrupt the line instead.
@@ -1138,6 +1177,11 @@ public class DialogueView : DialogueViewBase
         // if we'd received a signal from any other part of the game (for
         // example, if a DialogueAdvanceInput had signalled us.)
         UserRequestedViewAdvancement();
+    }
+
+    public void OnBackClicked()
+    {
+
     }
 }
 

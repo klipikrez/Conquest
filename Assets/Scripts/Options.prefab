@@ -31,7 +31,6 @@ RectTransform:
   - {fileID: 5442429496789537623}
   - {fileID: 3783337228397523456}
   m_Father: {fileID: 6207607964035659828}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -69,7 +68,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5442429496789537623}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -152,7 +150,6 @@ RectTransform:
   - {fileID: 6628269672084496895}
   - {fileID: 7258915273801021200}
   m_Father: {fileID: 5993957312427566643}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -231,7 +228,6 @@ RectTransform:
   m_Children:
   - {fileID: 5993957312427566643}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -255,10 +251,11 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 31
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!114 &6207607964035659830
 MonoBehaviour:
@@ -325,7 +322,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TransformParent: {fileID: 5993957312427566643}
     m_Modifications:
     - target: {fileID: 3262374298988689686, guid: 777cd2ae3ba737b4fb828f4081ee1b6b, type: 3}
@@ -457,7 +454,9 @@ PrefabInstance:
       value: ReturnToMAinMenu (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 777cd2ae3ba737b4fb828f4081ee1b6b, type: 3}
 --- !u!224 &3783337228397523456 stripped
 RectTransform:
@@ -469,7 +468,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TransformParent: {fileID: 5442429496789537623}
     m_Modifications:
     - target: {fileID: 802369203587283328, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
@@ -661,7 +660,9 @@ PrefabInstance:
       value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
 --- !u!224 &5518939432004797473 stripped
 RectTransform:
@@ -684,7 +685,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TransformParent: {fileID: 5442429496789537623}
     m_Modifications:
     - target: {fileID: 1030983434339917933, guid: f3045ce1df711774ba7bfcdddedc42a8, type: 3}
@@ -816,7 +817,9 @@ PrefabInstance:
       value: Toggle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3045ce1df711774ba7bfcdddedc42a8, type: 3}
 --- !u!114 &2508692729042028962 stripped
 MonoBehaviour:
@@ -839,7 +842,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TransformParent: {fileID: 5442429496789537623}
     m_Modifications:
     - target: {fileID: 802369203587283328, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
@@ -1027,7 +1030,9 @@ PrefabInstance:
       value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
 --- !u!114 &5246926035657936312 stripped
 MonoBehaviour:
@@ -1050,7 +1055,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TransformParent: {fileID: 5442429496789537623}
     m_Modifications:
     - target: {fileID: 802369203587283328, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
@@ -1250,7 +1255,9 @@ PrefabInstance:
       value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
 --- !u!224 &7849352384284699720 stripped
 RectTransform:
@@ -1273,7 +1280,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TransformParent: {fileID: 5442429496789537623}
     m_Modifications:
     - target: {fileID: 802369203587283328, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
@@ -1461,7 +1468,9 @@ PrefabInstance:
       value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
 --- !u!224 &7258915273801021200 stripped
 RectTransform:
@@ -1484,7 +1493,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 2
+    serializedVersion: 3
     m_TransformParent: {fileID: 5442429496789537623}
     m_Modifications:
     - target: {fileID: 802369203587283328, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
@@ -1700,7 +1709,9 @@ PrefabInstance:
       value: 0.16666667
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e592dc3473d094a4295ad12136e9b6f7, type: 3}
 --- !u!114 &7212401748694623202 stripped
 MonoBehaviour:

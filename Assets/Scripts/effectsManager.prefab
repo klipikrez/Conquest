@@ -25,12 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4477172578591511504}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 42.00247, y: -121.48182, z: 170.41039}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3419446221185108373
 MonoBehaviour:
@@ -85,6 +86,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d3ee39a154523a34496a0fa730d1d63d, type: 3}
   - {fileID: 8300000, guid: 9225e01834e666343b4b1d9696505596, type: 3}
   - {fileID: 8300000, guid: 1fa239a84d97b9145b0e9ca5f5cb6d82, type: 3}
+  gun:
+  - {fileID: 8300000, guid: ef29627090180cb46b3b856cc2783ad2, type: 3}
+  talk:
+  - {fileID: 8300000, guid: 119e127c1453635498d574a81f322851, type: 3}
+  - {fileID: 8300000, guid: 0a749efc276a4d04aaed44b924784d14, type: 3}
+  - {fileID: 8300000, guid: a26e64ed33fbdc54b8f424d92e59cc01, type: 3}
+  - {fileID: 8300000, guid: 853c10da13938d5478f4d887490dab4a, type: 3}
+  - {fileID: 8300000, guid: 66b5137ef96b73a40b429b2d408ae56a, type: 3}
   battleSoundPrefab: {fileID: 5342293701193922976, guid: 2cce321d71305234da82dd33cf5aaf7e, type: 3}
   DD: {fileID: 3317138956622227943, guid: 621d6046287247a4c9ed145c30360789, type: 2}
 --- !u!114 &7076161696787454817
@@ -101,3 +110,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vfx:
   - {fileID: 3666607150640622164, guid: 7eb2a8bdef4f1ea4eae44188b570ca28, type: 3}
+  - {fileID: 5935246285332246720, guid: 9ee6712329fc7aa4a93baccccde1a8c4, type: 3}

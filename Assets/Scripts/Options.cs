@@ -13,6 +13,7 @@ public class Settings
     public float[] volumes = { 1, 1, 1, 1 };
     public bool vsync = true;
     public bool showEditorTutorial = true;
+    public int campaignLevel = 0;
 
 }
 

@@ -10,6 +10,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] send;
     public AudioClip[] battle;
     public AudioClip[] tower;
+    public AudioClip[] gun;
+    public AudioClip[] talk;
     public GameObject battleSoundPrefab;
     public AudioMixerGroup DD;
     // Start is called before the first frame update
@@ -48,6 +50,11 @@ public class SoundManager : MonoBehaviour
         StartCoroutine(PlayDDD(tower[Random.Range(0, tower.Length - 1)], position));
     }
 
+    public void PlayGunSound(Vector3 position)
+    {
+        StartCoroutine(PlayDDD(gun[Random.Range(0, gun.Length - 1)], position));
+    }
+
     public void PlayDeniedSound()
     {
         PlayAudioClip(Random.Range(8, 10));
@@ -63,15 +70,46 @@ public class SoundManager : MonoBehaviour
         audioSource.Stop();
         Destroy(gameobj);
     }
-    IEnumerator Play(AudioClip audio)
+    IEnumerator Play(AudioClip audio, float pitch = 1f)
     {
         AudioSource audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.outputAudioMixerGroup = DD;
         audioSource.clip = audio;
+        audioSource.pitch = pitch;
         audioSource.Play();
         yield return new WaitForSeconds(audio.length); //cekaj
         audioSource.Stop();
         Destroy(audioSource);
     }
 
+    internal void PlayTalkSound(string charName)
+    {
+        int id = 0;
+
+        switch (charName)
+        {
+            case ("Zoran"):
+                {
+                    id = 1;
+                    break;
+                }
+            case ("Brigada"):
+                {
+                    id = 2;
+                    break;
+                }
+            case ("Wizard"):
+                {
+                    id = 3;
+                    break;
+                }
+            case ("Jamal"):
+                {
+                    id = 4;
+                    break;
+                }
+        }
+
+        StartCoroutine(Play(talk[id]));
+    }
 }
