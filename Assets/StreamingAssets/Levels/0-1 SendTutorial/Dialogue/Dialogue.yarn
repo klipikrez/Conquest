@@ -10,21 +10,18 @@ position: NaN,NaN
 Zoran: Ah... Your majesty. I see you got my urgent message... 
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
 Zoran: *But you're as late as ever* <br> *Cough* *Cough*
-Zoran: Though I'd love to debate your qualifications...
-<<Act Zoran zoranChill 0.25 0.2 #a20404>>
-Zoran: Now! we have a more urgent matter to tend to.
+Zoran:...
 
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: The situation is dire...
 <<Act Zoran zoranSmug 0.25 0.2 #a20404>>
-Zoran: The [normalWave]FILTHY[/normalWave] peasantry disagree with the notion of your rule.
+Zoran: The [normalWave]FILTHY[/normalWave] peasantry disagree with you as their new monarch.
 Zoran: And thus they have risen in rebelion...
 
 <<Act Zoran zoranChill 0.25 0.2 #a20404>>
 Zoran: Unlike me, your ever-loyal servant.
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
 Zoran: Of course, I warned the late king this might happen...
-Zoran: But, as is often the case, my brilliance was ignored.
 Zoran: No matter, we can't stand here lamenting poor decisions of the past. 
 
 
@@ -42,21 +39,18 @@ Zoran: they represent real life towns, castles and structures of interest in you
 <<LookAt 2 4>>
 <<Act Zoran zoranSmug 0.25 0.2 #a20404>>
 Zoran: Take this one for instance, the dispicable rabble have comandeered it as their own.
-Zoran: But fear not my princess, we can *remedy* this little inconvenience, so to speak.
 
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
 Zoran: Thankfully not all of your subjects are as disloyal.
-<<LookAt 0 7>>
-Zoran: Some loyal men remain stationed in this town here.
 <<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: Some loyal men remain stationed in this town here.
 <<LookAt 0 4>>
-Zoran: It's marked with green as to indicate that it has men loyal to the crown.
 
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
 <<LookAt 0 7>>
 Zoran: And above it sits the number of expendable troops it has of course.
 Zoran: ...
-Zoran: Now all you have to do is give the command an they'll march on the rebelious scum.
+Zoran: Now all you have to do is give the order and they'll march on your comamnd.
 <<Act Zoran zoranSmug 0.25 0.2 #a20404>>
 <<LookAt 1 7>>
 Zoran: you can do this by first <color=red><b>clicking once <sprite name="mouse_l"></b></color> on your town and then <color=red><b>click <sprite name="mouse_l"></b></color> on the enemy town.

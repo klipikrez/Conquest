@@ -38,7 +38,11 @@ public class UnitDetector : MonoBehaviour
                         {
                             if (AIManager.Instance != null && building.team.teamid >= 2)//znaci samo ai timove
                             {
-                                AIManager.Instance.AIPlayers[building.team.teamid - 2].currentEnemyTeam = unitAgent.selfTeam;//novi neprijatelj je napadac
+                                AIPlayer ai = AIManager.Instance.GetAIPlayer(building.team.teamid);
+                                if (ai != null)
+                                {
+                                    ai.currentEnemyTeam = unitAgent.selfTeam;//novi neprijatelj je napadac
+                                }
                             }
                             building.team.Damage(unitAgent);
                             UnitPool.Instance.ReurnUnitsToPool(unitAgent);

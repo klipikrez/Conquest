@@ -28,31 +28,26 @@ Zoran: The enemy can seize it without much trouble.
 <<Scene #000000 0.585>>
 <<LookAt 5 7>>
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
-Zoran: Now, should one of these backwater hamlets somehow grow...
-Zoran: perhaps by absorbing its neighbors in an entirely legal manner it may become a <b>large town</b>.
-<<Act Zoran zoranChill 0.25 0.2 #a20404>>
 Zoran: A large town provides more troops, which is lovely.
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
 Zoran: But, much like its smaller counterpart, it remains… exposed. If you do not defend it, the enemy will gladly take it off your hands.
 
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 <<LookAt 3 7>>
-Zoran: Ah, but this! This is a castle. A true fortress.
+Zoran: Ah, but this! <br>This is a castle.
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
 Zoran: Unlike those flimsy towns, castles are built to last.
 <<Act Zoran zoranSmug 0.25 0.2 #a20404>>
-Zoran: Taking one is an ordeal, an unpleasant, drawn out mess of blood and failure.
-Zoran: They do not produce as many troops as towns, but what does it matter? 
+Zoran: Taking one is an ordeal, an unpleasant, drawn out mess that can cost the enemy double the troops it has stationed inside to take it off your hands.
+Zoran: They do not produce any troops, unlike towns, but what does it matter? 
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
 Zoran: A wise ruler knows how to restation troops where they are needed most.
 
 <<Act Zoran zoranChill 0.25 0.2 #a20404>>
 Zoran: Keep these in mind, Your Majesty.
-Zoran: A town is a farm for soldiers. A castle is a wall of steel.
-Zoran: Control both, and perhaps perhaps you might yet prove yourself worthy of the throne.
 
 <<Act Zoran zoranSmug 0.25 0.2 #a20404>>
-Zoran: …Or at least, worthy enough for now.
+Zoran: …And you may prove yourself worthy of the throne.
 
 <<StopAudioAll>>
 <<Reset>>

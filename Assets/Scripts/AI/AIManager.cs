@@ -91,7 +91,11 @@ public class AIManager : MonoBehaviour
                 }
                 else
                 {
-                    AIPlayers[agent.selfTeam - 2].numberOfUnits++;
+                    AIPlayer ai = GetAIPlayer(agent.selfTeam);
+                    if (ai != null)
+                    {
+                        ai.numberOfUnits++;
+                    }
                 }
             }
         }
@@ -163,7 +167,14 @@ public class AIManager : MonoBehaviour
             AIPlayers.Add(new AIPlayer(team.Key) { buildings = team.Value });
         }
 
+        AIPlayers.Sort((left, right) => left.team.CompareTo(right.team));
+
         return AIPlayers.Count > 0;
+    }
+
+    public AIPlayer GetAIPlayer(int team)
+    {
+        return AIPlayers.Find(ai => ai.team == team);
     }
 
     void InitiateAITeams()
@@ -194,12 +205,20 @@ public class AIManager : MonoBehaviour
     public void UpdateTeamTowers(BuildingMain tower, int oldTeam, int newTeam)
     {
         if (oldTeam >= 2)
-            AIPlayers[oldTeam - 2].buildings.Remove(tower);
+        {
+            AIPlayer oldAI = GetAIPlayer(oldTeam);
+            if (oldAI != null)
+                oldAI.buildings.Remove(tower);
+        }
         else
             if (oldTeam == 1)
                 Player.buildings.Remove(tower);
         if (newTeam >= 2)
-            AIPlayers[newTeam - 2].buildings.Add(tower);
+        {
+            AIPlayer newAI = GetAIPlayer(newTeam);
+            if (newAI != null && !newAI.buildings.Contains(tower))
+                newAI.buildings.Add(tower);
+        }
         else
             if (newTeam == 1)
                 Player.buildings.Add(tower);

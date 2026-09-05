@@ -6,9 +6,10 @@ position: NaN,NaN
 <<Scene #000000 0.985>>
 
 <<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
-Brigada: ZORAN! I have been marching for TWO DAYS through YOUR miserable countryside!
-
 <<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Brigada: ZORAN! I have been marching for TWO DAYS through THIS miserable countryside!
+
+
 Zoran: Ah, Brigada. Still alive, I see. The roads are... treacherous this time of year.
 <<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
 Brigada: Treacherous?! The roads are FINE! It's your TROOPS that keep attacking my supply lines!
@@ -30,7 +31,7 @@ Zoran: They grow up so fast~ <br>Just like papa taught them.
 
 <<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
 Brigada: Even in your absence you find a way to terrorize me...
-Brigada: while you're off... off... doing WHAT exactly?!
+Brigada: while you're off... off... [smoothWave]doing WHAT exactly?![/smoothWave]
 
 <<LookAt 1 7>>
 <<Scene #000000 0.585>>
@@ -43,11 +44,11 @@ Zoran: On a diplomatic mission... Advising. On... matters of state.
 Brigada: Advising WHO?
 
 <<Act Wizard wizardChill 0.75 0.2 #61eb45>>
-Wizard: The Princess, actually. She's standing right here.
+Wizard: The Princess, actually. She is standing right here saar.
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: WHYYY would you say that?!
 <<Act Wizard wizardChill 0.75 0.2 #61eb45>>
-Wizard: You asked me to always announce guests properly. I'm doing helpful!
+Wizard: You asked me to always announce princess to guests properly, no? I am doing helpful!
 <<Hide Wizard>>
 
 <<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
@@ -70,7 +71,7 @@ Brigada: Show me the harlot! NOW!
 <<Act Zoran zoranChill 0.25 0.2 #a20404>>
 
 <<Act Wizard wizardChill 0.75 0.2 #61eb45>>
-Wizard: I can adjust the mirror's view angle! One moment...
+Wizard: Arre, no problem saar! I can adjust the mirror! One moment only...
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: Don't you dare, you geriatric midget!
 <<Hide Wizard>>
@@ -88,12 +89,12 @@ Zoran: She's older than she looks! Very old. Ancient, even. Practically a crone.
 Brigada: And she doesn't say anything... What's wrong? Cat got your tongue, little princess?
 Zoran: She's stoic. A warrior's disposition. Very intimidating.
 <<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
-Brigada: Or maybe she's just SIMPLE.
+Brigada: Or maybe she's just SIMPLE~
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: How dare you! She can read and everything! (I think...)
 
 <<Act Wizard wizardChill 0.75 0.2 #61eb45>>
-Wizard: Actually, I've noticed she never speaks. It's been quite peaceful since the king passed.
+Wizard: Actually saar, I've noticed she never speaks. It's been quite peaceful since the king passed.
 <<Act Zoran zoranSmug 0.25 0.2 #a20404>>
 Zoran: See? The wizard appreciates her. We've bonded.
 

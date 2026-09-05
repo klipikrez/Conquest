@@ -7,39 +7,41 @@ position: NaN,NaN
 
 <<Act Wizard wizardChill 0.75 0.2 #61eb45>>
 <<Draw mirrorBroken 1.0 0.35>>
-Wizard: Ah! Your Majesty! 
+Wizard: Ah! Your Majestee!
 
-Wizard: I have done it! The royal mirror is restored!
-Wizard: It was really a simple fix, no mo' need to thank me. hehe.
+Wizard: I have restored the royal mirror! Fully fixed, no?
+Wizard: It was really a simple fixing, no mo' need to thank me. hehe.
 
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: No! That is not necessary. It was fine broken. It had character!
 <<Act Wizard wizardChill 0.75 0.2 #61eb45>>
 <<Hide mirrorBroken>>
 <<Draw mirror 1.0 0.35>>
-Wizard: Some Absolute donkey enchanted the mirror with an ancient curse called "Windows 11" (No idea what that was)... 
-Wizard: The mirror now runs the latest Mirror 7 IOS, fully runescribed and aether bound.
-Wizard: Now it has custon Backdrop support, Scrype calls, and what the young mages call the "Vine".
-Wizard: Which is, as I understand it, a magical network of... flying pigs.
+Wizard: Some Absolute donkeh enchanted the mirror with one ancient curse called "Windows 11"... 
+Wizard: But no problem, no problem.
+Wizard: Mirror now runing latest Mirror 7 IOS. Fully runescribed and aether bound, everything proper proper.
+Wizard: Now it has custom background support also. I put this cute puppy fo' now also.
+Wizard: It Scrype calls, and what the young mages arre call the "Vine".
+Wizard: Which is, how you people saying... Magical network of... flying pigs?
 
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
 Zoran: I do not wish to Scrype anyone. Throw a sheet over it, it's destracting the princess in her royal duties!
 <<Act Wizard wizardChill 0.75 0.2 #61eb45>>
-Wizard: Too late. Incoming call from... “The Blue Brigade”?
+Wizard: Too late saar. Call incoming from... “The Blue Brigade”?
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
-Zoran: Decline! Where is the button? Where is the button?!
+Zoran: [normalWave]Decline! Where is the button? Where is the button?![/normalWave]
 
 <<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
 <<Hide mirror>>
-Brigada: ZORAN!
+Brigada: [normalWave]ZORAN![/normalWave]
 <<Act Zoran zoranChill 0.25 0.2 #a20404>>
 Zoran: ...
 <<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
 Brigada: Do you know how long I have been trying to call you? I had to listen to lute music for three days!
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
-Zoran: You are breaking up. KRRRK. I cannot hear you. KRRRK.
+Zoran: You are breaking up. [normalWave]KRRRK[/normalWave]. I cannot hear you. [normalWave]KRRRK[/normalWave].
 <<Act Wizard wizardChill 0.75 0.2 #61eb45>>
-Wizard: The connection is crystal clear, my lord.
+Wizard: Saar, connection is <color=cyan>crystal</color> clear. <color=cyan>crystal</color> clear only.
 <<Act Zoran zoranSmug 0.25 0.2 #a20404>>
 Zoran: Not now, you insolent buffoon!
 
@@ -49,15 +51,15 @@ Brigada: You left without a word, Zoran! I sent fourteen ravens! They all came b
 Zoran: Ah, that! A misunderstanding. I assumed they were carriers for bad news, so I ignored them. A wise man picks his ravens.
 Zoran: You look well. Are those new horns? Very slimming.
 
-Brigada: THOSE ARENT HORNS, THATS MY ROYAL CROWN YOU...! YOU!
+Brigada: [normalWave]THOSE ARENT HORNS, THATS MY ROYAL CROWN YOU...! YOU![/normalWave]
 Brigada: And another thing! Some little army attacked my outriders near the border! They came from YOUR direction, Zoran!
 
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: Whaa? My direction? No, no, that was... The... One of my rats! Very pale. Her name is Gertrude.
 <<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
-Brigada: A rat attacked my soldiers?!
+Brigada: A rat attacked my soldiers..?
 <<Act Zoran zoranChill 0.25 0.2 #a20404>>
-Zoran: Very territorial. But very disciplined for a mere rodent.
+Zoran: Very territorial...
 
 <<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
 Brigada: I don't care if it's a rat, a goblin, or a goat wearing a crown! If someone attacks my people, they answer to me!
@@ -69,16 +71,18 @@ Zoran: Idk...
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: Not doing that?
 <<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
-Brigada: I'm done playing these games! I'm bringing the army, I'm bringing our son, and I'm enforcing the Royal Decree!
+Brigada: [normalWave]I'm done playing these games![/normalWave] I'm bringing the army, I'm bringing our son, and I'm enforcing the Royal Decree!
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: That decree is invalid! You... You can't inforce it...
 
 <<Act Wizard wizardChill 0.75 0.2 #61eb45>>
-Wizard: My lord, the late King Cefan Susni ratified your marriage. I have the royal decree right here.
+Wizard: Saar, the late <color=orange>King Cefan Susni</color> ratified your marriage. 
+Wizard: I have the royal decree right here.
+Wizard: Please see, official document. Very official.
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: Put that down! It is not a decree! It is a napkin with a donkey drawn on it!
 <<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
-Brigada: That donkey is the Royal Seal of Love! <3 The late king himself drew a little crown on it and wrote "Zoran + Brigada 4ever".
+Brigada: That donkey is the Royal Seal of Love! <3 The late king himself drew a little crown on it and wrote: <br>"Zoran + Brigada 4ever".
 <<Act Zoran zoranChill 0.25 0.2 #a20404>>
 Zoran: It was written in crayon. It has a smiley face. It is legally worthless.
 <<Act Wizard wizardChill 0.75 0.2 #61eb45>>
@@ -87,9 +91,9 @@ Wizard: The late king did love crayon. His final will had a dapper crayon unicor
 
 <<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
 Brigada: I am coming to your little tower, Zoran! And when I get there, I'm going to drag you back to the Blue Marches by your skinny, lying neck!
-Brigada: And if that anyone tries to stop me, I'll bury them in a sea of holy salt!
+Brigada: And if <color=green>anyone</color> tries to stop me, I'll bury them in a sea of holy salt!
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
-Zoran: The line is breaking. Goodbye.
+Zoran: [smoothWave]The line is breaking. Goodbye.[/smoothWave]
 
 <<Scene #000000 0.585>>
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>

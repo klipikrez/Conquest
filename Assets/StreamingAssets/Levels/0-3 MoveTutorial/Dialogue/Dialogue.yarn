@@ -11,9 +11,10 @@ Zoran: Before we continue, Your Majesty, allow me to enlighten you on the fine a
 Zoran: as much as I would love to be able to oversee the battle map myself... 
 Zoran: im afraid i have to leave that horor to your royal eyes.
 <<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: ...
 Zoran: Unfortunately, war is rarely convenient enough to fit neatly within your field of view.
-Zoran: So, to properly survey your domain, you must move the camera using the <sprite name="key_w">, <sprite name="key_a">, <sprite name="key_s">, and <sprite name="key_s"> keys.
-Zoran: And dont forget to loook up sometimes with the scrool wheel on your mouse.
+Zoran: So, to properly survey your domain, you must move the camera using the <sprite name="key_w">, <sprite name="key_a">, <sprite name="key_s">, and <sprite name="key_d"> keys.
+Zoran: And dont forget to look up sometimes with the scrool wheel on your mouse.
 <<Act Zoran zoranSmug 0.25 0.2 #a20404>>
 Zoran: Go on, try it. See if you can keep up with the grand scope of this rebellion. *tsk~*
 <<StopAudioAll>>
