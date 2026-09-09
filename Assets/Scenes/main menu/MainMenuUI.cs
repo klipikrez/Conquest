@@ -46,6 +46,16 @@ public class MainMenuUI : MonoBehaviour
         SetObjectsActive(3);
     }
 
+    public void Credits()
+    {
+        SetObjectsActive(4);
+    }
+
+    public void Cabinet()
+    {
+        SetObjectsActive(5);
+    }
+
     public void SetObjectsActive(int i)
     {
         foreach (GameObject obj in GameObjectUIPanels)
