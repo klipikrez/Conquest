@@ -14,10 +14,11 @@ public class SnapToScrollViewItem : MonoBehaviour
     public RectTransform sampleListItem;
     public HorizontalLayoutGroup layoutGroup;
     public LevelInfoManage levelManager;
-    int currentItem;
+    public int currentItem;
     Vector3 autoMovePointerPosition;
     bool autoMoveStartedWithPointerDown;
     float lastViewportWidth = -1f;
+    public bool levelSelector = true;
 
     Action handleMove;
 
@@ -31,7 +32,8 @@ public class SnapToScrollViewItem : MonoBehaviour
     {
         UpdateLayoutPadding();
         handleMove = ManualMove;
-        SnapToItem(contentPanel.childCount - 1);
+        if (levelSelector)
+            SnapToItem(contentPanel.childCount - 1);
     }
 
     bool selectionLatch = false;
@@ -57,8 +59,11 @@ public class SnapToScrollViewItem : MonoBehaviour
             if (!selectionLatch)
             {
                 selectionLatch = true;
-                MenuLevel menuLevel = GetItem(currentItem);
-                levelManager.SetSelectedLevel(menuLevel.levelName, menuLevel.levelNumber);
+                if (levelSelector)
+                {
+                    MenuLevel menuLevel = GetItem(currentItem);
+                    levelManager.SetSelectedLevel(menuLevel.levelName, menuLevel.levelNumber);
+                }
             }
             MoveToItem(currentItem);
         }
@@ -87,11 +92,33 @@ public class SnapToScrollViewItem : MonoBehaviour
     void UpdateLayoutPadding()
     {
         RectTransform viewport = GetViewport();
-        int sidePadding = Mathf.Max(0, Mathf.RoundToInt((viewport.rect.width - sampleListItem.rect.width) * 0.5f));
+        float referenceWidth = GetReferenceItemWidth();
+        int sidePadding = Mathf.Max(0, Mathf.RoundToInt((viewport.rect.width - referenceWidth) * 0.5f));
         layoutGroup.padding.left = sidePadding;
         layoutGroup.padding.right = sidePadding;
         LayoutRebuilder.ForceRebuildLayoutImmediate(contentPanel);
         lastViewportWidth = viewport.rect.width;
+    }
+
+    float GetReferenceItemWidth()
+    {
+        if (sampleListItem != null)
+            return sampleListItem.rect.width;
+
+        float totalWidth = 0f;
+        int itemCount = 0;
+
+        for (int i = 0; i < contentPanel.childCount; i++)
+        {
+            RectTransform item = contentPanel.GetChild(i) as RectTransform;
+            if (item == null || (levelSelector && item.GetComponent<MenuLevel>() == null))
+                continue;
+
+            totalWidth += item.rect.width;
+            itemCount++;
+        }
+
+        return itemCount > 0 ? totalWidth / itemCount : 0f;
     }
 
     RectTransform GetViewport()
@@ -109,7 +136,7 @@ public class SnapToScrollViewItem : MonoBehaviour
         for (int i = 0; i < contentPanel.childCount; i++)
         {
             RectTransform item = contentPanel.GetChild(i) as RectTransform;
-            if (item == null || item.GetComponent<MenuLevel>() == null)
+            if (item == null || (levelSelector && item.GetComponent<MenuLevel>() == null))
                 continue;
 
             float distance = Mathf.Abs(item.TransformPoint(item.rect.center).x - viewportCenter.x);

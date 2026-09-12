@@ -45,7 +45,6 @@ public class GenerateMenuLevelButtons : MonoBehaviour
     }
 
 
-
     void CheckLevelFolder()
     {
         if (!System.IO.Directory.Exists(Application.dataPath + "/StreamingAssets/Levels"))
