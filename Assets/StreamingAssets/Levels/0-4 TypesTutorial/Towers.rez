@@ -30,7 +30,12 @@
             "team": 0,
             "modelPath": "castle.glb",
             "presetName": "castle",
-            "towerOverrides": [],
+            "towerOverrides": [
+                {
+                    "overrideName": "Starting units",
+                    "value": 100.0
+                }
+            ],
             "connections": [
                 2
             ],

@@ -71,7 +71,6 @@ Zoran: WHY does this kid have CHAINS?!
 Brigada: Every handsome young prince needs accessories!
 Brigada: He's just expressing himself!
 
-<<Scene #000000 0.585>>
 <<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
 Brigada: And he's already doing FOURTH GRADE MATH! Unlike YOUR little princess over there!
 Brigada: TAKE THAT!
@@ -82,9 +81,6 @@ Jamal: Ye ye...
 Jamal: Uhh...
 <<Act Jamal jamalMath 0.8 0.3 #505050>>
 Jamal: 21?
-<<LookAt 1 7>>
-
-
 
 <<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
 Brigada: ...
@@ -129,10 +125,15 @@ Jamal: 'Ight, this is a snooze. Ma', can I go play?
 <<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
 Brigada: Of course, sugar-bear!
 <<Act Jamal jamalGun 0.8 0.2 #505050>>
+<<Scene #000000 0.585>>
+<<LookAt 17 13>>
 Brigada: Dont hurt yourelf.
 Jamal: Fo sho!
+Jamal: If anyone comes close to my <color=purple>MAGIC tower</color>, i'm gonna zap them till they darker than me~
 <<Hide Jamal>>
 
+<<LookAt 1 7>>
+<<Scene #000000 0.985>>
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: You gave a child an ARCANE DARK ORB?!
 <<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
@@ -152,14 +153,20 @@ Brigada: No can do. He's anxious to meet you.
 Zoran: HE HAS A TICKING TIME BOMB.
 <<Act Brigada brigadaAngryRat 1.0 0.2 #7E00FF>>
 Brigada: See you soon, darling!
+<<Hide Brigada>>
 
-<<Scene #000000 0.585>>
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: Y..your Majesty... we need to prepare the defenses. 
 <<Act Zoran zoranChill 0.25 0.2 #a20404>>
 Zoran: ...
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: NOW!
+<<Scene #000000 0.585>>
+<<LookAt 17 14>>
+Zoran: ...and try to stay out of magic range for that cursed tower...
+<<LookAt 1 7>>
+Zoran: At least as much as you can...
+
 
 <<StopAudioAll>>
 <<Reset>>

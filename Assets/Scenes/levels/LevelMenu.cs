@@ -160,7 +160,7 @@ public class LevelMenu : MonoBehaviour
 
     public void Retry()
     {
-        ScenesManager.Instance.Load(SceneManager.GetActiveScene().buildIndex);
+        ScenesManager.Instance.ReloadActiveLevel();
     }
 
     public void Continue()

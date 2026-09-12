@@ -9,7 +9,7 @@ position: NaN,NaN
 <<Draw mirrorBroken 1.0 0.35>>
 Wizard: Ah! Your Majestee!
 
-Wizard: I have restored the royal mirror! Fully fixed, no?
+Wizard: I have restored the royal mirror! Fully fix, no?
 Wizard: It was really a simple fixing, no mo' need to thank me. hehe.
 
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
@@ -29,7 +29,7 @@ Zoran: I do not wish to Scrype anyone. Throw a sheet over it, it's destracting t
 <<Act Wizard wizardChill 0.75 0.2 #61eb45>>
 Wizard: Too late saar. Call incoming from... “The Blue Brigade”?
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
-Zoran: [normalWave]Decline! Where is the button? Where is the button?![/normalWave]
+Zoran: [normalWave]Decline![/normalWave] Where is the button? Where is the button?!
 
 <<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
 <<Hide mirror>>
@@ -37,11 +37,11 @@ Brigada: [normalWave]ZORAN![/normalWave]
 <<Act Zoran zoranChill 0.25 0.2 #a20404>>
 Zoran: ...
 <<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
-Brigada: Do you know how long I have been trying to call you? I had to listen to lute music for three days!
+Brigada: Do you know how long I have been trying to call you? I had to listen to lute music for three days while I was on hold!
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
 Zoran: You are breaking up. [normalWave]KRRRK[/normalWave]. I cannot hear you. [normalWave]KRRRK[/normalWave].
 <<Act Wizard wizardChill 0.75 0.2 #61eb45>>
-Wizard: Saar, connection is <color=cyan>crystal</color> clear. <color=cyan>crystal</color> clear only.
+Wizard: Saar, connection is <color=lightblue>crystal</color> clear. <color=lightblue>crystal</color> clear only.
 <<Act Zoran zoranSmug 0.25 0.2 #a20404>>
 Zoran: Not now, you insolent buffoon!
 
@@ -51,7 +51,7 @@ Brigada: You left without a word, Zoran! I sent fourteen ravens! They all came b
 Zoran: Ah, that! A misunderstanding. I assumed they were carriers for bad news, so I ignored them. A wise man picks his ravens.
 Zoran: You look well. Are those new horns? Very slimming.
 
-Brigada: [normalWave]THOSE ARENT HORNS, THATS MY ROYAL CROWN YOU...! YOU![/normalWave]
+Brigada: THOSE ARENT HORNS, THATS MY ROYAL CROWN YOU...! YOU!
 Brigada: And another thing! Some little army attacked my outriders near the border! They came from YOUR direction, Zoran!
 
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
@@ -71,7 +71,7 @@ Zoran: Idk...
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: Not doing that?
 <<Act Brigada brigadaAngry 1.0 0.2 #7E00FF>>
-Brigada: [normalWave]I'm done playing these games![/normalWave] I'm bringing the army, I'm bringing our son, and I'm enforcing the Royal Decree!
+Brigada: I'm done playing these [normalWave]games![/normalWave] I'm bringing the army, I'm bringing our son, and I'm enforcing the Royal Decree!
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: That decree is invalid! You... You can't inforce it...
 

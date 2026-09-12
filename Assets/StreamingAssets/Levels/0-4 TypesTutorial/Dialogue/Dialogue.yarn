@@ -7,7 +7,8 @@ position: NaN,NaN
 
 <<LookAt 3 7>>
 <<Act Zoran zoranSmug 0.25 0.2 #a20404>>
-Zoran: Ah, yes, the very backbone of any conflict, territory. 
+Zoran: Ah, yes, the very backbone of any conflict...
+Zoran: ...territory. 
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
 Zoran: It is not enough to simply exist upon the land, Your Majesty. One must own it.
 
@@ -30,7 +31,8 @@ Zoran: The enemy can seize it without much trouble.
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
 Zoran: A large town provides more troops, which is lovely.
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
-Zoran: But, much like its smaller counterpart, it remains… exposed. If you do not defend it, the enemy will gladly take it off your hands.
+Zoran: But, much like its smaller counterpart, it remains… exposed. If you do not defend it...
+Zoran: ...the enemy will gladly take it off your hands.
 
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 <<LookAt 3 7>>
@@ -42,9 +44,14 @@ Zoran: Taking one is an ordeal, an unpleasant, drawn out mess that can cost the 
 Zoran: They do not produce any troops, unlike towns, but what does it matter? 
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
 Zoran: A wise ruler knows how to restation troops where they are needed most.
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: You should also know to always keep men on the front line...
+<<Act Zoran zoranTalk 0.25 0.2 #a20404>>
+Zoran: Even if that sometimes means deserting your castles if they arent of use anymore,
+Zoran: Like this one in the backline for instance...
 
 <<Act Zoran zoranChill 0.25 0.2 #a20404>>
-Zoran: Keep these in mind, Your Majesty.
+Zoran: Keep this in mind, Your Majesty.
 
 <<Act Zoran zoranSmug 0.25 0.2 #a20404>>
 Zoran: …And you may prove yourself worthy of the throne.

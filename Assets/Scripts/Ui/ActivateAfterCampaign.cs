@@ -12,8 +12,7 @@ public class ActivateAfterCampaign : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        Settings settings = JsonUtility.FromJson<Settings>(File.ReadAllText(Application.dataPath + "/StreamingAssets/klipik.rez"));
-
+        Options.GetSettings();
         gameObject.GetComponent<Button>().interactable = CampaignComplete();
     }
     public bool CampaignComplete()
@@ -25,7 +24,7 @@ public class ActivateAfterCampaign : MonoBehaviour
             return false;
         }
 
-        Settings settings = JsonUtility.FromJson<Settings>(File.ReadAllText(Application.dataPath + "/StreamingAssets/klipik.rez"));
+        Settings settings = Options.GetSettings();
 
         int officialLevelCount = 0;
         string[] dirs = Directory.GetDirectories(folderPath);
@@ -36,7 +35,6 @@ public class ActivateAfterCampaign : MonoBehaviour
                 officialLevelCount++;
             }
         }
-
         return settings.campaignLevel >= officialLevelCount;
     }
 

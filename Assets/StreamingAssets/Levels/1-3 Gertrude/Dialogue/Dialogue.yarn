@@ -33,13 +33,11 @@ Zoran: They grow up so fast~ <br>Just like papa taught them.
 Brigada: Even in your absence you find a way to terrorize me...
 Brigada: while you're off... off... [smoothWave]doing WHAT exactly?![/smoothWave]
 
-<<LookAt 1 7>>
-<<Scene #000000 0.585>>
+<<LookAt 0 7>>
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: ...
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
 Zoran: On a diplomatic mission... Advising. On... matters of state.
-<<Scene #000000 0.985>>
 <<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>
 Brigada: Advising WHO?
 
@@ -61,7 +59,6 @@ Zoran: It's purely professional! She needed help with...
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: ...learning third grade math? Very boring. You wouldn't be interested.
 
-<<LookAt 1 7>>
 <<Act Brigada brigadaTalk 1.0 0.2 #7E00FF>>
 Brigada: Let me see her.
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
@@ -77,7 +74,6 @@ Zoran: Don't you dare, you geriatric midget!
 <<Hide Wizard>>
 
 <<Draw mirror 0.75 0.35>>
-<<LookAt 1 4>>
 Brigada: ...
 Brigada: THAT'S her?
 <<Act Brigada brigadaChill 1.0 0.2 #7E00FF>>

@@ -129,9 +129,9 @@
             "presetName": "smallTown",
             "towerOverrides": [],
             "connections": [
+                1,
                 2,
                 12,
-                1,
                 16
             ],
             "position": {
@@ -184,8 +184,8 @@
             "presetName": "smallTown",
             "towerOverrides": [],
             "connections": [
-                6,
                 15,
+                6,
                 7
             ],
             "position": {
@@ -211,8 +211,8 @@
             "towerOverrides": [],
             "connections": [
                 4,
-                9,
-                5
+                5,
+                9
             ],
             "position": {
                 "x": -6.471122741699219,
@@ -236,9 +236,9 @@
             "presetName": "smallTown",
             "towerOverrides": [],
             "connections": [
+                15,
                 5,
-                8,
-                15
+                8
             ],
             "position": {
                 "x": 3.1325836181640627,
@@ -287,8 +287,8 @@
             "presetName": "largeTown",
             "towerOverrides": [],
             "connections": [
-                6,
                 4,
+                6,
                 13
             ],
             "position": {
@@ -313,8 +313,8 @@
             "presetName": "largeTown",
             "towerOverrides": [],
             "connections": [
-                12,
                 4,
+                12,
                 13
             ],
             "position": {
@@ -339,10 +339,10 @@
             "presetName": "smallTown",
             "towerOverrides": [],
             "connections": [
+                1,
                 3,
                 4,
-                10,
-                1
+                10
             ],
             "position": {
                 "x": -13.650611877441407,
@@ -387,12 +387,12 @@
         {
             "id": 14,
             "team": 0,
-            "modelPath": "",
+            "modelPath": "none",
             "presetName": "invisiblePoint",
             "towerOverrides": [],
             "connections": [
-                8,
-                0
+                0,
+                8
             ],
             "position": {
                 "x": 5.499786376953125,
@@ -412,7 +412,7 @@
         {
             "id": 16,
             "team": 0,
-            "modelPath": "",
+            "modelPath": "none",
             "presetName": "invisiblePoint",
             "towerOverrides": [],
             "connections": [
@@ -423,6 +423,28 @@
                 "x": -10.216476440429688,
                 "y": -0.99798583984375,
                 "z": 0.31455230712890627
+            },
+            "rotation": {
+                "value": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                }
+            },
+            "scale": 1.0
+        },
+        {
+            "id": 17,
+            "team": 0,
+            "modelPath": "",
+            "presetName": "invisiblePoint",
+            "towerOverrides": [],
+            "connections": [],
+            "position": {
+                "x": -1.5302658081054688,
+                "y": 1.2835693359375,
+                "z": 7.5330352783203129
             },
             "rotation": {
                 "value": {

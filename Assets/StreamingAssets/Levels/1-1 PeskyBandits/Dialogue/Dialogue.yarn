@@ -9,7 +9,7 @@ position: NaN,NaN
 Zoran: Ah... Your Majesty! You are still awake. Good. Great. Wonderful...
 Zoran: Uhh...
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
-Zoran: I have urgent news. There is a... small... situation on the border.
+Zoran: I have urgent news. There is a... <size=-17>small</size>... situation on the border.
 <<Scene #000000 0.585>>
 <<LookAt 7 7>>
 Zoran: Do not ask questions. Just look at the map. You see those blue flags?
@@ -19,9 +19,18 @@ Zoran: Thore are Bri...
 Zoran:  [smoothWave]I mean... those are bandits...[/smoothWave]
 
 <<Act Zoran zoranSmug 0.25 0.2 #a20404>>
+<<LookAt 4 15>>
 Zoran: Very well organised bandits.
 <<Act Zoran zoranTalk 0.25 0.2 #a20404>>
 Zoran: Do not parley. Just send the troops.
+
+<<LookAt 3 7>>
+Zoran: You could leave this old castle as a decoy for them to take...
+<<Act Zoran zoranChill 0.25 0.2 #a20404>>
+Zoran: ...when they try to ransack it.
+<<LookAt 3 13>>
+Zoran: Strike them while they are still weak from that attack.
+Zoran: Like I said earlier, patience and cunning are a virtue is this cruel game we play.
 <<LookAt 2 7>>
 <<Act Zoran zoranSurprise 0.25 0.2 #a20404>>
 Zoran: Why are you staring at me? I am not nervous. 

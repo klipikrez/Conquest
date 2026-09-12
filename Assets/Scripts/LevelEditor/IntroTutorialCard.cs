@@ -11,9 +11,9 @@ public class IntroTutorialCard : MonoBehaviour
     {
         if (toggle != null && !toggle.isOn)
         {
-            Settings settings = JsonUtility.FromJson<Settings>(File.ReadAllText(Application.dataPath + "/StreamingAssets/klipik.rez"));
+            Settings settings = Options.GetSettings();
             settings.showEditorTutorial = false;
-            File.WriteAllText(Application.dataPath + "/StreamingAssets/klipik.rez", JsonUtility.ToJson(settings));//update setings json
+            Options.SetSettings(settings);
         }
     }
 }

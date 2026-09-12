@@ -25,6 +25,7 @@ public class EditorManager : MonoBehaviour
     public towerEditorToggle[] toggles;
     public TowerButton towerPresets;
     public GameObject tutorialCards;
+    public GameObject tutorialCanvas;
     public bool drawBrushGraphic = false;
     public DynamicMeshGenerator dynamicMeshGenerator;
     public List<EditorTower> editorTowers = new List<EditorTower>();
@@ -42,10 +43,12 @@ public class EditorManager : MonoBehaviour
 
     private void Start()
     {
+        tutorialCanvas.SetActive(false);
         tutorialCards.SetActive(false);
-        Settings settings = JsonUtility.FromJson<Settings>(File.ReadAllText(Application.dataPath + "/StreamingAssets/klipik.rez"));
+        Settings settings = Options.GetSettings();
         if (settings.showEditorTutorial)
         {
+            tutorialCanvas.SetActive(true);
             tutorialCards.SetActive(true);
         }
     }

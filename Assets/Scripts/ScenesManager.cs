@@ -17,6 +17,7 @@ public class ScenesManager : MonoBehaviour
     public int levelNumber = -52;
     public string[] campaignLevels;
     private SceneReference levelScene = null;
+    private string activeLevelName = string.Empty;
 
     private void Awake()
     {
@@ -76,12 +77,33 @@ public class ScenesManager : MonoBehaviour
     {
         if (levelNumber >= 0) this.levelNumber = levelNumber;
         levelScene = sceneRef;
+        activeLevelName = levelName;
         SetLoadingGizmos(true);
         //
         // 
         //Debug.Log(tekibelike.activeSelf);
         StartCoroutine(LoadAsyncSceneLevel(sceneRef, levelName, levelNumber));
 
+    }
+
+    public void ReloadActiveLevel()
+    {
+        if (levelScene == null)
+        {
+            UnityEngine.Debug.LogWarning("No active dynamic level scene reference is stored.");
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(activeLevelName))
+        {
+            UnityEngine.Debug.LogWarning("ReloadActiveLevel called without a remembered active level name.");
+            return;
+        }
+
+        UnityEngine.Debug.Log(activeLevelName + "  " + levelNumber);
+
+        SetLoadingGizmos(true);
+        StartCoroutine(LoadAsyncSceneLevel(levelScene, activeLevelName, levelNumber));
     }
     public void SetCampaignLevels(string[] names)
     {
@@ -95,18 +117,17 @@ public class ScenesManager : MonoBehaviour
 
 
         SetLoadingGizmos(true);
-
+        activeLevelName = campaignLevels[levelNumber];
         StartCoroutine(LoadAsyncSceneLevel(levelScene, campaignLevels[levelNumber], levelNumber));
     }
 
     public void UpdateCurrentCampaignProgress()
     {
         levelNumber++;
-        Settings settings = JsonUtility.FromJson<Settings>(File.ReadAllText(Application.dataPath + "/StreamingAssets/klipik.rez"));
+        Settings settings = Options.GetSettings();
         if (levelNumber < settings.campaignLevel) return;
         settings.campaignLevel = levelNumber;
-        File.WriteAllText(Application.dataPath + "/StreamingAssets/klipik.rez", JsonUtility.ToJson(settings));//update setings json
-
+        Options.SetSettings(settings);
     }
 
     public void LoadEditor(SceneReference sceneRef, string levelName)

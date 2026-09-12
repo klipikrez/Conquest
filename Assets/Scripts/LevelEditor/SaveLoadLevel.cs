@@ -534,10 +534,7 @@ public class SaveLoadLevel : MonoBehaviour
         int layNum = 0;
         while (true)
         {
-
-
-            string path = Application.dataPath + "/StreamingAssets/Levels/" + levelName + "/" + "DetailMap" + layNum++ + ".rez";
-
+            string path = Application.dataPath + "/StreamingAssets/Levels/" + levelName + "/" + "DetailMap" + layNum + ".rez";
 
             if (!File.Exists(path)) break;
 
@@ -556,13 +553,32 @@ public class SaveLoadLevel : MonoBehaviour
             br.Close();
 
             if (inEditor)
+            {
                 EditorManager.Instance.RefreshDetailTerrain(dat);
+            }
+            else
+            {
+                int[,] detailMap = ConvertDetailMap(dat, terrain);
+                terrain.SetDetailLayer(0, 0, layNum, detailMap);
+            }
 
-
-            //terrain.SetDetailLayer(0, 0, layNum++, dat);
-
-
+            layNum++;
         }
+    }
+
+    int[,] ConvertDetailMap(float[,] dat, TerrainData terrain)
+    {
+        int[,] detailMap = new int[terrain.detailWidth, terrain.detailHeight];
+
+        for (int i = 0; i < terrain.detailHeight; i++)
+        {
+            for (int j = 0; j < terrain.detailWidth; j++)
+            {
+                detailMap[i, j] = Mathf.Clamp(Mathf.RoundToInt(dat[i, j] * 16f), 0, 255);
+            }
+        }
+
+        return detailMap;
     }
 
     void SaveTerrainDetailsOld(string levelName, TerrainData terrain)

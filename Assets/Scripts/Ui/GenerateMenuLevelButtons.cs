@@ -15,10 +15,7 @@ public class GenerateMenuLevelButtons : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-
-
-        Settings settings = JsonUtility.FromJson<Settings>(File.ReadAllText(Application.dataPath + "/StreamingAssets/klipik.rez"));
-
+        Settings settings = Options.GetSettings();
 
         int loadedLevel = 0;
 

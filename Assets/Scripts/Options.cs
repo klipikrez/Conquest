@@ -14,6 +14,7 @@ public class Settings
     public bool vsync = true;
     public bool showEditorTutorial = true;
     public int campaignLevel = 0;
+    public bool[] doneToolTotorial = { false, false, false, false, false, false };
 
 }
 
@@ -36,22 +37,79 @@ public class Options : MonoBehaviour
     public Slider Fps;
     public Slider[] VolumeSliders = new Slider[4];
     public AudioMixer audioMixer;
+    public string[] volumeMixerParameters = { "MasterVolume", "MusicVolume", "EffectsVolume", "VoiceVolume" };
 
+    private static string SettingsFilePath()
+    {
+        return Path.Combine(Application.dataPath, "StreamingAssets", "klipik.rez");
+    }
 
-    Settings settings;
-    public static Options Instance { get; private set; }
+    public static Settings GetSettings()
+    {
+        string filePath = SettingsFilePath();
+        string directory = Path.GetDirectoryName(filePath);
 
-    private void Awake()
-    {//ptickixcce idu tut tut
-        settings = JsonUtility.FromJson<Settings>(File.ReadAllText(Application.dataPath + "/StreamingAssets/klipik.rez"));
-        Instance = this;
+        if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
+        Settings settings;
+        if (!File.Exists(filePath))
+        {
+            settings = new Settings();
+            File.WriteAllText(filePath, JsonUtility.ToJson(settings, true));
+            Debug.Log("File created at: " + filePath);
+            return settings;
+        }
+
+        try
+        {
+            string json = File.ReadAllText(filePath);
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                settings = new Settings();
+                SetSettings(settings);
+                return settings;
+            }
+
+            settings = JsonUtility.FromJson<Settings>(json);
+            if (settings == null)
+            {
+                settings = new Settings();
+                SetSettings(settings);
+            }
+
+            return settings;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning("Failed to read settings file: " + e.Message);
+            settings = new Settings();
+            SetSettings(settings);
+            return settings;
+        }
+    }
+
+    public static void SetSettings(Settings settings)
+    {
+        string filePath = SettingsFilePath();
+        string directory = Path.GetDirectoryName(filePath);
+
+        if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
+        File.WriteAllText(filePath, JsonUtility.ToJson(settings, true));
     }
 
     void Start()
     {
+        Settings settings = GetSettings();
         fullScreenToggle.isOn = settings.fullScreen;
         Fps.value = settings.fps;
-        UpdateSettings(settings.fullScreen ? 1 : 0, settings.fps);
+        UpdateSettings(settings, settings.fullScreen ? 1 : 0, settings.fps);
 
         for (int i = 0; i < VolumeSliders.Length; i++)
         {
@@ -64,30 +122,34 @@ public class Options : MonoBehaviour
 
     public void FullScreenValue(bool value)
     {
+        Settings settings = GetSettings();
         if (settings != null)
         {
             settings.fullScreen = value;
-            UpdateSettings(value ? 1 : 0, settings.fps);
+            UpdateSettings(settings, value ? 1 : 0, settings.fps);
         }
 
     }
 
     public void FpsValue(float value)
     {
+        Settings settings = GetSettings();
         if (settings != null)
         {
             settings.fps = (int)value;
             VsyncValue(value <= 0.1f ? true : false);
-            UpdateSettings(settings.fullScreen ? 1 : 0, (int)value);
+            UpdateSettings(settings, settings.fullScreen ? 1 : 0, (int)value);
         }
     }
 
     public void VsyncValue(bool value)
     {
+        Settings settings = GetSettings();
         if (settings != null)
         {
             settings.vsync = value;
             QualitySettings.vSyncCount = value ? 1 : 0;
+            UpdateSettings(settings);
         }
     }
 
@@ -109,16 +171,39 @@ public class Options : MonoBehaviour
     }
     void VolumeValue(float value, int index)
     {
+        Settings settings = GetSettings();
         if (settings != null)
         {
-            value /= 100;
-            settings.volumes[index] = value;
-            audioMixer.SetFloat(index.ToString(), (Mathf.Log10(value) * 20) != float.NegativeInfinity ? Mathf.Log10(value) * 20 : -52);
-            UpdateSettings();
+            if (index < 0 || index >= settings.volumes.Length)
+            {
+                Debug.LogWarning("Volume index out of range: " + index);
+                return;
+            }
+
+            if (index < 0 || index >= volumeMixerParameters.Length)
+            {
+                Debug.LogWarning("Missing mixer parameter name for volume index: " + index);
+                return;
+            }
+
+            float clamped = Mathf.Clamp01(value / 100f);
+            settings.volumes[index] = clamped;
+
+            if (audioMixer != null)
+            {
+                float db = clamped <= 0f ? -80f : Mathf.Log10(clamped) * 20f;
+                bool mixerSet = audioMixer.SetFloat(volumeMixerParameters[index], db);
+                if (!mixerSet)
+                {
+                    Debug.LogWarning("AudioMixer parameter not found or not exposed: " + volumeMixerParameters[index]);
+                }
+            }
+
+            UpdateSettings(settings);
         }
     }
 
-    void UpdateSettings(int fullScreen = -1, int hz = -1)
+    void UpdateSettings(Settings settings, int fullScreen = -1, int hz = -1)
     {
         Application.targetFrameRate = hz != -1 ? (hz) : Application.targetFrameRate;
         Vector2Int resolution = (fullScreen != -1 ? (fullScreen == 1 ? true : false) : Screen.fullScreen) ? new Vector2Int(Screen.currentResolution.width, Screen.currentResolution.height) : new Vector2Int(Screen.width, Screen.height);
@@ -129,7 +214,7 @@ public class Options : MonoBehaviour
               fullScreen != -1 ? (fullScreen == 1 ? true : false) : Screen.fullScreen,
                hz != -1 ? (hz) : Application.targetFrameRate);
 
-        File.WriteAllText(Application.dataPath + "/StreamingAssets/klipik.rez", JsonUtility.ToJson(settings));//update setings json
+        SetSettings(settings);
     }
 
     /*
