@@ -13,12 +13,17 @@ public struct Tab
 }
 public class UiTabs : MonoBehaviour
 {
-
+    public int initialTab = -52;
     public Tab[] Tabs;
 
     private void Start()
     {
-        SelectTab(-52);
+        SelectTab(initialTab);
+    }
+
+    private void OnEnable()
+    {
+        SelectTab(initialTab);
     }
     public void SelectTab(int val)
     {
